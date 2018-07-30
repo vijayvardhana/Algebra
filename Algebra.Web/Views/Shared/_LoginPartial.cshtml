@@ -1,0 +1,47 @@
+@using Microsoft.AspNetCore.Identity
+@using Algebra.Entities.Models
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" id="logoutForm" class="navbar-right">
+        <ul class="nav navbar-nav navbar-left">
+            @*<li>
+            <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
+        </@*li>
+        <li>
+            <button type="submit" class="btn btn-link navbar-btn navbar-link">Log out</button>
+        </li>*@
+            <li>
+                <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage" class="text-center">
+                    <i class="glyphicon glyphicon-user white" style="padding-left: 5px;"></i><br />Hello @UserManager.GetUserName(User)!
+                </a>
+            </li>
+
+            <li>
+                <button type="submit" id="exit" class="btn btn-link navbar-btn navbar-link">
+                    <i id="exitIcon" class="glyphicon glyphicon-log-out white"></i><br />Log out
+                </button>
+            </li>
+        </ul>
+    </form>
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>
+            <a asp-area="" asp-controller="Account" asp-action="Register" class="text-center">
+                <i class="glyphicon glyphicon-file white"></i><br />Register
+            </a>
+        </li>
+        <li>
+            <a asp-area="" asp-controller="Account" asp-action="Login" class="text-center">
+                <i class="glyphicon glyphicon-log-in white" style="padding-left: 5px;"></i><br />Log in
+            </a>
+        </li>
+        @*<li><a asp-area="" asp-controller="Account" asp-action="Register">Register</a></li>
+        <li><a asp-area="" asp-controller="Account" asp-action="Login">Log in</a></li>*@
+    </ul>
+}

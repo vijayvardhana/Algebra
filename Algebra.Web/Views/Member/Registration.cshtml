@@ -1,0 +1,75 @@
+﻿@using Algebra.Data
+@using Algebra.Entities.ViewModels
+@model RegistrationFormViewModel
+@{
+    var member = Model.Member;
+    var spouse = Model.Spouse;
+    var dependent = Model.Dependent;
+}
+<div class="container">
+    <form method="post" id="registration-form" asp-action="api/Member/Post">
+        <div class="panel panel-default row" style="padding: 10px; margin: 10px">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label asp-for="@Model.ReferredBy"></label>
+                        <select asp-for="@Model.ReferredBy" asp-items="@(new SelectList(ViewBag.Referrers, "Name", "Name"))" class="form-control input-sm">
+                            <option value="">select</option>
+                        </select>
+                        <span asp-validation-for="@Model.ReferredBy" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label asp-for="@Model.Location"></label>
+                        <select asp-for="@Model.Location" asp-items="@(new SelectList(ViewBag.Locations, "Name", "Name"))" class="form-control input-sm">
+                            <option value="">select</option>
+                        </select>
+                        <span asp-validation-for="@Model.Location" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label asp-for="@Model.MembershipType"></label>
+                        @*<select asp-for="@Model.MembershipType" asp-items="Html.GetEnumSelectList<Enums.MembershipCategory>()" class="form-control input-sm">*@
+                        <select asp-for="@Model.MembershipType" asp-items="Html.GetEnumSelectList(typeof(Enums.MembershipCategory))" class="form-control input-sm">
+                            <option selected="selected" value="">select</option>
+                        </select>
+                        <span asp-validation-for="@Model.MembershipType" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div id="Tabs" role="tabpanel">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="active"><a href="#member" aria-controls="personal" role="tab" data-toggle="tab">Member Details</a></li>
+                    <li><a href="#spouse" aria-controls="employment" role="tab" data-toggle="tab">Spouse Details</a></li>
+                    <li><a href="#first-dependent" aria-controls="first-dependent" role="tab" data-toggle="tab">First Dependent</a></li>
+                    <li><a href="#second-dependent" aria-controls="second-dependent" role="tab" data-toggle="tab">Second Dependent</a></li>
+                </ul>
+                <!-- Tab panes -->
+                <div class="tab-content" style="padding-top: 20px">
+                    <div role="tabpanel" class="tab-pane active" id="member">
+                        @*@Html.Partial("_Member.cshtml", Model)*@
+                        @await Html.PartialAsync("_Member", member)
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="spouse">
+                        @await Html.PartialAsync("_Spouse", spouse)
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="first-dependent">
+                        tab3
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="second-dependent">
+                        Second Dependent
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+</div>
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

@@ -1,0 +1,33 @@
+﻿@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+<ul class="nav navbar-nav">
+    @*<li><a asp-area="" asp-controller="Location" asp-action="Index">Location</a></li>
+    <li><a asp-area="" asp-controller="Member" asp-action="Registration">Registration</a></li>
+    <li><a asp-area="" asp-controller="User" asp-action="Index">Users</a></li>*@
+
+    <li class="dropdown">
+        <a class="dropdown-toggle text-center" data-toggle="dropdown" href="#">
+            <i class="glyphicon glyphicon-education white"></i><br />Membership<span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+            <li><a asp-area="" asp-controller="Member" asp-action="Registration">Registration</a></li>
+        </ul>
+    </li>
+    <li class="dropdown">
+        <a class="dropdown-toggle text-center" data-toggle="dropdown" href="#">
+            <i class="glyphicon glyphicon-education white"></i><br />Lookups<span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+            <li><a asp-area="" asp-controller="Location" asp-action="Index">Location</a></li>
+            <li><a asp-area="" asp-controller="User" asp-action="Index">Users</a></li>
+            <li><a asp-area="" asp-controller="Referrer" asp-action="Index">Referrer</a></li>
+        </ul>
+    </li>
+</ul>
+}
+else
+{
+}

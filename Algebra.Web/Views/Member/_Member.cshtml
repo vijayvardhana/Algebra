@@ -1,0 +1,54 @@
+﻿@using Algebra.Entities.ViewModels
+@using Algebra.Data
+@model MemberViewModels
+<div>
+    <h4>APPLICANT DETAILS <small></small></h4>
+    <hr class="colorgraph">
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label asp-for="@Model.AccountId"></label>
+                <input asp-for="@Model.AccountId" class="form-control input-sm" />
+                <span asp-validation-for="@Model.AccountId" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label asp-for="@Model.CardId"></label>
+                <input asp-for="@Model.CardId" class="form-control input-sm" />
+                <span asp-validation-for="@Model.CardId" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label asp-for="@Model.Title"></label>
+                <select asp-for="@Model.Title" asp-items="Html.GetEnumSelectList(typeof(Enums.Title))" class="form-control input-sm">
+                    <option selected="selected" value="">Please select</option>
+                </select>
+                <span asp-validation-for="@Model.Title" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label asp-for="@Model.FirstName"></label>
+                <input asp-for="@Model.FirstName" class="form-control input-sm" />
+                <span asp-validation-for="@Model.FirstName" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label asp-for="@Model.MiddleName"></label>
+                <input asp-for="@Model.MiddleName" class="form-control input-sm" />
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label asp-for="@Model.LastName"></label>
+                <input asp-for="@Model.LastName" class="form-control input-sm" />
+                <span asp-validation-for="@Model.LastName" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+</div>

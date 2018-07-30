@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Algebra</title>
+
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+    </environment>
+</head>
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color:#330033;">
+        <div class="container-fluid" style="padding-right: 0px">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed"
+                        data-toggle="collapse" data-target="#navbar-collapse-zagros" aria-
+                        controls="zagros">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand" style="padding-left:8px">MyApp</a>
+                <div style="background-image: url('Images/logo-zagros.png'); background-repeat: no-repeat; width: 124px; height: 70px;">
+                </div>
+            </div>
+
+            <div class="collapse navbar-collapse" id="navbar-collapse-zagros">
+                <ul class="nav navbar-nav ">
+                    <li class="active ">
+                        <a asp-area="" asp-controller="Home" asp-action="Index" class="text-center">
+                            <i class="glyphicon glyphicon-home white"></i><br />Home
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-area="" asp-controller="Home" asp-action="About" class="text-center">
+                            <i class="glyphicon glyphicon-info-sign white"></i><br />About
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-area="" asp-controller="Home" asp-action="Contact" class="text-center">
+                            <i class="glyphicon glyphicon-th white"></i><br />Contact
+                        </a>
+                    </li>
+                    @*<li><i class="glyphicon glyphicon-file white"></i><br />Home</li>
+                        <li><i class="glyphicon glyphicon-cog white"></i><br />Contact</li>
+                        <li class="dropdown"><i class="glyphicon glyphicon-education white"></i><br />Membership<span class="caret"></span></li>*@
+                </ul>
+                @await Html.PartialAsync("_Navigation")
+                @*<ul class="nav navbar-nav navbar-left">
+                                        <li>
+                                            <a href="#" class="text-center">
+                                                <i class="glyphicon glyphicon-log-in white" style="padding-left: 5px;"></i><br />About
+                                            </a>
+                                        </li>
+                    <li>
+                                <a href="#" class="text-center">
+                                    <i class="glyphicon glyphicon-user white" style="padding-left: 5px;"></i><br />Login User
+                                </a>
+                            </li>
+                                </ul>*@
+
+                @await Html.PartialAsync("_LoginPartial")
+            </div>
+        </div>
+    </nav>
+    <div class="container body-content" style="padding-top:30px;">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; 2018 - My App</p>
+        </footer>
+    </div>
+
+    <environment include="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery"
+                crossorigin="anonymous"
+                integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
+        </script>
+        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
+                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                crossorigin="anonymous"
+                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
+        </script>
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
+    </environment>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

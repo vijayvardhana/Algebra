@@ -1,0 +1,44 @@
+﻿@using Algebra.Entities.Models
+@model IEnumerable<Location>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Location(s) <small>Here you can add edit remove locations.</small></h3>
+            <hr class="colorgraph">
+            <div class="table-responsive">
+                <table id="mytable" class="table table-bordred table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Initials</th>
+                            <th scope="col">Address</th>
+                            <th scope="col">PhoneNumber</th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+
+
+                    <tbody>
+                        @foreach (var location in Model)
+                        {
+                        <tr>
+                            <td>@location.Id</td>
+                            <td>@location.Name</td>
+                            <td>@location.Initials</td>
+                            <td>@location.Address</td>
+                            <td>@location.PhoneNumber</td>
+                            <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit"><span class="glyphicon glyphicon-pencil"></span></button></p></td>
+                            <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete"><span class="glyphicon glyphicon-trash"></span></button></p></td>
+
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
