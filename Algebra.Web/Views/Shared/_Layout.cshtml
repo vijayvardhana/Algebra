@@ -29,8 +29,8 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand" style="padding-left:8px">MyApp</a>
-                <div style="background-image: url('Images/logo-zagros.png'); background-repeat: no-repeat; width: 124px; height: 70px;">
-                </div>
+                @* <div style="background-image: url('Images/logo-zagros.png'); background-repeat: no-repeat; width: 124px; height: 70px;">
+                </div>*@
             </div>
 
             <div class="collapse navbar-collapse" id="navbar-collapse-zagros">
@@ -51,8 +51,9 @@
                         </a>
                     </li>
                     @*<li><i class="glyphicon glyphicon-file white"></i><br />Home</li>
-                        <li><i class="glyphicon glyphicon-cog white"></i><br />Contact</li>
-                        <li class="dropdown"><i class="glyphicon glyphicon-education white"></i><br />Membership<span class="caret"></span></li>*@
+        <li><i class="glyphicon glyphicon-cog white"></i><br />Contact</li>*@
+                    <li><a asp-area="" asp-controller="Member" asp-action="Registration"><i class="glyphicon glyphicon-education white"></i><br />Registration</a></li>
+                    
                 </ul>
                 @await Html.PartialAsync("_Navigation")
                 @*<ul class="nav navbar-nav navbar-left">
@@ -84,6 +85,7 @@
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
+        <script src="~/js/registration.js" asp-append-version="true"></script>
     </environment>
     <environment exclude="Development">
         <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"

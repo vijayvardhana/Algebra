@@ -1,7 +1,7 @@
 ﻿@using Algebra.Entities.ViewModels
 @using Algebra.Data
 @model MemberViewModels
-<div>
+<div id="member">
     <h4>APPLICANT DETAILS <small></small></h4>
     <hr class="colorgraph">
     <div class="row">
@@ -22,7 +22,7 @@
         <div class="col-lg-4">
             <div class="form-group">
                 <label asp-for="@Model.Title"></label>
-                <select asp-for="@Model.Title" asp-items="Html.GetEnumSelectList(typeof(Enums.Title))" class="form-control input-sm">
+                <select asp-for="@Model.Title" asp-items="Html.GetEnumSelectList(typeof(Enums.Title))" class="form-control input-sm" model="member">
                     <option selected="selected" value="">Please select</option>
                 </select>
                 <span asp-validation-for="@Model.Title" class="text-danger"></span>

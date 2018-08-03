@@ -37,11 +37,11 @@ namespace Algebra.Data
         {
             [Display(Name = "Individual")]
             Individual = 1,
-            [Display(Name = "Individual With Couple")]
+            [Display(Name = "Individual With Spouse")]
             IndividualCouple = 2,
-            [Display(Name = "Individual With Dependent")]
+            [Display(Name = "Individual With Dependent(s)")]
             IndividualDependent = 3,
-            [Display(Name = "Individual And Couple With Dependent")]
+            [Display(Name = "Individual, Spouse With Dependent(s)")]
             IndividualCoupleDependent = 4
 
         };
