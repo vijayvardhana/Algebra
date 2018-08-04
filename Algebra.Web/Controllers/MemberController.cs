@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace Algebra.Web.Controllers
 {
-    [Route("api/[controller]")]
+    //[Route("api/[controller]")]
     public class MemberController : Controller
     {
 
@@ -55,7 +55,7 @@ namespace Algebra.Web.Controllers
         ////    return "value";
         ////}
 
-        //// POST api/<controller>
+        // POST api/<controller>
         //[HttpPost]
         //public void Post([FromBody]string value)
         //{
@@ -89,11 +89,24 @@ namespace Algebra.Web.Controllers
             }
              ViewBag.Locations = locations;
              ViewBag.Referrers = referrer;
-            //MemberViewModels member = new MemberViewModels();
             RegistrationFormViewModel RegistrationForm = new RegistrationFormViewModel();
+            RegistrationForm.Member = new MemberViewModels();
             return View(RegistrationForm);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Route("api/Member/Post")]
+        public IActionResult Post([FromForm]RegistrationFormViewModel model)
+           // public IActionResult Post(RegistrationFormViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var m = new MemberViewModels();
+            }
+            
+            return View("Registration", model);
+        }
 
     }
 }

@@ -1,38 +1,43 @@
 ﻿@using Algebra.Entities.ViewModels
 @using Algebra.Data
 @model MemberViewModels
-<div id="member">
+<div id="member" class="small">
     <h4>APPLICANT DETAILS <small></small></h4>
     <hr class="colorgraph">
     <div class="row">
         <div class="col-lg-4">
             <div class="form-group">
-                <label asp-for="@Model.AccountId"></label>
+                <label asp-for="@Model.AccountId"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
                 <input asp-for="@Model.AccountId" class="form-control input-sm" />
                 <span asp-validation-for="@Model.AccountId" class="text-danger"></span>
             </div>
         </div>
         <div class="col-lg-4">
             <div class="form-group">
-                <label asp-for="@Model.CardId"></label>
+                <label asp-for="@Model.CardId"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
                 <input asp-for="@Model.CardId" class="form-control input-sm" />
                 <span asp-validation-for="@Model.CardId" class="text-danger"></span>
             </div>
         </div>
         <div class="col-lg-4">
             <div class="form-group">
-                <label asp-for="@Model.Title"></label>
-                <select asp-for="@Model.Title" asp-items="Html.GetEnumSelectList(typeof(Enums.Title))" class="form-control input-sm" model="member">
-                    <option selected="selected" value="">Please select</option>
-                </select>
-                <span asp-validation-for="@Model.Title" class="text-danger"></span>
+               
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-lg-4">
             <div class="form-group">
-                <label asp-for="@Model.FirstName"></label>
+                <label asp-for="@Model.Title"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
+                <select asp-for="@Model.Title" asp-items="Html.GetEnumSelectList(typeof(Enums.Title))" class="form-control input-sm" model="member">
+                    <option selected="selected" value="">Please select</option>
+                </select>
+                <span asp-validation-for="@Model.Title" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label asp-for="@Model.FirstName"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
                 <input asp-for="@Model.FirstName" class="form-control input-sm" />
                 <span asp-validation-for="@Model.FirstName" class="text-danger"></span>
             </div>
@@ -43,12 +48,80 @@
                 <input asp-for="@Model.MiddleName" class="form-control input-sm" />
             </div>
         </div>
+    </div>
+    <div class="row">
         <div class="col-lg-4">
             <div class="form-group">
-                <label asp-for="@Model.LastName"></label>
+                <label asp-for="@Model.LastName"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
                 <input asp-for="@Model.LastName" class="form-control input-sm" />
                 <span asp-validation-for="@Model.LastName" class="text-danger"></span>
             </div>
         </div>
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label asp-for="@Model.DateOfBirth"></label>
+                <input asp-for="@Model.DateOfBirth" class="form-control input-sm" />
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="form-group">
+                
+            </div>
+        </div>
     </div>
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label asp-for="@Model.ProfessionalTitle"></label>
+                <input asp-for="@Model.ProfessionalTitle" class="form-control input-sm" />
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label asp-for="@Model.Designation"></label>
+                <input asp-for="@Model.Designation" class="form-control input-sm" />
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label asp-for="@Model.Organization"></label>
+                <input asp-for="@Model.Organization" class="form-control input-sm" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label asp-for="@Model.TelephoneNumber"></label>
+                <input asp-for="@Model.TelephoneNumber" class="form-control input-sm" />
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label asp-for="@Model.MobileNumber"></label>
+                <input asp-for="@Model.MobileNumber" class="form-control input-sm" />
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label asp-for="@Model.Email"></label>
+                <input asp-for="@Model.Email" class="form-control input-sm" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label asp-for="@Model.PresentAddress"></label>
+                <input asp-for="@Model.PresentAddress" class="form-control input-sm" />
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label asp-for="@Model.CorrespondenceAddress"></label>
+                <input asp-for="@Model.CorrespondenceAddress" class="form-control input-sm" />
+            </div>
+        </div>
+    </div>
+
 </div>

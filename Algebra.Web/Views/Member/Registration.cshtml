@@ -2,17 +2,17 @@
 @using Algebra.Entities.ViewModels
 @model RegistrationFormViewModel
 @{
-    var member = Model.Member;
-    var spouse = Model.Spouse;
-    var dependent = Model.Dependent;
+//var member = Model.Member;
+//var spouse = Model.Spouse;
+//var dependent = Model.Dependent;
 }
 <div class="container">
-    <form method="post" id="registration-form">
-        <div id="registration">
+    <form method="post" id="registration-form" asp-controller="Member" asp-action="Post">
+        <div id="registration" class="small">
             <div class="row" style="padding: 10px; margin: 10px">
                 <div class="col-lg-4">
                     <div class="form-group">
-                        <label asp-for="@Model.ReferredBy"></label>
+                        <label asp-for="@Model.ReferredBy"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
                         <select asp-for="@Model.ReferredBy" asp-items="@(new SelectList(ViewBag.Referrers, "Name", "Name"))" class="form-control input-sm">
                             <option value="">select</option>
                         </select>
@@ -21,7 +21,7 @@
                 </div>
                 <div class="col-lg-4">
                     <div class="form-group">
-                        <label asp-for="@Model.Location"></label>
+                        <label asp-for="@Model.Location"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
                         <select asp-for="@Model.Location" asp-items="@(new SelectList(ViewBag.Locations, "Name", "Name"))" class="form-control input-sm">
                             <option value="">select</option>
                         </select>
@@ -30,7 +30,7 @@
                 </div>
                 <div class="col-lg-4">
                     <div class="form-group">
-                        <label asp-for="@Model.MembershipType"></label>
+                        <label asp-for="@Model.MembershipType"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
                         <select asp-for="@Model.MembershipType" asp-items="Html.GetEnumSelectList<Enums.MembershipCategory>()" class="form-control input-sm">
                             @*<select asp-for="@Model.MembershipType" asp-items="Html.GetEnumSelectList(typeof(Enums.MembershipCategory))" class="form-control input-sm">*@
                             <option value="">select</option>
@@ -54,62 +54,59 @@
                 <!-- Tab panes -->
                 <div class="tab-content" style="padding-top: 20px">
                     <div role="tabpanel" class="tab-pane active" id="member">
-                        @*@Html.Partial("_Member.cshtml", Model)*@
-                        @await Html.PartialAsync("_Member", member)
+                        @await Html.PartialAsync("_Member", Model.Member)
                     </div>
-                    <div role="tabpanel" class="tab-pane" id="spouse">
-                        @await Html.PartialAsync("_Spouse", spouse)
-                    </div>
-                    <div role="tabpanel" class="tab-pane" id="first-dependent">
-                        tab3
-                    </div>
-                    <div role="tabpanel" class="tab-pane" id="second-dependent">
-                        Second Dependent
-                    </div>
-                    <div role="tabpanel" class="tab-pane" id="membership-fee">
-                        Membership Fee
-                    </div>
-                    <div role="tabpanel" class="tab-pane" id="assets">
-                        Assets
+                        <div role="tabpanel" class="tab-pane" id="spouse">
+                            @*@await Html.PartialAsync("_Spouse", Model.Spouse)*@
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="first-dependent">
+                            tab3
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="second-dependent">
+                            Second Dependent
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="membership-fee">
+                            Membership Fee
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="assets">
+                            Assets
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         <div class="form-group">
+            @*<button type="button" class="btn btn-primary" id="btn-submit">Submit</button>*@
             <button type="button" class="btn btn-primary" id="btn-submit">Submit</button>
         </div>
-    </form>
+        </form>
 
 
 
-    @* Model for error list *@
-    <div class="modal fade" id="error-model" role="dialog">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header" style="background-color:#330033;">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <i class="glyphicon glyphicon-alert white"></i><h4 class="modal-title"></h4>
-                </div>
-                <div class="modal-body panel panel-default" style="padding: 10px; margin: 10px">
-                    <ul></ul>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                </div>
-            </div>
+        @* Model for error list *@
+                        <div class="modal fade" id="error-model" role="dialog">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header" style="background-color:#330033;">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <i class="glyphicon glyphicon-alert white"></i><h4 class="modal-title"></h4>
+                                    </div>
+                                    <div class="modal-body panel panel-default" style="padding: 10px; margin: 10px">
+                                        <ul></ul>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
 
-        </div>
-    </div>
+                            </div>
+                        </div>
 
-</div>
+                    </div>
 @section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial")
 
     <script type="text/javascript">
         $("#btn-submit").click(function () {
-            //var o = new registration();
-            //o.submit;
-
             var o = new Registration();
             o.SubmitForm();
         });

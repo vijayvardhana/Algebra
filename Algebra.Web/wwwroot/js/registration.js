@@ -127,85 +127,13 @@ class Registration {
     }
 
     SubmitForm() {
-        this.ValidateForm();
+
+        if (!this.ValidateForm())
+        {
+            return false;
+        }
+        else {
+            $("#registration-form").submit();
+        }
     }
 }
-
-
-//function registration() {
-//    var ctrl = new Array();
-//    var member = {};
-//    var spouse = {};
-//    var register = {};
-
-//    submit: {
-//        //alert('test');
-//        this.validate;
-//    };
-
-//    extraction: {
-//        this.ctrl = $(".form-control").each(function (index) {
-//            var o = {};
-//            var id = this.id;
-//            var value = $(this).val();
-//            var required = $(this).attr('data-val-required') ? true : false;
-//            var errorMessage = $(this).attr('data-val-required');
-//            var model = $(this).parents(':eq(3)').attr('id');;
-//            o = { 'id': id, 'value': value, 'isRequired': required, 'errorMessage': errorMessage, 'model': model };
-//            ctrl[index] = o;
-//            o = {};
-//        });
-//    };
-
-//    modelbuilder: {
-//        for (var i = 0; i <= ctrl.length - 1; i++) {
-
-//            let c = ctrl[i];
-//            let model = c["model"];
-//            let key = c["id"];
-//            let val = c["value"];
-
-//            switch (model) {
-//                case 'registration':
-//                    register['"' + key + '"'] = val;
-//                    break;
-//                case 'member':
-//                    member['"' + key + '"'] = val;
-//                    break;
-//                case 'spouse':
-//                    spouse['"' + key + '"'] = val;
-//                    break;
-//                default:
-//            }
-//        }
-//        console.log(register);
-//    };
-
-//    validate: {
-//        var sb_msg = new StringBuilder();
-//        for (var i = 0; i <= ctrl.length - 1; i++) {
-//            let c = ctrl[i];
-//            let model = c["model"];
-//            let val = c["value"];
-//            let required = c["isRequired"];
-//            let message = c["errorMessage"];
-//            let tab = c["model"];
-//            if (required && !val) {
-//                sb_msg.append("<li> Tab " + tab + " - " + message + "</li>");
-//            }
-//        }
-
-//        if (sb_msg.strings.length > 0) {
-//            $('.modal-title').html("Error List");
-//            $('.modal-body>ul').html(sb_msg.toString());
-//            $("#error-model").modal({ show: true });
-
-//            return false;
-//        }
-//        else {
-//            return true;
-//        }
-//        // console.log(sb_msg);
-
-//    };
-//}

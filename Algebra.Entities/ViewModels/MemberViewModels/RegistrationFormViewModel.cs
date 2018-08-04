@@ -1,18 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Algebra.Entities.ViewModels
 {
     public class RegistrationFormViewModel
     {
+        public RegistrationFormViewModel()
+        {
+            this.Member = new MemberViewModels();
+            //this.Spouse  = new SpouseViewModels();
+            //this.Dependent = new DependentViewModels();
+        }
+
         public MemberViewModels Member { get; set; }
 
-        public SpouseViewModels Spouse { get; set; }
+        //public SpouseViewModels Spouse { get; set; }
 
-        public DependentViewModels Dependent { get; set; }
+        //public DependentViewModels Dependent { get; set; }
 
         [Required]
         [Display(Name = "Referred By")]

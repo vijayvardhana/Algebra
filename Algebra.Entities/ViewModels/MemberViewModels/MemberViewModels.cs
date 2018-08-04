@@ -47,6 +47,8 @@ namespace Algebra.Entities.ViewModels
         public string LastName { get; set; }
 
         [Display(Name = "Date Of Birth")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime DateOfBirth { get; set; }
 
         [Display(Name = "Title/Profession")]
