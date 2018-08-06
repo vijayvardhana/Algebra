@@ -1,11 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace Algebra.Entities.Models
 {
-    public class Member:MembershipBase
+    public class Member : MembershipBase
     {
 
         #region Constructor

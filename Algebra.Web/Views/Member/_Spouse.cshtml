@@ -1,29 +1,129 @@
 ﻿@using Algebra.Entities.ViewModels
+@using Algebra.Data
 @model SpouseViewModels
 
-<div id="spouse">
-    <h2>Spouse <small>Details</small></h2>
+<div id="spouse" class="small">
+    <h4>Spouse <small>Details</small></h4>
     <hr class="colorgraph">
     <div class="row">
         <div class="col-lg-4">
             <div class="form-group">
-                <label asp-for="@Model.FirstName"></label>
-                <input asp-for="@Model.FirstName" class="form-control input-sm" />
-                <span asp-validation-for="@Model.FirstName" class="text-danger"></span>
+                <label asp-for="@Model.S_CardId"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
+                <input asp-for="@Model.S_CardId" class="form-control input-sm" />
+                <span asp-validation-for="@Model.S_CardId" class="text-danger"></span>
             </div>
         </div>
         <div class="col-lg-4">
             <div class="form-group">
-                <label asp-for="@Model.MiddleName"></label>
-                <input asp-for="@Model.MiddleName" class="form-control input-sm" />
-                <span asp-validation-for="@Model.MiddleName" class="text-danger"></span>
+                <label asp-for="@Model.S_Location"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
+                <select asp-for="@Model.S_Location" asp-items="@(new SelectList(ViewBag.Locations, "Name", "Name"))" class="form-control input-sm">
+                    <option value="">select</option>
+                </select>
+                <span asp-validation-for="@Model.S_Location" class="text-danger"></span>
             </div>
         </div>
         <div class="col-lg-4">
             <div class="form-group">
-                <label asp-for="@Model.LastName"></label>
-                <input asp-for="@Model.LastName" class="form-control input-sm" />
-                <span asp-validation-for="@Model.LastName" class="text-danger"></span>
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label asp-for="@Model.S_Title"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
+                <select asp-for="@Model.S_Title" asp-items="Html.GetEnumSelectList(typeof(Enums.Title))" class="form-control input-sm" model="member">
+                    <option selected="selected" value="">Please select</option>
+                </select>
+                <span asp-validation-for="@Model.S_Title" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label asp-for="@Model.S_FirstName"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
+                <input asp-for="@Model.S_FirstName" class="form-control input-sm" />
+                <span asp-validation-for="@Model.S_FirstName" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label asp-for="@Model.S_MiddleName"></label>
+                <input asp-for="@Model.S_MiddleName" class="form-control input-sm" />
+                <span asp-validation-for="@Model.S_MiddleName" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label asp-for="@Model.S_LastName"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
+                <input asp-for="@Model.S_LastName" class="form-control input-sm" />
+                <span asp-validation-for="@Model.S_LastName" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label asp-for="@Model.S_DateOfBirth"></label>
+                <input asp-for="@Model.S_DateOfBirth" class="form-control input-sm" />
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="form-group">
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label asp-for="@Model.S_ProfessionalTitle"></label>
+                <input asp-for="@Model.S_ProfessionalTitle" class="form-control input-sm" />
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label asp-for="@Model.S_Designation"></label>
+                <input asp-for="@Model.S_Designation" class="form-control input-sm" />
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label asp-for="@Model.S_Organization"></label>
+                <input asp-for="@Model.S_Organization" class="form-control input-sm" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label asp-for="@Model.S_TelephoneNumber"></label>
+                <input asp-for="@Model.S_TelephoneNumber" class="form-control input-sm" />
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label asp-for="@Model.S_MobileNumber"></label>
+                <input asp-for="@Model.S_MobileNumber" class="form-control input-sm" />
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label asp-for="@Model.S_Email"></label>
+                <input asp-for="@Model.S_Email" class="form-control input-sm" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label asp-for="@Model.S_PresentAddress"></label>
+                <input asp-for="@Model.S_PresentAddress" class="form-control input-sm" />
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label asp-for="@Model.S_CorrespondenceAddress"></label>
+                <input asp-for="@Model.S_CorrespondenceAddress" class="form-control input-sm" />
             </div>
         </div>
     </div>

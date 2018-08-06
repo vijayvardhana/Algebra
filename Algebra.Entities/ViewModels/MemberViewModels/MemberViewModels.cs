@@ -12,89 +12,89 @@ namespace Algebra.Entities.ViewModels
         [Required(ErrorMessage = "Please enter Account Number")]
         [Display(Name = "Account Number")]
         [DataType(DataType.Text)]
-        public string AccountId { get; set; }
+        public string M_AccountId { get; set; }
 
         [Required]
         [Display(Name = "Card Number")]
         [DataType(DataType.Text)]
-        public string CardId { get; set; }
+        public string M_CardId { get; set; }
 
         [Required]
         [Display(Name = "Referred By")]
         [DataType(DataType.Text)]
-        public string ReferredBy { get; set; }
+        public string M_ReferredBy { get; set; }
 
         [Required]
         [Display(Name = "Category of Membership")]
-        public short MembershipType { get; set; }
+        public short M_MembershipType { get; set; }
 
         [Required]
         [Display(Name = "Title")]
-        public string Title { get; set; }
+        public string M_Title { get; set; }
 
         [Required]
         [Display(Name = "First Name")]
         [DataType(DataType.Text)]
-        public string FirstName { get; set; }
+        public string M_FirstName { get; set; }
 
         [Display(Name = "Middle Name")]
         [DataType(DataType.Text)]
-        public string MiddleName { get; set; }
+        public string M_MiddleName { get; set; }
 
         [Required]
         [Display(Name = "Last Name")]
         [DataType(DataType.Text)]
-        public string LastName { get; set; }
+        public string M_LastName { get; set; }
 
         [Display(Name = "Date Of Birth")]
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
-        public DateTime DateOfBirth { get; set; }
+        public DateTime? M_DateOfBirth { get; set; }
 
         [Display(Name = "Title/Profession")]
-        public string ProfessionalTitle { get; set; }
+        public string M_ProfessionalTitle { get; set; }
 
         [Display(Name = "Designation")]
-        public string Designation { get; set; }
+        public string M_Designation { get; set; }
 
         [Display(Name = "Organization")]
-        public string Organization { get; set; }
+        public string M_Organization { get; set; }
 
         [Display(Name = "Present Address")]
-        public string PresentAddress { get; set; }
+        public string M_PresentAddress { get; set; }
 
         [Display(Name = "Telephone Number")]
-        public string TelephoneNumber { get; set; }
+        public string M_TelephoneNumber { get; set; }
 
         [Display(Name = "Correspondence Address")]
-        public string CorrespondenceAddress { get; set; }
+        public string M_CorrespondenceAddress { get; set; }
 
         [Display(Name = "Mobile Number")]
-        public string MobileNumber { get; set; }
+        public string M_MobileNumber { get; set; }
 
         [Display(Name = "Email")]
-        public string Email { get; set; }
+        public string M_Email { get; set; }
 
         [Display(Name = "Location")]
-        public string Location { get; set; }
+        public string M_Location { get; set; }
 
         [Required]
-        public DateTime CreatedDate { get; set; }
+        public DateTime M_CreatedDate { get; set; }
 
         [Required]
-        public DateTime MembershipStartDate { get; set; }
+        public DateTime M_MembershipStartDate { get; set; }
 
         [Required]
-        public DateTime MembershipEndDate { get; set; }
+        public DateTime M_MembershipEndDate { get; set; }
 
-        public string ImagePath { get; set; }
-        public string FormPath { get; set; }
+        public string M_ImagePath { get; set; }
+        public string M_FormPath { get; set; }
 
-        public string CreatedBy { get; set; }
+        public string M_CreatedBy { get; set; }
 
-        public bool IsActive { get; set; }
+        public bool M_IsActive { get; set; }
 
-        public bool IsDeleted { get; set; }
+        public bool M_IsDeleted { get; set; }
 
 
         public Spouse Spouse { get; set; }

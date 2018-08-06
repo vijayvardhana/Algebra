@@ -65,7 +65,7 @@ namespace Algebra
                     template: "{controller=Home}/{action=Index}/{id?}");
                 routes.MapRoute(
                     name: "member",
-                    template: "{controller=Member}/{action=Index}/{id?}");
+                    template: "api/{controller=Member}/{action=Index}/{id?}");
                 routes.MapRoute(
                     name: "location",
                     template: "{controller=Location}/{action=Index}/{id?}");

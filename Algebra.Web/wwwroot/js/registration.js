@@ -11,6 +11,7 @@ class Registration {
         this.register = {};
         this.ctrl = [];
         this.FormControlExtraction();
+        this.url = "/api/member/AddMember";
     }
 
     TabsSelection(m) {
@@ -70,7 +71,7 @@ class Registration {
             var errorMessage = $(this).attr('data-val-required');
             var model = $(this).parents(':eq(3)').attr('id');;
             o = { 'id': id, 'value': value, 'isRequired': required, 'errorMessage': errorMessage, 'model': model };
-            console.log(o);
+            //console.log(o);
             c[index] = o;
             o = {};
         });
@@ -78,26 +79,27 @@ class Registration {
     }
 
     ModelBuilder() {
-        for (var i = 0; i <= ctrl.length - 1; i++) {
-            let c = ctrl[i];
+        for (var i = 0; i <= this.ctrl.length - 1; i++) {
+            let c = this.ctrl[i];
             let model = c["model"];
             let key = c["id"];
             let val = c["value"];
 
             switch (model) {
                 case 'registration':
-                    register['"' + key + '"'] = val;
+                    this.register[key.substr(2)] = val;
                     break;
                 case 'member':
-                    member['"' + key + '"'] = val;
+                        this.member[key.substr(2)] = val;
+                    console.log("Model: " + model + ", Key : " + key + " Value : " + val);
                     break;
                 case 'spouse':
-                    spouse['"' + key + '"'] = val;
+                    this.spouse[key.substr(2)] = val;
                     break;
                 default:
             }
         }
-        console.log(register);
+        //console.log(register);
     }
 
     ValidateForm() {
@@ -127,13 +129,31 @@ class Registration {
     }
 
     SubmitForm() {
-
-        if (!this.ValidateForm())
-        {
+        if (!this.ValidateForm()) {
             return false;
         }
         else {
-            $("#registration-form").submit();
+            this.ModelBuilder();
+            
+            var models = {};
+            models["o1"] = this.member;
+            models["o2"] = this.spouse;
+
+            $.ajax({
+                url: "/api/member/post",
+                type: "POST",
+                contentType: "application/json",
+                dataType: "json",
+                data: JSON.stringify(models),
+               // data: data,
+                success: function (result) {
+                    console.log(result);
+                },
+
+                error: function (xhr, resp, text) {
+                    console.log(xhr, resp, text);
+                }
+            });
         }
     }
 }
