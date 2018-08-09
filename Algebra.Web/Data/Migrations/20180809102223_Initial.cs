@@ -30,12 +30,12 @@ namespace Algebra.Web.Data.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    Created = table.Column<string>(nullable: true),
+                    Created = table.Column<string>(maxLength: 50, nullable: true),
                     RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true),
-                    Name = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(maxLength: 50, nullable: false),
                     Initials = table.Column<string>(nullable: false),
-                    Address = table.Column<string>(nullable: true),
-                    PhoneNumber = table.Column<string>(nullable: true)
+                    Address = table.Column<string>(maxLength: 500, nullable: true),
+                    PhoneNumber = table.Column<string>(maxLength: 100, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -48,33 +48,33 @@ namespace Algebra.Web.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CardId = table.Column<string>(nullable: false),
+                    CardId = table.Column<string>(maxLength: 50, nullable: false),
                     DateOfBirth = table.Column<DateTime>(nullable: false),
-                    Email = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(maxLength: 50, nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     MembershipStartDate = table.Column<DateTime>(nullable: false),
                     MembershipEndDate = table.Column<DateTime>(nullable: false),
-                    ImagePath = table.Column<string>(nullable: true),
+                    ImagePath = table.Column<string>(maxLength: 100, nullable: true),
                     IsActive = table.Column<bool>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true),
-                    AccountId = table.Column<string>(nullable: false),
-                    ReferredBy = table.Column<string>(nullable: false),
+                    AccountId = table.Column<string>(maxLength: 50, nullable: false),
+                    ReferredBy = table.Column<string>(maxLength: 100, nullable: false),
                     MembershipType = table.Column<short>(nullable: false),
-                    Title = table.Column<string>(nullable: false),
-                    FirstName = table.Column<string>(nullable: false),
-                    MiddleName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: false),
-                    ProfessionalTitle = table.Column<string>(nullable: true),
-                    Designation = table.Column<string>(nullable: true),
-                    Organization = table.Column<string>(nullable: true),
-                    PresentAddress = table.Column<string>(nullable: true),
-                    TelephoneNumber = table.Column<string>(nullable: true),
-                    CorrespondenceAddress = table.Column<string>(nullable: true),
-                    MobileNumber = table.Column<string>(nullable: true),
-                    Location = table.Column<string>(nullable: true),
-                    FormPath = table.Column<string>(nullable: true),
-                    CreatedBy = table.Column<string>(nullable: true)
+                    Title = table.Column<string>(maxLength: 50, nullable: false),
+                    FirstName = table.Column<string>(maxLength: 200, nullable: false),
+                    MiddleName = table.Column<string>(maxLength: 200, nullable: true),
+                    LastName = table.Column<string>(maxLength: 200, nullable: false),
+                    ProfessionalTitle = table.Column<string>(maxLength: 100, nullable: true),
+                    Designation = table.Column<string>(maxLength: 100, nullable: true),
+                    Organization = table.Column<string>(maxLength: 200, nullable: true),
+                    PresentAddress = table.Column<string>(maxLength: 500, nullable: true),
+                    TelephoneNumber = table.Column<string>(maxLength: 50, nullable: true),
+                    CorrespondenceAddress = table.Column<string>(maxLength: 500, nullable: true),
+                    MobileNumber = table.Column<string>(maxLength: 50, nullable: true),
+                    Location = table.Column<string>(maxLength: 50, nullable: true),
+                    FormPath = table.Column<string>(maxLength: 255, nullable: true),
+                    CreatedBy = table.Column<string>(maxLength: 50, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -89,13 +89,14 @@ namespace Algebra.Web.Data.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    Created = table.Column<string>(nullable: true),
+                    Created = table.Column<string>(maxLength: 50, nullable: true),
                     RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true),
                     Individual = table.Column<decimal>(type: "decimal(10,4)", nullable: false),
                     Couple = table.Column<decimal>(type: "decimal(10,4)", nullable: false),
                     Dependent = table.Column<decimal>(type: "decimal(10,4)", nullable: false),
-                    GSTRate = table.Column<string>(nullable: false),
+                    GSTRate = table.Column<string>(maxLength: 50, nullable: false),
                     GSTAmount = table.Column<decimal>(type: "decimal(10,4)", nullable: false),
+                    TotalAmount = table.Column<decimal>(type: "decimal(10,4)", nullable: false),
                     LocationId = table.Column<int>(nullable: false),
                     LocationInitials = table.Column<string>(nullable: false)
                 },
@@ -110,8 +111,8 @@ namespace Algebra.Web.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Mode = table.Column<string>(nullable: false),
-                    Description = table.Column<string>(nullable: false),
+                    Mode = table.Column<string>(maxLength: 50, nullable: false),
+                    Description = table.Column<string>(maxLength: 500, nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
@@ -125,9 +126,9 @@ namespace Algebra.Web.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: false),
-                    Code = table.Column<string>(nullable: false),
-                    ImagePath = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(maxLength: 100, nullable: false),
+                    Code = table.Column<string>(maxLength: 10, nullable: false),
+                    ImagePath = table.Column<string>(maxLength: 200, nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
@@ -154,13 +155,13 @@ namespace Algebra.Web.Data.Migrations
                     SecurityStamp = table.Column<string>(nullable: true),
                     ConcurrencyStamp = table.Column<string>(nullable: true),
                     PhoneNumber = table.Column<string>(nullable: true),
-                    DisplayName = table.Column<string>(nullable: true),
-                    Notes = table.Column<string>(nullable: true),
+                    DisplayName = table.Column<string>(maxLength: 200, nullable: true),
+                    Notes = table.Column<string>(maxLength: 400, nullable: true),
                     Type = table.Column<int>(nullable: false),
                     Flags = table.Column<int>(nullable: false),
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     LastModifiedDate = table.Column<DateTime>(nullable: false),
-                    Location = table.Column<string>(nullable: false)
+                    Location = table.Column<string>(maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -194,19 +195,19 @@ namespace Algebra.Web.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CardId = table.Column<string>(nullable: false),
+                    CardId = table.Column<string>(maxLength: 50, nullable: false),
                     DateOfBirth = table.Column<DateTime>(nullable: false),
-                    Email = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(maxLength: 50, nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     MembershipStartDate = table.Column<DateTime>(nullable: false),
                     MembershipEndDate = table.Column<DateTime>(nullable: false),
-                    ImagePath = table.Column<string>(nullable: true),
+                    ImagePath = table.Column<string>(maxLength: 100, nullable: true),
                     IsActive = table.Column<bool>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true),
                     MemberId = table.Column<int>(nullable: false),
-                    Name = table.Column<string>(nullable: false),
-                    MobileNumber = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(maxLength: 200, nullable: false),
+                    MobileNumber = table.Column<string>(maxLength: 50, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -227,16 +228,20 @@ namespace Algebra.Web.Data.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    Created = table.Column<string>(nullable: true),
+                    Created = table.Column<string>(maxLength: 50, nullable: true),
                     RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true),
                     MemberId = table.Column<int>(nullable: false),
                     MembershipFee = table.Column<decimal>(type: "decimal(10,4)", nullable: false),
-                    GST = table.Column<string>(nullable: true),
+                    GST = table.Column<string>(maxLength: 50, nullable: true),
                     TaxAmount = table.Column<decimal>(type: "decimal(10,4)", nullable: false),
-                    PaymentMode = table.Column<string>(nullable: true),
-                    ChequeNumber = table.Column<string>(nullable: true),
-                    TransactionId = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true)
+                    TotalAmount = table.Column<decimal>(type: "decimal(10,4)", nullable: false),
+                    PaymentDate = table.Column<DateTime>(nullable: false),
+                    NumberOfDependent = table.Column<short>(nullable: false),
+                    PaymentMode = table.Column<string>(maxLength: 50, nullable: true),
+                    ChequeNumber = table.Column<string>(maxLength: 500, nullable: true),
+                    TransactionId = table.Column<string>(maxLength: 50, nullable: true),
+                    IsDiscountApplicable = table.Column<bool>(nullable: false),
+                    Description = table.Column<string>(maxLength: 500, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -255,28 +260,28 @@ namespace Algebra.Web.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CardId = table.Column<string>(nullable: false),
+                    CardId = table.Column<string>(maxLength: 50, nullable: false),
                     DateOfBirth = table.Column<DateTime>(nullable: false),
-                    Email = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(maxLength: 50, nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     MembershipStartDate = table.Column<DateTime>(nullable: false),
                     MembershipEndDate = table.Column<DateTime>(nullable: false),
-                    ImagePath = table.Column<string>(nullable: true),
+                    ImagePath = table.Column<string>(maxLength: 100, nullable: true),
                     IsActive = table.Column<bool>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true),
                     MemberId = table.Column<int>(nullable: false),
-                    Title = table.Column<string>(nullable: false),
-                    FirstName = table.Column<string>(nullable: false),
-                    MiddleName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: false),
-                    ProfessionalTitle = table.Column<string>(nullable: true),
-                    Designation = table.Column<string>(nullable: true),
-                    Organization = table.Column<string>(nullable: true),
-                    PresentAddress = table.Column<string>(nullable: true),
-                    TelephoneNumber = table.Column<string>(nullable: true),
-                    CorrespondenceAddress = table.Column<string>(nullable: true),
-                    MobileNumber = table.Column<string>(nullable: true)
+                    Title = table.Column<string>(maxLength: 50, nullable: false),
+                    FirstName = table.Column<string>(maxLength: 100, nullable: false),
+                    MiddleName = table.Column<string>(maxLength: 100, nullable: true),
+                    LastName = table.Column<string>(maxLength: 100, nullable: false),
+                    ProfessionalTitle = table.Column<string>(maxLength: 50, nullable: true),
+                    Designation = table.Column<string>(maxLength: 100, nullable: true),
+                    Organization = table.Column<string>(maxLength: 100, nullable: true),
+                    PresentAddress = table.Column<string>(maxLength: 200, nullable: true),
+                    TelephoneNumber = table.Column<string>(maxLength: 50, nullable: true),
+                    CorrespondenceAddress = table.Column<string>(maxLength: 200, nullable: true),
+                    MobileNumber = table.Column<string>(maxLength: 50, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -380,9 +385,9 @@ namespace Algebra.Web.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    ClientId = table.Column<string>(nullable: false),
+                    ClientId = table.Column<string>(maxLength: 50, nullable: false),
                     Type = table.Column<int>(nullable: false),
-                    Value = table.Column<string>(nullable: false),
+                    Value = table.Column<string>(maxLength: 50, nullable: false),
                     UserId = table.Column<string>(nullable: false),
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     LastModifiedDate = table.Column<DateTime>(nullable: false)

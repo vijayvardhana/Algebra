@@ -1,10 +1,8 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace Algebra.Entities.Models
 {
@@ -14,10 +12,12 @@ namespace Algebra.Entities.Models
         public int Id { get; set; }
 
         [Required]
+        [MaxLength(50)]
         public string CardId { get; set; }
 
         public DateTime DateOfBirth { get; set; }
 
+        [MaxLength(50)]
         public string Email { get; set; }
 
         [Required]
@@ -29,6 +29,7 @@ namespace Algebra.Entities.Models
         [Required]
         public DateTime MembershipEndDate { get; set; } = DateTime.Now.AddYears(1);
 
+        [MaxLength(100)]
         public string ImagePath { get; set; }
 
         [DefaultValue(false)]

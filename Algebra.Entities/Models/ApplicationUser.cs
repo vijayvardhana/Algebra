@@ -13,9 +13,10 @@ namespace Algebra.Entities.Models
         #endregion
 
         #region Properties
-
+        [MaxLength(200)]
         public string DisplayName { get; set; }
 
+        [MaxLength(400)]
         public string Notes { get; set; }
 
         [Required]
@@ -32,6 +33,7 @@ namespace Algebra.Entities.Models
         #endregion
 
         [Required]
+        [MaxLength(100)]
         public string Location { get;set; }
 
         #region Lazy-Load Properties

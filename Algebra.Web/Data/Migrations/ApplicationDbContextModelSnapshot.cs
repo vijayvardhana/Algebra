@@ -31,7 +31,8 @@ namespace Algebra.Web.Data.Migrations
 
                     b.Property<DateTime>("CreatedDate");
 
-                    b.Property<string>("DisplayName");
+                    b.Property<string>("DisplayName")
+                        .HasMaxLength(200);
 
                     b.Property<string>("Email")
                         .HasMaxLength(256);
@@ -43,7 +44,8 @@ namespace Algebra.Web.Data.Migrations
                     b.Property<DateTime>("LastModifiedDate");
 
                     b.Property<string>("Location")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(100);
 
                     b.Property<bool>("LockoutEnabled");
 
@@ -55,7 +57,8 @@ namespace Algebra.Web.Data.Migrations
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256);
 
-                    b.Property<string>("Notes");
+                    b.Property<string>("Notes")
+                        .HasMaxLength(400);
 
                     b.Property<string>("PasswordHash");
 
@@ -92,15 +95,18 @@ namespace Algebra.Web.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("CardId")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(50);
 
                     b.Property<DateTime>("CreatedDate");
 
                     b.Property<DateTime>("DateOfBirth");
 
-                    b.Property<string>("Email");
+                    b.Property<string>("Email")
+                        .HasMaxLength(50);
 
-                    b.Property<string>("ImagePath");
+                    b.Property<string>("ImagePath")
+                        .HasMaxLength(100);
 
                     b.Property<bool>("IsActive");
 
@@ -112,10 +118,12 @@ namespace Algebra.Web.Data.Migrations
 
                     b.Property<DateTime>("MembershipStartDate");
 
-                    b.Property<string>("MobileNumber");
+                    b.Property<string>("MobileNumber")
+                        .HasMaxLength(50);
 
                     b.Property<string>("Name")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(200);
 
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
@@ -134,9 +142,11 @@ namespace Algebra.Web.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Address");
+                    b.Property<string>("Address")
+                        .HasMaxLength(500);
 
-                    b.Property<string>("Created");
+                    b.Property<string>("Created")
+                        .HasMaxLength(50);
 
                     b.Property<DateTime>("CreatedDate");
 
@@ -147,9 +157,11 @@ namespace Algebra.Web.Data.Migrations
                     b.Property<bool>("IsDeleted");
 
                     b.Property<string>("Name")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(50);
 
-                    b.Property<string>("PhoneNumber");
+                    b.Property<string>("PhoneNumber")
+                        .HasMaxLength(100);
 
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
@@ -167,38 +179,49 @@ namespace Algebra.Web.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("AccountId")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(50);
 
                     b.Property<string>("CardId")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(50);
 
-                    b.Property<string>("CorrespondenceAddress");
+                    b.Property<string>("CorrespondenceAddress")
+                        .HasMaxLength(500);
 
-                    b.Property<string>("CreatedBy");
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(50);
 
                     b.Property<DateTime>("CreatedDate");
 
                     b.Property<DateTime>("DateOfBirth");
 
-                    b.Property<string>("Designation");
+                    b.Property<string>("Designation")
+                        .HasMaxLength(100);
 
-                    b.Property<string>("Email");
+                    b.Property<string>("Email")
+                        .HasMaxLength(50);
 
                     b.Property<string>("FirstName")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(200);
 
-                    b.Property<string>("FormPath");
+                    b.Property<string>("FormPath")
+                        .HasMaxLength(255);
 
-                    b.Property<string>("ImagePath");
+                    b.Property<string>("ImagePath")
+                        .HasMaxLength(100);
 
                     b.Property<bool>("IsActive");
 
                     b.Property<bool>("IsDeleted");
 
                     b.Property<string>("LastName")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(200);
 
-                    b.Property<string>("Location");
+                    b.Property<string>("Location")
+                        .HasMaxLength(50);
 
                     b.Property<DateTime>("MembershipEndDate");
 
@@ -206,27 +229,35 @@ namespace Algebra.Web.Data.Migrations
 
                     b.Property<short>("MembershipType");
 
-                    b.Property<string>("MiddleName");
+                    b.Property<string>("MiddleName")
+                        .HasMaxLength(200);
 
-                    b.Property<string>("MobileNumber");
+                    b.Property<string>("MobileNumber")
+                        .HasMaxLength(50);
 
-                    b.Property<string>("Organization");
+                    b.Property<string>("Organization")
+                        .HasMaxLength(200);
 
-                    b.Property<string>("PresentAddress");
+                    b.Property<string>("PresentAddress")
+                        .HasMaxLength(500);
 
-                    b.Property<string>("ProfessionalTitle");
+                    b.Property<string>("ProfessionalTitle")
+                        .HasMaxLength(100);
 
                     b.Property<string>("ReferredBy")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(100);
 
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate();
 
-                    b.Property<string>("TelephoneNumber");
+                    b.Property<string>("TelephoneNumber")
+                        .HasMaxLength(50);
 
                     b.Property<string>("Title")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(50);
 
                     b.HasKey("Id");
 
@@ -242,7 +273,8 @@ namespace Algebra.Web.Data.Migrations
                     b.Property<decimal>("Couple")
                         .HasColumnType("decimal(10,4)");
 
-                    b.Property<string>("Created");
+                    b.Property<string>("Created")
+                        .HasMaxLength(50);
 
                     b.Property<DateTime>("CreatedDate");
 
@@ -253,7 +285,8 @@ namespace Algebra.Web.Data.Migrations
                         .HasColumnType("decimal(10,4)");
 
                     b.Property<string>("GSTRate")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(50);
 
                     b.Property<decimal>("Individual")
                         .HasColumnType("decimal(10,4)");
@@ -270,6 +303,9 @@ namespace Algebra.Web.Data.Migrations
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate();
 
+                    b.Property<decimal>("TotalAmount")
+                        .HasColumnType("decimal(10,4)");
+
                     b.HasKey("Id");
 
                     b.ToTable("MembershipFees");
@@ -281,24 +317,35 @@ namespace Algebra.Web.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ChequeNumber");
+                    b.Property<string>("ChequeNumber")
+                        .HasMaxLength(500);
 
-                    b.Property<string>("Created");
+                    b.Property<string>("Created")
+                        .HasMaxLength(50);
 
                     b.Property<DateTime>("CreatedDate");
 
-                    b.Property<string>("Description");
+                    b.Property<string>("Description")
+                        .HasMaxLength(500);
 
-                    b.Property<string>("GST");
+                    b.Property<string>("GST")
+                        .HasMaxLength(50);
 
                     b.Property<bool>("IsDeleted");
+
+                    b.Property<bool>("IsDiscountApplicable");
 
                     b.Property<int>("MemberId");
 
                     b.Property<decimal>("MembershipFee")
                         .HasColumnType("decimal(10,4)");
 
-                    b.Property<string>("PaymentMode");
+                    b.Property<short>("NumberOfDependent");
+
+                    b.Property<DateTime>("PaymentDate");
+
+                    b.Property<string>("PaymentMode")
+                        .HasMaxLength(50);
 
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
@@ -307,7 +354,11 @@ namespace Algebra.Web.Data.Migrations
                     b.Property<decimal>("TaxAmount")
                         .HasColumnType("decimal(10,4)");
 
-                    b.Property<string>("TransactionId");
+                    b.Property<decimal>("TotalAmount")
+                        .HasColumnType("decimal(10,4)");
+
+                    b.Property<string>("TransactionId")
+                        .HasMaxLength(50);
 
                     b.HasKey("Id");
 
@@ -324,12 +375,14 @@ namespace Algebra.Web.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Description")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(500);
 
                     b.Property<bool>("IsDeleted");
 
                     b.Property<string>("Mode")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(50);
 
                     b.HasKey("Id");
 
@@ -343,14 +396,17 @@ namespace Algebra.Web.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Code")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(10);
 
-                    b.Property<string>("ImagePath");
+                    b.Property<string>("ImagePath")
+                        .HasMaxLength(200);
 
                     b.Property<bool>("IsDeleted");
 
                     b.Property<string>("Name")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(100);
 
                     b.HasKey("Id");
 
@@ -364,29 +420,36 @@ namespace Algebra.Web.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("CardId")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(50);
 
-                    b.Property<string>("CorrespondenceAddress");
+                    b.Property<string>("CorrespondenceAddress")
+                        .HasMaxLength(200);
 
                     b.Property<DateTime>("CreatedDate");
 
                     b.Property<DateTime>("DateOfBirth");
 
-                    b.Property<string>("Designation");
+                    b.Property<string>("Designation")
+                        .HasMaxLength(100);
 
-                    b.Property<string>("Email");
+                    b.Property<string>("Email")
+                        .HasMaxLength(50);
 
                     b.Property<string>("FirstName")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(100);
 
-                    b.Property<string>("ImagePath");
+                    b.Property<string>("ImagePath")
+                        .HasMaxLength(100);
 
                     b.Property<bool>("IsActive");
 
                     b.Property<bool>("IsDeleted");
 
                     b.Property<string>("LastName")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(100);
 
                     b.Property<int>("MemberId");
 
@@ -394,24 +457,31 @@ namespace Algebra.Web.Data.Migrations
 
                     b.Property<DateTime>("MembershipStartDate");
 
-                    b.Property<string>("MiddleName");
+                    b.Property<string>("MiddleName")
+                        .HasMaxLength(100);
 
-                    b.Property<string>("MobileNumber");
+                    b.Property<string>("MobileNumber")
+                        .HasMaxLength(50);
 
-                    b.Property<string>("Organization");
+                    b.Property<string>("Organization")
+                        .HasMaxLength(100);
 
-                    b.Property<string>("PresentAddress");
+                    b.Property<string>("PresentAddress")
+                        .HasMaxLength(200);
 
-                    b.Property<string>("ProfessionalTitle");
+                    b.Property<string>("ProfessionalTitle")
+                        .HasMaxLength(50);
 
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate();
 
-                    b.Property<string>("TelephoneNumber");
+                    b.Property<string>("TelephoneNumber")
+                        .HasMaxLength(50);
 
                     b.Property<string>("Title")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(50);
 
                     b.HasKey("Id");
 
@@ -428,7 +498,8 @@ namespace Algebra.Web.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ClientId")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(50);
 
                     b.Property<DateTime>("CreatedDate");
 
@@ -437,10 +508,12 @@ namespace Algebra.Web.Data.Migrations
                     b.Property<int>("Type");
 
                     b.Property<string>("UserId")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(50);
 
                     b.Property<string>("Value")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(50);
 
                     b.HasKey("Id");
 

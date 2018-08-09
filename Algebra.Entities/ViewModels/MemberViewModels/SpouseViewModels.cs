@@ -35,7 +35,7 @@ namespace Algebra.Entities.ViewModels
         [Display(Name = "Date Of Birth")]
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
-        public DateTime S_DateOfBirth { get; set; }
+        public DateTime? S_DateOfBirth { get; set; }
 
         [Display(Name = "Title/Profession")]
         public string S_ProfessionalTitle { get; set; }
@@ -61,8 +61,8 @@ namespace Algebra.Entities.ViewModels
         [Display(Name = "Email")]
         public string S_Email { get; set; }
 
-        [Display(Name = "Location")]
-        public string S_Location { get; set; }
+        //[Display(Name = "Location")]
+        //public string S_Location { get; set; }
 
         [Required]
         public DateTime S_CreatedDate { get; set; }

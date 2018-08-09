@@ -23,11 +23,9 @@ namespace Algebra.Web.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            //IList<Location> location;
             IEnumerable<Location> location; 
             using (var unitOfWork = new UnitOfWork(_dbContext))
             {
-                //location = unitOfWork.Locations.GetAll().ToList();
                 location = unitOfWork.Locations.GetAll();
             }
 

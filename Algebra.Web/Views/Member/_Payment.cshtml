@@ -1,0 +1,90 @@
+﻿@using Algebra.Entities.ViewModels
+@using Algebra.Data
+
+@model PaymentViewModel
+
+<div id="payment" class="small">
+    <h4>Payment <small>Details</small></h4>
+    <hr class="colorgraph">
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label asp-for="@Model.P_MembershipFee"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
+                <input asp-for="@Model.P_MembershipFee" class="form-control input-sm" />
+                <span asp-validation-for="@Model.P_MembershipFee" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label asp-for="@Model.P_GST"></label>
+                <input asp-for="@Model.P_GST" class="form-control input-sm" />
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label asp-for="@Model.P_TaxAmount"></label>
+                <input asp-for="@Model.P_TaxAmount" class="form-control input-sm" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label asp-for="@Model.P_NumberOfDependent"></label>
+                <input asp-for="@Model.P_NumberOfDependent" class="form-control input-sm" />
+                <span asp-validation-for="@Model.P_NumberOfDependent" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label asp-for="@Model.P_PaymentDate"></label>
+                <input asp-for="@Model.P_PaymentDate" class="form-control input-sm" />
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label asp-for="@Model.P_TotalAmount"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
+                <label asp-for="@Model.P_TotalAmount"></label>
+                <input asp-for="@Model.P_TotalAmount" class="form-control input-sm" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label asp-for="@Model.P_PaymentMode"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
+                <select asp-for="@Model.P_PaymentMode" asp-items="@(new SelectList(ViewBag.PaymentModes, "Mode", "Description"))" class="form-control input-sm">
+                    <option value="">select</option>
+                </select>
+                <span asp-validation-for="@Model.P_PaymentMode" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label asp-for="@Model.P_ChequeNumber"></label> <small>(Input comma separated cheque number, for multiple cheques)</small>
+                <input asp-for="@Model.P_ChequeNumber" class="form-control input-sm" />
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label asp-for="@Model.P_TransactionId"></label>
+                <input asp-for="@Model.P_TransactionId" class="form-control input-sm" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label asp-for="@Model.P_IsDiscountApplicable"></label>
+                <input asp-for="@Model.P_IsDiscountApplicable" class="form-control input-sm" />
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label asp-for="@Model.P_Description"></label>
+                <input asp-for="@Model.P_Description" class="form-control input-sm" />
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,5 +1,59 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using Algebra.Entities.ViewModels
+@using Algebra.Data
+@model List<DependentViewModels>
 @{
+    if (Model.Count == 0)
+    {
+        Model.Add(new DependentViewModels());
+        Model.Add(new DependentViewModels());
+    }
+}
+@for (int i = 0; i < Model.Count; i++)
+{
+    int index = i + 1;
+    <div id="dependent_@index.ToString()" class="small">
+        <h4>Dependent <small>@index</small></h4>
+
+        <hr class="colorgraph">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label asp-for="@Model[i].D_Name"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
+                    <input asp-for="@Model[i].D_Name" class="form-control input-sm" />
+                    <span asp-validation-for="@Model[i].D_Name" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label asp-for="@Model[i].D_DateOfBirth"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
+                    <input asp-for="@Model[i].D_DateOfBirth" class="form-control input-sm" />
+                    <span asp-validation-for="@Model[i].D_DateOfBirth" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <input type="hidden" asp-for="@Model[i].D_CardId" value="@ViewBag.AccountId-@(i+3)" acid="@ViewBag.AccountId-@(i+3)" class="form-control input-sm" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label asp-for="@Model[i].D_MobileNumber"></label> (if any)
+                    <input asp-for="@Model[i].D_MobileNumber" class="form-control input-sm" />
+                    <span asp-validation-for="@Model[i].D_MobileNumber" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label asp-for="@Model[i].D_Email"></label>(if any)
+                    <input asp-for="@Model[i].D_Email" class="form-control input-sm" />
+                    <span asp-validation-for="@Model[i].D_Email" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-lg-4">
+
+            </div>
+        </div>
+    </div>
 }

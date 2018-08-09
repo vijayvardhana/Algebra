@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
 
 namespace Algebra.Entities.ViewModels
 {
@@ -8,25 +8,18 @@ namespace Algebra.Entities.ViewModels
         {
             this.Member = new MemberViewModels();
             this.Spouse  = new SpouseViewModels();
-            //this.Dependent = new DependentViewModels();
+            this.Dependent = new List<DependentViewModels>();
+            this.Payment = new PaymentViewModel();
+
         }
 
         public MemberViewModels Member { get; set; }
 
         public SpouseViewModels Spouse { get; set; }
 
-        //public DependentViewModels Dependent { get; set; }
+        public IList<DependentViewModels> Dependent { get; set; }
 
-        //[Required]
-        //[Display(Name = "Referred By")]
-        //[DataType(DataType.Text)]
-        //public string R_ReferredBy { get; set; }
+        public PaymentViewModel Payment { get; set; }
 
-        //[Required]
-        //[Display(Name = "Category of Membership")]
-        //public short R_MembershipType { get; set; }
-
-        //[Display(Name = "Location")]
-        //public string R_Location { get; set; }
     }
 }

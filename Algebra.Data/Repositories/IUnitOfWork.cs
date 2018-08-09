@@ -8,6 +8,7 @@ namespace Algebra.Data.Repositories
     {
         IMemberRepository Members { get; }
         ISpouseRepository Spouses { get; }
-        int Complete();
+        int Commit();
+        void Rollback();
     }
 }

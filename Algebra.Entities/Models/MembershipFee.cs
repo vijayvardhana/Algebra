@@ -25,11 +25,16 @@ namespace Algebra.Entities.Models
         public decimal Dependent { get; set; }
 
         [Required]
+        [MaxLength(50)]
         public string GSTRate { get; set; }
 
         [DataType(DataType.Currency)]
         [Column(TypeName = "decimal(10,4)")]
         public decimal GSTAmount { get; set; }
+
+        [DataType(DataType.Currency)]
+        [Column(TypeName = "decimal(10,4)")]
+        public decimal TotalAmount { get; set; }
 
         public int LocationId { get; set; }
 

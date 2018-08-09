@@ -15,9 +15,10 @@ namespace Algebra.Entities.Models
         public int MemberId { get; set; }
 
         [Required]
+        [MaxLength(200)]
         public string Name { get; set; }
 
-
+        [MaxLength(50)]
         public string MobileNumber { get; set; }
 
         #endregion Properties

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace Algebra.Entities.Models
 {
@@ -15,9 +12,11 @@ namespace Algebra.Entities.Models
         public int Id { get; set; }
 
         [Required]
+        [MaxLength(50)]
         public string Mode { get; set; }
 
         [Required]
+        [MaxLength(500)]
         public string Description { get; set; }
 
         [DefaultValue(false)]

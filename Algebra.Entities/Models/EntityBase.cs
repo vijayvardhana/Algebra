@@ -10,6 +10,7 @@ namespace Algebra.Entities.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
+        [MaxLength(50)]
         public string Created { get; set; }
 
         [Required]

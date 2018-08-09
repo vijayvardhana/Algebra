@@ -1,0 +1,72 @@
+﻿@using Algebra.Entities.Models
+@model IEnumerable<Member>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Member(s) <small></small></h3>
+            <hr class="colorgraph">
+            <div class="table-responsive">
+                <table id="mytable" class="table table-bordred table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Account Id</th>
+                            <th scope="col">CardId</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Referred By</th>
+                            <th scope="col">Location</th>
+                            <th scope="col">Membership Type</th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+
+
+                    <tbody>
+                        @foreach (var member in Model)
+                        {
+                            <tr>
+                                <td>@member.AccountId</td>
+                                <td>@member.CardId</td>
+                                <td>@member.FirstName @member.LastName</td>
+                                <td>@member.ReferredBy</td>
+                                <td>@member.Location</td>
+                                <td>@member.MembershipType</td>
+                                <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit"><span class="glyphicon glyphicon-pencil"></span></button></p></td>
+                                <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete"><span class="glyphicon glyphicon-trash"></span></button></p></td>
+
+                            </tr>
+                            if (member.Spouse != null)
+                            {
+                                <tr>
+                                    <td>Spouse :</td>
+                                    <td>@member.Spouse.CardId</td>
+                                    <td>@member.Spouse.FirstName @member.Spouse.LastName</td>
+                                    <td>@member.Spouse.Email</td>
+                                    <td>@member.Spouse.MobileNumber</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+
+                            }
+                            @foreach (var dependent in member.Dependents)
+                            {
+                                <tr>
+                                    <td>Dependent :</td>
+                                    <td>@dependent.Name</td>
+                                    <td>@dependent.DateOfBirth</td>
+                                    <td>@dependent.Email</td>
+                                    <td>@dependent.MobileNumber</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

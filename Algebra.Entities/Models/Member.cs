@@ -14,43 +14,59 @@ namespace Algebra.Entities.Models
         #region Properties
 
         [Required]
+        [MaxLength(50)]
         public string AccountId { get; set; }
 
         [Required]
+        [MaxLength(100)]
         public string ReferredBy { get; set; }
 
         [Required]
         public short MembershipType { get; set; }
 
         [Required]
+        [MaxLength(50)]
         public string Title { get; set; }
 
         [Required]
+        [MaxLength(200)]
         public string FirstName { get; set; }
 
+        [MaxLength(200)]
         public string MiddleName { get; set; }
 
         [Required]
+        [MaxLength(200)]
         public string LastName { get; set; }
 
+        [MaxLength(100)]
         public string ProfessionalTitle { get; set; }
 
+        [MaxLength(100)]
         public string Designation { get; set; }
 
+        [MaxLength(200)]
         public string Organization { get; set; }
 
+        [MaxLength(500)]
         public string PresentAddress { get; set; }
 
+        [MaxLength(50)]
         public string TelephoneNumber { get; set; }
 
+        [MaxLength(500)]
         public string CorrespondenceAddress { get; set; }
 
+        [MaxLength(50)]
         public string MobileNumber { get; set; }
 
+        [MaxLength(50)]
         public string Location { get; set; }
 
+        [MaxLength(255)]
         public string FormPath { get; set; }
 
+        [MaxLength(50)]
         public string CreatedBy { get; set; }
 
 

@@ -6,17 +6,13 @@
     <form method="post" id="registration-form">
         <input name="__RequestVerificationToken" type="hidden" value="CfDJ8KW5cuB058RCnNyZSLI7AUjUAtTwe54jQ4Z9Goyn3WKPcpVFYSFUM5J-JDFC3E-MZIUcyR0UnbrvrC_sHv6MbUONStuIMhqDc7i00pQiGkrzf3hK6t5gZFVrjUpyAcargow4zvKU_ISjdPfoLTNF588" />
         @Html.AntiForgeryToken()
-        @*<div id="registration" class="small">
-
-            </div>*@
         <div class="panel panel-default row" style="padding: 10px; margin: 10px">
             <div id="Tabs" role="tabpanel">
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs" role="tablist">
                     <li class="disabled"><a href="#member" aria-controls="personal" role="tab" data-toggle="tab">Member Details</a></li>
                     <li class="disabled"><a href="#spouse" aria-controls="employment" role="tab">Spouse Details</a></li>
-                    <li class="disabled"><a href="#first-dependent" aria-controls="first-dependent" role="tab">First Dependent</a></li>
-                    <li class="disabled"><a href="#second-dependent" aria-controls="second-dependent" role="tab">Second Dependent</a></li>
+                    <li class="disabled"><a href="#dependent" aria-controls="dependent" role="tab">Dependent(s)</a></li>
                     <li class="disabled"><a href="#membership-fee" aria-controls="membership-fee" role="tab">Membership Fee</a></li>
                     <li class="disabled"><a href="#assets" aria-controls="assets" role="tab">Assets</a></li>
                 </ul>
@@ -28,14 +24,11 @@
                     <div role="tabpanel" class="tab-pane" id="spouse">
                         @await Html.PartialAsync("_Spouse", Model.Spouse)
                     </div>
-                    <div role="tabpanel" class="tab-pane" id="first-dependent">
-                        tab3
-                    </div>
-                    <div role="tabpanel" class="tab-pane" id="second-dependent">
-                        Second Dependent
+                    <div role="tabpanel" class="tab-pane" id="dependent">
+                        @await Html.PartialAsync("_Dependent", Model.Dependent)
                     </div>
                     <div role="tabpanel" class="tab-pane" id="membership-fee">
-                        Membership Fee
+                       @await Html.PartialAsync("_Payment", Model.Payment)
                     </div>
                     <div role="tabpanel" class="tab-pane" id="assets">
                         Assets
@@ -79,8 +72,14 @@
 
         $("#M_MembershipType").change(function () {
             var member_type = $(this).val();
-            var t = new Registration();
-            t.TabsSelection(member_type);
+             var t = new Registration();
+             t.TabsSelection(member_type);
+        });
+
+        $("#M_Location").change(function () {
+            var location = $(this).val();
+            var l = new Registration();
+            l.SetCardNumber(location.charAt(0));
         });
     </script>
 }

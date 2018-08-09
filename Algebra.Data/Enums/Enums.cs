@@ -48,12 +48,20 @@ namespace Algebra.Data
 
         public enum Title
         {
-            Mr,
-            Mrs,
-            Miss,
-            Ms,
-            Sir,
-            Dr
+            Mr = 1,
+            Mrs = 2,
+            Miss = 3,
+            Ms = 4,
+            Sir = 5,
+            Dr = 6
+        };
+
+        public enum CardNumberSuffix
+        {
+            Member = 1,
+            Spouse = 2,
+            FirstDependent = 3,
+            SecondDependent = 4
         }
 
 

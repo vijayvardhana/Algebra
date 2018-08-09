@@ -8,29 +8,6 @@
     <div class="row">
         <div class="col-lg-4">
             <div class="form-group">
-                <label asp-for="@Model.S_CardId"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
-                <input asp-for="@Model.S_CardId" class="form-control input-sm" />
-                <span asp-validation-for="@Model.S_CardId" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="col-lg-4">
-            <div class="form-group">
-                <label asp-for="@Model.S_Location"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
-                <select asp-for="@Model.S_Location" asp-items="@(new SelectList(ViewBag.Locations, "Name", "Name"))" class="form-control input-sm">
-                    <option value="">select</option>
-                </select>
-                <span asp-validation-for="@Model.S_Location" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="col-lg-4">
-            <div class="form-group">
-
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-4">
-            <div class="form-group">
                 <label asp-for="@Model.S_Title"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
                 <select asp-for="@Model.S_Title" asp-items="Html.GetEnumSelectList(typeof(Enums.Title))" class="form-control input-sm" model="member">
                     <option selected="selected" value="">Please select</option>
@@ -124,6 +101,13 @@
             <div class="form-group">
                 <label asp-for="@Model.S_CorrespondenceAddress"></label>
                 <input asp-for="@Model.S_CorrespondenceAddress" class="form-control input-sm" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="form-group">
+                <input type="hidden" asp-for="@Model.S_CardId" value="@ViewBag.AccountId-2" acid="@ViewBag.AccountId-2" class="form-control input-sm" />
             </div>
         </div>
     </div>

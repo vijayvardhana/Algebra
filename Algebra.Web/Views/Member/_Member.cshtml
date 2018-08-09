@@ -9,7 +9,7 @@
         <div class="col-lg-4">
             <div class="form-group">
                 <label asp-for="@Model.M_MembershipType"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
-                <select asp-for="@Model.M_MembershipType" asp-items="Html.GetEnumSelectList<Enums.MembershipCategory>()" class="form-control input-sm">
+                <select asp-for="@Model.M_MembershipType" asp-items="Html.GetEnumSelectList(typeof(Enums.MembershipCategory))" class="form-control input-sm">
                     <option value="">select</option>
                 </select>
                 <span asp-validation-for="@Model.M_MembershipType" class="text-danger"></span>
@@ -34,27 +34,6 @@
             </div>
         </div>
 
-    </div>
-    <div class="row">
-        <div class="col-lg-4">
-            <div class="form-group">
-                <label asp-for="@Model.M_AccountId"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
-                <input asp-for="@Model.M_AccountId" class="form-control input-sm" />
-                <span asp-validation-for="@Model.M_AccountId" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="col-lg-4">
-            <div class="form-group">
-                <label asp-for="@Model.M_CardId"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
-                <input asp-for="@Model.M_CardId" class="form-control input-sm" />
-                <span asp-validation-for="@Model.M_CardId" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="col-lg-4">
-            <div class="form-group">
-
-            </div>
-        </div>
     </div>
     <div class="row">
         <div class="col-lg-4">
@@ -154,5 +133,21 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="form-group">
+                <input type="hidden" asp-for="@Model.M_AccountId" value="@ViewBag.AccountId" acid="@ViewBag.AccountId" class="form-control input-sm" />
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="form-group">
+                <input type="hidden" asp-for="@Model.M_CardId" value="@ViewBag.AccountId-1" acid="@ViewBag.AccountId-1" class="form-control input-sm" />
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="form-group">
 
+            </div>
+        </div>
+    </div>
 </div>

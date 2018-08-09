@@ -7,8 +7,8 @@ using Algebra.Entities.Models;
 using System.Linq;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
-using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Identity;
+using System;
+using Microsoft.Extensions.Options;
 
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -19,68 +19,26 @@ namespace Algebra.Web.Controllers
     public class MemberController : Controller
     {
 
-        private ApplicationDbContext _dbContext;
-        private readonly UserManager<Entities.Models.ApplicationUser> _userManager;
-        private readonly SignInManager<Entities.Models.ApplicationUser> _signInManager;
+        private readonly ApplicationDbContext _dbContext;
+        private readonly ApplicationVariables _applicationVariables;
 
-        public MemberController(ApplicationDbContext dbContext)
+        public MemberController(ApplicationDbContext dbContext, IOptions<ApplicationVariables> options)
         {
             _dbContext = dbContext;
+            _applicationVariables = options.Value;
         }
 
-        //// GET: api/<controller>
-        //[HttpGet]
-        //public IEnumerable<Member> Get()
-        //{
-        //    IEnumerable<Member> members;
-        //    using (var unitOfWork = new UnitOfWork(_dbContext))
-        //    {
-
-
-        //        members = unitOfWork.Members.GetLatestMembers(20);
-
-        //        //return members;
-        //        // Example1
-        //        //var course = unitOfWork.Courses.Get(1);
-
-        //        //// Example2
-        //        //var courses = unitOfWork.Courses.GetCoursesWithAuthors(1, 4);
-
-        //        //// Example3
-        //        //var author = unitOfWork.Authors.GetAuthorWithCourses(1);
-        //        //unitOfWork.Courses.RemoveRange(author.Courses);
-        //        //unitOfWork.Authors.Remove(author);
-        //        //unitOfWork.Complete();
-        //    }
-        //    return members; 
-        //}
-
-        ////// GET api/<controller>/5
-        ////[HttpGet("{id}")]
-        ////public string Get(int id)
-        ////{
-        ////    return "value";
-        ////}
-
-        // POST api/<controller>
-        //[HttpPost]
-        //public void Post([FromBody]string value)
-        //{
-        //}
-
-        //// PUT api/<controller>/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody]string value)
-        //{
-        //}
-
-        //// DELETE api/<controller>/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
-
-
+        // GET: api/<controller>
+        [HttpGet]
+        public IActionResult Index()
+        {
+            IEnumerable<Member> members;
+            using (var unitOfWork = new UnitOfWork(_dbContext))
+            {
+                members = unitOfWork.Members.GetMembersWithSpouseAndDependents();
+            }
+            return View(members);
+        }
 
         [HttpGet]
         public IActionResult Registration(string returnUrl = null)
@@ -89,16 +47,21 @@ namespace Algebra.Web.Controllers
 
             IEnumerable<Location> locations;
             IEnumerable<Referrer> referrer;
+            IEnumerable<PaymentMode> paymentModes;
+            int maxAccId = 0;
             using (var unitOfWork = new UnitOfWork(_dbContext))
             {
                 locations = unitOfWork.Locations.GetAll().ToList();
                 referrer = unitOfWork.Referrers.GetAll().ToList();
+                maxAccId = unitOfWork.Members.GetMaxId(_applicationVariables.InitialAccountNumber);
+                paymentModes = unitOfWork.PaymentModes.GetAll().ToList();
             }
             ViewBag.Locations = locations;
             ViewBag.Referrers = referrer;
-           
+            ViewBag.AccountId = GetAccountNumber(maxAccId, _applicationVariables.InitialAccountNumber);
+            ViewBag.PaymentModes = paymentModes;
+
             RegistrationFormViewModel RegistrationForm = new RegistrationFormViewModel();
-            RegistrationForm.Member = new MemberViewModels();
             return View(RegistrationForm);
         }
 
@@ -110,13 +73,66 @@ namespace Algebra.Web.Controllers
             if (ModelState.IsValid)
             {
                 // ViewBag.LoginUser = User.Identity.Name;
-                string[] str = Utils.UnWrapObjects(model);
+                string[] str = Utils.UnWrapObjects(model, 'o');
                 var member = JsonConvert.DeserializeObject<Member>(str[0]);
                 var spouse = JsonConvert.DeserializeObject<Spouse>(str[1]);
+                List<Dependent> dependents = GetDependentList(str[2]);
+
+                member.CreatedBy = User.Identity.Name;
+                member.Spouse = spouse;
+                member.Dependents = dependents;
+
+                using (IUnitOfWork unitOfWork = new UnitOfWork(_dbContext))
+                {
+                    unitOfWork.Members.Add(member);
+                    int memberId = unitOfWork.Commit();
+                }
             }
 
             return View("Registration", model);
         }
 
+
+        private List<Dependent> GetDependentList(string _str)
+        {
+            List<Dependent> list = new List<Dependent>();
+
+            string[] _dependents = Utils.UnWrapObjects(JObject.Parse(_str), 'd');
+            for (int i = 0; i < _dependents.Length; i++)
+            {
+                Dependent d = JsonConvert.DeserializeObject<Dependent>(_dependents[i]);
+                list.Add(d);
+            }
+
+            return list;
+        }
+
+        private int GetAccountNumber(int maxAccId, int _initialAccountNumber)
+        {
+            int accountNo = 0;
+            if (maxAccId > 0)
+            {
+                accountNo = _initialAccountNumber + maxAccId;
+            }
+            else
+            {
+                accountNo = _initialAccountNumber;
+            }
+            return accountNo;
+        }
     }
 }
+
+
+//return members;
+// Example1
+//var course = unitOfWork.Courses.Get(1);
+
+//// Example2
+//var courses = unitOfWork.Courses.GetCoursesWithAuthors(1, 4);
+
+//// Example3
+//var author = unitOfWork.Authors.GetAuthorWithCourses(1);
+//unitOfWork.Courses.RemoveRange(author.Courses);
+//unitOfWork.Authors.Remove(author);
+//unitOfWork.Complete();
