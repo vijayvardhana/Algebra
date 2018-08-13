@@ -1,0 +1,70 @@
+﻿@using Algebra.Entities.ViewModels
+@model MembershipFeeViewModels
+
+<div class="container">
+        <div id="fee" class="small">
+            <h4>Membership Fee <small>(Details)</small></h4>
+            <hr class="colorgraph">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label asp-for="@Model.Individual"></label> :  
+                        <span>@Model.Individual</span>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label asp-for="@Model.Couple"></label> : 
+                        <span>@Model.Couple</span>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label asp-for="@Model.Dependent"></label> : 
+                        <span>@Model.Dependent</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label asp-for="@Model.GSTRate"></label> : 
+                        <span>@Model.GSTRate</span>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label asp-for="@Model.GSTAmount"></label> : 
+                        <span>@Model.GSTAmount</span>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label asp-for="@Model.TotalAmount"></label> : 
+                        <span>@Model.TotalAmount</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label asp-for="@Model.LocationId"></label> : 
+                        <span>@Model.LocationId</span>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label asp-for="@Model.LocationInitials"></label> :
+                        <span>{@Model.LocationInitials} - @ViewBag.Location.Name</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary" id="btn-cancel" onclick="location.href='@Url.Action("index", "fee")'">Fee List</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>

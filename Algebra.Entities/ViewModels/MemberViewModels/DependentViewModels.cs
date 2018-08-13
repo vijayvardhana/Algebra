@@ -6,7 +6,7 @@ namespace Algebra.Entities.ViewModels
     public class DependentViewModels
     {
         [Required]
-        [Display(Name = "Name")]
+        [Display(Name = "Full Name")]
         [DataType(DataType.Text)]
         public string D_Name { get; set; }
 

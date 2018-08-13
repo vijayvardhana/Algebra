@@ -49,5 +49,10 @@ namespace Algebra.Data.Repositories
         {
             _dbContext.Set<TEntity>().RemoveRange(entities);
         }
+
+        public virtual void Update(TEntity entity)
+        {
+            _dbContext.Set<TEntity>().Update(entity);
+        }
     }
 }

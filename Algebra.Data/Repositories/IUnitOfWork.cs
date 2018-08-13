@@ -8,6 +8,12 @@ namespace Algebra.Data.Repositories
     {
         IMemberRepository Members { get; }
         ISpouseRepository Spouses { get; }
+        IUserRepository Users { get; }
+        ILocationRepository Locations { get; }
+        IReferrerRepository Referrers { get; }
+        IPaymentModeRepository PaymentModes { get; }
+        IMembershipFeeRepository Fees { get; }
+        
         int Commit();
         void Rollback();
     }

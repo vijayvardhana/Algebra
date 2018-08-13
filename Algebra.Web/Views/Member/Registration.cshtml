@@ -28,7 +28,7 @@
                         @await Html.PartialAsync("_Dependent", Model.Dependent)
                     </div>
                     <div role="tabpanel" class="tab-pane" id="membership-fee">
-                       @await Html.PartialAsync("_Payment", Model.Payment)
+                        @await Html.PartialAsync("_Payment", Model.Payment)
                     </div>
                     <div role="tabpanel" class="tab-pane" id="assets">
                         Assets
@@ -45,7 +45,7 @@
     <div class="modal fade" id="error-model" role="dialog">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <div class="modal-header" style="background-color:#330033;">
+                <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <i class="glyphicon glyphicon-alert white"></i><h4 class="modal-title"></h4>
                 </div>
@@ -65,21 +65,29 @@
     @await Html.PartialAsync("_ValidationScriptsPartial")
 
     <script type="text/javascript">
-        $("#btn-submit").click(function () {
+
+        $(document).ready(function () {
             var o = new Registration();
-            o.SubmitForm();
-        });
 
-        $("#M_MembershipType").change(function () {
-            var member_type = $(this).val();
-             var t = new Registration();
-             t.TabsSelection(member_type);
-        });
+            $("#btn-submit").click(function () {
+                console.log('inside btn submit');
+                //var o = new Registration();
+                o.SubmitForm();
+            });
 
-        $("#M_Location").change(function () {
-            var location = $(this).val();
-            var l = new Registration();
-            l.SetCardNumber(location.charAt(0));
+            $("#M_MembershipType").change(function () {
+                console.log('inside membership type change');
+                var member_type = $(this).val();
+               // var t = new Registration();
+                o.TabsSelection(member_type);
+            });
+
+            $("#M_Location").change(function () {
+                console.log('inside location change');
+                var location = $(this).val();
+              //  var l = new Registration();
+                o.SetCardNumber(location.charAt(0));
+            });
         });
     </script>
 }

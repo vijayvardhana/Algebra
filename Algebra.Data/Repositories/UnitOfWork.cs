@@ -15,6 +15,7 @@ namespace Algebra.Data.Repositories
             Users = new UserRepository(_dbContext);
             Referrers = new ReferrerRepository(_dbContext);
             PaymentModes = new PaymentModeRepository(_dbContext);
+            Fees = new MembershipFeeRepository(_dbContext);
         }
 
         public IMemberRepository Members { get; private set; }
@@ -23,26 +24,12 @@ namespace Algebra.Data.Repositories
         public IUserRepository Users { get; set; }
         public IReferrerRepository Referrers { get; set; }
         public IPaymentModeRepository PaymentModes { get; set; }
+        public IMembershipFeeRepository Fees { get; set; }
 
 
         int IUnitOfWork.Commit()
         {
-            
-            try
-            {
-                return _dbContext.SaveChanges();
-            }
-            catch (DbUpdateException)
-            {
-                //return e.Message;
-                //This either returns a error string, or null if it can’t handle that error
-                //var error = CheckHandleError(e);
-                //if (error != null)
-                //{
-                //    return error; //return the error string
-                //}
-                throw; //couldn’t handle that error, so rethrow
-            }
+            return _dbContext.SaveChanges();
         }
 
         public void Dispose()

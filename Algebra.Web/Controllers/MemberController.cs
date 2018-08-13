@@ -77,10 +77,12 @@ namespace Algebra.Web.Controllers
                 var member = JsonConvert.DeserializeObject<Member>(str[0]);
                 var spouse = JsonConvert.DeserializeObject<Spouse>(str[1]);
                 List<Dependent> dependents = GetDependentList(str[2]);
+                var payment = JsonConvert.DeserializeObject<PaymentDetails>(str[3]);
 
                 member.CreatedBy = User.Identity.Name;
                 member.Spouse = spouse;
                 member.Dependents = dependents;
+                member.Payment = payment;
 
                 using (IUnitOfWork unitOfWork = new UnitOfWork(_dbContext))
                 {

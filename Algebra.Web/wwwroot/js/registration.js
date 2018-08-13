@@ -10,7 +10,7 @@
         this.dependent = {};
         this.payment = {};
         this.ctrl = [];
-        this.FormControlExtraction();
+        
         this.url = "/api/member/AddMember";
     }
 
@@ -130,6 +130,7 @@
             let tab = c["model"];
             if (required && !val) {
                 sb_msg.append("<li> Tab " + tab + " - " + message + "</li>");
+                console.log('Model : ' + model + ', Control: ' + c.id + ', Value : ' + val);
             }
         }
 
@@ -145,6 +146,9 @@
     }
 
     SubmitForm() {
+
+        this.FormControlExtraction();
+
         if (!this.ValidateForm()) {
             return false;
         }
@@ -155,8 +159,8 @@
             models["o1"] = this.member;
             models["o2"] = this.spouse;
             models["o3"] = this.dependent;
-            models["o3"] = this.payment;
-            return false;
+            models["o4"] = this.payment;
+          //  return false;
             $.ajax({
                 url: "/api/member/post",
                 type: "POST",

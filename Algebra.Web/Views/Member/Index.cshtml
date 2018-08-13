@@ -1,7 +1,7 @@
 ﻿@using Algebra.Entities.Models
 @model IEnumerable<Member>
 
-<div class="container">
+<div class="container small">
     <div class="row">
         <div class="col-md-12">
             <h3>Member(s) <small></small></h3>
@@ -38,30 +38,30 @@
                             </tr>
                             if (member.Spouse != null)
                             {
-                                <tr>
-                                    <td>Spouse :</td>
-                                    <td>@member.Spouse.CardId</td>
-                                    <td>@member.Spouse.FirstName @member.Spouse.LastName</td>
-                                    <td>@member.Spouse.Email</td>
-                                    <td>@member.Spouse.MobileNumber</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
+                            <tr>
+                                <td></td>
+                                <td>Spouse :</td>
+                                <td>@member.Spouse.CardId</td>
+                                <td>@member.Spouse.FirstName @member.Spouse.LastName</td>
+                                <td>@member.Spouse.Email</td>
+                                <td>@member.Spouse.MobileNumber</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
 
                             }
                             @foreach (var dependent in member.Dependents)
                             {
-                                <tr>
-                                    <td>Dependent :</td>
-                                    <td>@dependent.Name</td>
-                                    <td>@dependent.DateOfBirth</td>
-                                    <td>@dependent.Email</td>
-                                    <td>@dependent.MobileNumber</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
+                            <tr>
+                                <td></td>
+                                <td>Dependent :</td>
+                                <td>@dependent.CardId</td>
+                                <td>@dependent.Name</td>
+                                <td>@dependent.DateOfBirth</td>
+                                <td>@dependent.Email</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
                             }
                         }
                     </tbody>

@@ -1,0 +1,99 @@
+﻿@using Algebra.Entities.ViewModels
+@model MembershipFeeViewModels
+@{
+    var locations = (IEnumerable<SelectListItem>)ViewData["Locations"];
+}
+<div class="container">
+    <form method="post" id="fee-add-form">
+        @Html.AntiForgeryToken()
+        <div id="fee" class="small">
+            <h4>Membership Fee <small>(@ViewBag.Title)</small></h4>
+            <hr class="colorgraph">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label asp-for="@Model.Individual"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
+                        <input asp-for="@Model.Individual" class="form-control input-sm" />
+                        <span asp-validation-for="@Model.Individual" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label asp-for="@Model.Couple"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
+                        <input asp-for="@Model.Couple" class="form-control input-sm" />
+                        <span asp-validation-for="@Model.Couple" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label asp-for="@Model.Dependent"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
+                        <input asp-for="@Model.Dependent" class="form-control input-sm" />
+                        <span asp-validation-for="@Model.Dependent" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label asp-for="@Model.GSTRate"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
+                        <input asp-for="@Model.GSTRate" class="form-control input-sm" />
+                        <span asp-validation-for="@Model.GSTRate" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label asp-for="@Model.GSTAmount"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
+                        <input asp-for="@Model.GSTAmount" class="form-control input-sm" />
+                        <span asp-validation-for="@Model.GSTAmount" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label asp-for="@Model.TotalAmount"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
+                        <input asp-for="@Model.TotalAmount" class="form-control input-sm" />
+                        <span asp-validation-for="@Model.TotalAmount" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label asp-for="@Model.LocationId"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
+                        <select asp-for="@Model.LocationId" asp-items="locations" class="form-control input-sm">
+                            <option value="">select</option>
+                        </select>
+                        <span asp-validation-for="@Model.LocationId" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <input type="hidden" asp-for="@Model.LocationInitials" class="form-control input-sm">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary" id="btn-submit">Submit</button>
+                        <button type="button" class="btn" id="btn-cancel" onclick="location.href='@Url.Action("index", "fee")'">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $("#LocationId").change(function () {
+                var ctrl = $(this);
+                var txt = ctrl.find(':selected').text();
+                $("#LocationInitials").val(txt[0]);
+            });
+
+        });
+    </script>
+}

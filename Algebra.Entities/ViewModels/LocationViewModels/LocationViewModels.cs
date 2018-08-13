@@ -16,6 +16,9 @@ namespace Algebra.Entities.ViewModels
         [DataType(DataType.Text)]
         public char Initials { get; set; }
 
+        [Required(ErrorMessage = "Please input location Address!")]
+        [Display(Name = "Address")]
+        [DataType(DataType.Text)]
         public string Address { get; set; }
 
         public string PhoneNumber { get; set; }

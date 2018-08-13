@@ -21,6 +21,8 @@ namespace Algebra.Entities.ViewModels
         public decimal P_TaxAmount { get; set; }
 
         [Display(Name = "Payment Date")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime P_PaymentDate { get; set; }
 
         [Display(Name = "Number Of Dependent")]

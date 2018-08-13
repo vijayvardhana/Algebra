@@ -1,0 +1,59 @@
+﻿@using Algebra.Entities.ViewModels
+@model LocationViewModels
+
+<div class="container">
+    <form method="post" id="location-edit-form">
+        @Html.AntiForgeryToken()
+        <div id="location" class="small">
+            <h4>LOCATION DETAILS <small>(Edit)</small></h4>
+            <hr class="colorgraph">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label asp-for="@Model.Name"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
+                        <input asp-for="@Model.Name" class="form-control input-sm" />
+                        <span asp-validation-for="@Model.Name" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label asp-for="@Model.Initials"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
+                        <input asp-for="@Model.Initials" class="form-control input-sm" />
+                        <span asp-validation-for="@Model.Initials" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label asp-for="@Model.Address"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
+                        <input asp-for="@Model.Address" class="form-control input-sm" />
+                        <span asp-validation-for="@Model.Address" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label asp-for="@Model.PhoneNumber"></label> 
+                        <input asp-for="@Model.PhoneNumber" class="form-control input-sm" />
+                        <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary" id="btn-submit">Submit</button>
+                        <button type="button" class="btn" id="btn-cancel" onclick="location.href='@Url.Action("index", "location")'">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

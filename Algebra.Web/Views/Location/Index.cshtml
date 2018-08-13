@@ -1,10 +1,11 @@
 ﻿@using Algebra.Entities.Models
 @model IEnumerable<Location>
 
-<div class="container">
+<div class="container small">
     <div class="row">
         <div class="col-md-12">
-            <h3>Location(s) <small>Here you can add edit remove locations.</small></h3>
+            <div><h3>Location(s) <small>Here you can add edit remove locations.</small></h3></div>
+            <div><button type="button" class="btn btn-primary glyphicon-plus" onclick="location.href='@Url.Action("Edit", "Location")'">Add</button></div>
             <hr class="colorgraph">
             <div class="table-responsive">
                 <table id="mytable" class="table table-bordred table-striped">
@@ -24,16 +25,27 @@
                     <tbody>
                         @foreach (var location in Model)
                         {
-                        <tr>
-                            <td>@location.Id</td>
-                            <td>@location.Name</td>
-                            <td>@location.Initials</td>
-                            <td>@location.Address</td>
-                            <td>@location.PhoneNumber</td>
-                            <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit"><span class="glyphicon glyphicon-pencil"></span></button></p></td>
-                            <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete"><span class="glyphicon glyphicon-trash"></span></button></p></td>
+                            <tr>
+                                <td>@location.Id</td>
+                                <td>@location.Name</td>
+                                <td>@location.Initials</td>
+                                <td>@location.Address</td>
+                                <td>@location.PhoneNumber</td>
+                                <td>
+                                    <p data-placement="top" data-toggle="tooltip" title="Edit">
+                                        @Html.ActionLink("", "Edit", new { id = location.Id }
+                                                , new { @class = "btn btn-primary btn-xs glyphicon glyphicon-pencil" })
+                                    </p>
+                                </td>
+                                <td>
+                                    <p data-placement="top" data-toggle="tooltip" title="Delete">
+                                        <button id="btn-location-delete-@location.Id" value="@location.Id" onclick='Location.GetLocationId' class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete">
+                                            <span class="glyphicon glyphicon-trash"></span>
+                                        </button>
+                                    </p>
+                                </td>
 
-                        </tr>
+                            </tr>
                         }
                     </tbody>
                 </table>
@@ -42,3 +54,78 @@
     </div>
 </div>
 
+
+<div class="modal fade" id="delete" role="dialog">
+    <div class="modal-dialog modal-sm ">
+        <div class="modal-content modal-body">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <span class="glyphicon glyphicon-trash"></span> <h4 class="modal-title">Delete Location </h4>
+            </div>
+            <div class="">
+                <div class="text-danger">
+                    <h4>Are you sure you want to delete?</h4>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="Location.Deletelocation" id="btn-delete-yes" class="btn btn-danger" data-dismiss="modal">Yes</button>
+                <button type="button" id="btn-delete-no" class="btn btn-default" data-dismiss="modal">No</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var o = new Location();
+        });
+        
+
+
+
+
+        class Location {
+
+            constructor() {
+                this.Id;
+                this.url = "/api/location/delete";
+            }
+
+            GetLocationId(id) {
+                console.log('Id inside getLocationId : ' + id);
+                this.Id = id;
+                console.log(_id);
+            }
+
+            Deletelocation() {
+                console.log('Id inside deletelocation: ' + this.Id);
+                //var o = new Location(_id);
+               this.Delete();
+            }
+
+            Delete() {
+                console.log('Id inside Delete###: ' + this.Id);
+                console.log(jQuery.validator.format("{0}/{1}", this.url, this.Id));
+                $.ajax({
+                    url: this.url,
+                    dataType: "json",
+                    type: "DELETE",
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify({ "id": this.Id }),
+                    success: function (result) {
+                        console.log(result);
+                    },
+                    error: function (xhr, resp, text) {
+                        console.log(xhr, resp, text);
+                    }
+                });
+            }
+        }
+    </script>
+}

@@ -94,6 +94,10 @@ namespace Algebra
                     name: "Referrer",
                     template: "{controller=Referrer}/{action=Referrer}/{id}"
                     );
+                //routes.MapRoute(
+                //    name: "fee",
+                //    template:"{controller=fee}/{action=Index}/"
+                //    );
             });
         }
     }
