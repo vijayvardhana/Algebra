@@ -4,7 +4,10 @@
 @model PaymentViewModel
 
 <div id="payment" class="small">
-    <h4>Payment <small>Details</small></h4>
+
+    
+        <h4>Membership Fee <small>(Fill payment details)</small></h4>
+        <ul id="fee-details" style="font-weight:bold;"></ul>
     <hr class="colorgraph">
     <div class="row">
         <div class="col-lg-4">
@@ -44,7 +47,6 @@
         <div class="col-lg-4">
             <div class="form-group">
                 <label asp-for="@Model.P_TotalAmount"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
-                <label asp-for="@Model.P_TotalAmount"></label>
                 <input asp-for="@Model.P_TotalAmount" class="form-control input-sm" />
             </div>
         </div>
@@ -61,8 +63,9 @@
         </div>
         <div class="col-lg-4">
             <div class="form-group">
-                <label asp-for="@Model.P_ChequeNumber"></label> <small>(Input comma separated cheque number, for multiple cheques)</small>
+                <label asp-for="@Model.P_ChequeNumber"></label>
                 <input asp-for="@Model.P_ChequeNumber" class="form-control input-sm" />
+                <small>(Input comma separated cheque number, for multiple cheques)</small>
             </div>
         </div>
         <div class="col-lg-4">
@@ -76,13 +79,18 @@
         <div class="col-lg-4">
             <div class="form-group">
                 <label asp-for="@Model.P_IsDiscountApplicable"></label>
-                <input asp-for="@Model.P_IsDiscountApplicable" class="form-control input-sm" />
+                <input asp-for="@Model.P_IsDiscountApplicable" class="form-control form-check-input" />
             </div>
         </div>
         <div class="col-lg-4">
             <div class="form-group">
                 <label asp-for="@Model.P_Description"></label>
                 <input asp-for="@Model.P_Description" class="form-control input-sm" />
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="form-group">
+                <input type="hidden" asp-for="@Model.P_MembershipFeeId" value="" oldid="@Model.P_MembershipFeeId" class="form-control input-sm" />
             </div>
         </div>
     </div>

@@ -1,7 +1,10 @@
 ﻿@using Algebra.Data
 @using Algebra.Entities.ViewModels
+@using Newtonsoft.Json;
 @model RegistrationFormViewModel
-
+@{
+    string Fee = JsonConvert.SerializeObject(ViewBag.MembershipFee);
+}
 <div class="container">
     <form method="post" id="registration-form">
         <input name="__RequestVerificationToken" type="hidden" value="CfDJ8KW5cuB058RCnNyZSLI7AUjUAtTwe54jQ4Z9Goyn3WKPcpVFYSFUM5J-JDFC3E-MZIUcyR0UnbrvrC_sHv6MbUONStuIMhqDc7i00pQiGkrzf3hK6t5gZFVrjUpyAcargow4zvKU_ISjdPfoLTNF588" />
@@ -67,27 +70,30 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
-            var o = new Registration();
+            var o = new Registration('@Html.Raw(Fee)');
 
             $("#btn-submit").click(function () {
                 console.log('inside btn submit');
-                //var o = new Registration();
                 o.SubmitForm();
             });
 
             $("#M_MembershipType").change(function () {
                 console.log('inside membership type change');
+                $("#M_LocationId").val("0");
                 var member_type = $(this).val();
-               // var t = new Registration();
                 o.TabsSelection(member_type);
             });
 
-            $("#M_Location").change(function () {
+            $("#M_LocationId").change(function () {
                 console.log('inside location change');
-                var location = $(this).val();
-              //  var l = new Registration();
-                o.SetCardNumber(location.charAt(0));
+                let locCtrl = $(this);
+                let locationId = $(this).val();
+                let locationTxt = locCtrl.find(':selected').text();
+                $("#M_Location").val(locationTxt);
+                o.SetCardNumber(locationTxt.charAt(0));
+                o.PopulatePaymentControls(locationId)
             });
+
         });
     </script>
 }

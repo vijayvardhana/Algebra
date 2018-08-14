@@ -75,8 +75,11 @@ namespace Algebra.Entities.ViewModels
         [Display(Name = "Email")]
         public string M_Email { get; set; }
 
-        [Display(Name = "Location")]
+        
         public string M_Location { get; set; }
+
+        [Display(Name = "Location")]
+        public short M_LocationId { get; set; }
 
         [Required]
         public DateTime M_CreatedDate { get; set; }

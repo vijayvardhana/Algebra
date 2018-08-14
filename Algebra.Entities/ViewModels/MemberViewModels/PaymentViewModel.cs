@@ -48,5 +48,7 @@ namespace Algebra.Entities.ViewModels
         [Display(Name = "Description")]
         public string P_Description { get; set; }
 
+        public short P_MembershipFeeId { get; set; }
+
     }
 }

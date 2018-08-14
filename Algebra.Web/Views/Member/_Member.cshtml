@@ -26,11 +26,11 @@
         </div>
         <div class="col-lg-4">
             <div class="form-group">
-                <label asp-for="@Model.M_Location"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
-                <select asp-for="@Model.M_Location" asp-items="@(new SelectList(ViewBag.Locations, "Name", "Name"))" class="form-control input-sm">
+                <label asp-for="@Model.M_LocationId"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
+                <select asp-for="@Model.M_LocationId" asp-items="@(new SelectList(ViewBag.Locations, "Id", "Name"))" class="form-control input-sm">
                     <option value="">select</option>
                 </select>
-                <span asp-validation-for="@Model.M_Location" class="text-danger"></span>
+                <span asp-validation-for="@Model.M_LocationId" class="text-danger"></span>
             </div>
         </div>
 
@@ -146,7 +146,7 @@
         </div>
         <div class="col-lg-4">
             <div class="form-group">
-
+                <input type="hidden" asp-for="@Model.M_Location" value="" oldid="@Model.M_Location" class="form-control input-sm" />
             </div>
         </div>
     </div>

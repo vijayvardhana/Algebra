@@ -91,7 +91,7 @@
             $("#LocationId").change(function () {
                 var ctrl = $(this);
                 var txt = ctrl.find(':selected').text();
-                $("#LocationInitials").val(txt[0]);
+                $("#LocationInitials").val(txt.charAt(0));
             });
 
         });

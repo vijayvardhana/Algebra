@@ -63,6 +63,9 @@ namespace Algebra.Entities.Models
         [MaxLength(50)]
         public string Location { get; set; }
 
+        [Required]
+        public short LocationId { get; set; }
+
         [MaxLength(255)]
         public string FormPath { get; set; }
 

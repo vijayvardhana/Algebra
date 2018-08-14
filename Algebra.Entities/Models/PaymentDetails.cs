@@ -53,6 +53,9 @@ namespace Algebra.Entities.Models
 
         [MaxLength(500)]
         public string Description { get; set; }
+        
+        [Required]
+        public short MembershipFeeId { get; set; }
 
         #endregion Properties
 

@@ -4,14 +4,16 @@ using Algebra.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Algebra.Web.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180814090311_Migrations-02")]
+    partial class Migrations02
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -341,8 +343,6 @@ namespace Algebra.Web.Data.Migrations
 
                     b.Property<decimal>("MembershipFee")
                         .HasColumnType("decimal(10,4)");
-
-                    b.Property<short>("MembershipFeeId");
 
                     b.Property<short>("NumberOfDependent");
 

@@ -45,21 +45,23 @@ namespace Algebra.Web.Controllers
         {
             ViewData["ReturnUrl"] = returnUrl;
 
-            IEnumerable<Location> locations;
-            IEnumerable<Referrer> referrer;
-            IEnumerable<PaymentMode> paymentModes;
+           // IEnumerable<Location> locations;
+            //IEnumerable<Referrer> referrer;
+          //  IEnumerable<PaymentMode> paymentModes;
             int maxAccId = 0;
             using (var unitOfWork = new UnitOfWork(_dbContext))
             {
-                locations = unitOfWork.Locations.GetAll().ToList();
-                referrer = unitOfWork.Referrers.GetAll().ToList();
+                ViewBag.Locations = unitOfWork.Locations.GetAll().ToList();
+                ViewBag.Referrers = unitOfWork.Referrers.GetAll().ToList();
                 maxAccId = unitOfWork.Members.GetMaxId(_applicationVariables.InitialAccountNumber);
-                paymentModes = unitOfWork.PaymentModes.GetAll().ToList();
+                ViewBag.PaymentModes = unitOfWork.PaymentModes.GetAll().ToList();
+                ViewBag.MembershipFee = unitOfWork.Fees.GetAll().ToList();
+                ViewBag.AccountId = GetAccountNumber(maxAccId, _applicationVariables.InitialAccountNumber);
             }
-            ViewBag.Locations = locations;
-            ViewBag.Referrers = referrer;
-            ViewBag.AccountId = GetAccountNumber(maxAccId, _applicationVariables.InitialAccountNumber);
-            ViewBag.PaymentModes = paymentModes;
+            //ViewBag.Locations = locations;
+           // ViewBag.Referrers = referrer;
+           // ViewBag.AccountId = GetAccountNumber(maxAccId, _applicationVariables.InitialAccountNumber);
+           // ViewBag.PaymentModes = paymentModes;
 
             RegistrationFormViewModel RegistrationForm = new RegistrationFormViewModel();
             return View(RegistrationForm);
@@ -87,7 +89,7 @@ namespace Algebra.Web.Controllers
                 using (IUnitOfWork unitOfWork = new UnitOfWork(_dbContext))
                 {
                     unitOfWork.Members.Add(member);
-                    int memberId = unitOfWork.Commit();
+                    int memberId = unitOfWork.Commit();                    
                 }
             }
 
