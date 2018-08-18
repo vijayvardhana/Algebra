@@ -1,5 +1,5 @@
 ﻿@using Algebra.Entities.ViewModels
-@model MembershipFeeViewModels
+@model FeeViewModels
 @{
     var locations = (IEnumerable<SelectListItem>)ViewData["Locations"];
 }
@@ -56,7 +56,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-4">
+                @*<div class="col-lg-4">
                     <div class="form-group">
                         <label asp-for="@Model.LocationId"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
                         <select asp-for="@Model.LocationId" asp-items="locations" class="form-control input-sm">
@@ -64,10 +64,12 @@
                         </select>
                         <span asp-validation-for="@Model.LocationId" class="text-danger"></span>
                     </div>
-                </div>
+                </div>*@
                 <div class="col-lg-4">
                     <div class="form-group">
-                        <input type="hidden" asp-for="@Model.LocationInitials" class="form-control input-sm">
+                        <label asp-for="@Model.LocationId"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
+                        <select asp-for="@Model.LocationId" asp-items="@Model.Locations" class="form-control input-sm"></select>
+                        <span asp-validation-for="@Model.LocationId" class="text-danger"></span>
                     </div>
                 </div>
             </div>

@@ -4,23 +4,20 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Algebra.Entities.Models
 {
-    public class PaymentMode
+    public class Mode : EntityBase
     {
         #region Properties
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-
         [Required]
+        [Column(Order = 1)]
         [MaxLength(50)]
-        public string Mode { get; set; }
+        public string Text { get; set; }
 
         [Required]
+        [Column(Order = 2)]
         [MaxLength(500)]
         public string Description { get; set; }
 
-        [DefaultValue(false)]
-        public bool IsDeleted { get; set; }
 
         #endregion
     }

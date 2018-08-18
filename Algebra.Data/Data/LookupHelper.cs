@@ -29,7 +29,7 @@ namespace Algebra.Data
             return referrer;
         }
 
-        public static IEnumerable<PaymentMode> GetPaymentModes(ApplicationDbContext _dbContext)
+        public static IEnumerable<Mode> GetPaymentModes(ApplicationDbContext _dbContext)
         {
             //IEnumerable<PaymentMode> paymentModes;
             //using (var unitOfWork = new UnitOfWork(_dbContext))

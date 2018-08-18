@@ -1,5 +1,5 @@
 ﻿@using Algebra.Entities.Models
-@model IEnumerable<MembershipFee>
+@model IEnumerable<Fee>
 @{ 
     var loc = ViewBag.Locations;
 }
@@ -40,7 +40,7 @@
                                 <td>@fee.GSTRate</td>
                                 <td>@fee.GSTAmount</td>
                                 <td>@fee.TotalAmount</td>
-                                <td>{@fee.LocationInitials} - @loc[fee.LocationId]</td>
+                                <td>@loc[fee.LocationId]</td>
                                 <td>
                                     <p data-placement="top" data-toggle="tooltip" title="Edit">
                                         @Html.ActionLink("", "Add", new { id = fee.Id }

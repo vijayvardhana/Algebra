@@ -85,7 +85,76 @@ namespace Algebra.Web.Data.Migrations
                         .HasName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.ToTable("Users");
+                    b.ToTable("User");
+                });
+
+            modelBuilder.Entity("Algebra.Entities.Models.Category", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Created")
+                        .HasMaxLength(50);
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(400);
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate();
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasMaxLength(200);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Category");
+                });
+
+            modelBuilder.Entity("Algebra.Entities.Models.Cheque", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(10,4)");
+
+                    b.Property<string>("BankName")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("Created")
+                        .HasMaxLength(50);
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<DateTime>("Date");
+
+                    b.Property<string>("DrawnOn")
+                        .HasMaxLength(100);
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<string>("Number")
+                        .HasMaxLength(50);
+
+                    b.Property<int>("PaymentId");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate();
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PaymentId");
+
+                    b.ToTable("Cheque");
                 });
 
             modelBuilder.Entity("Algebra.Entities.Models.Dependent", b =>
@@ -133,7 +202,50 @@ namespace Algebra.Web.Data.Migrations
 
                     b.HasIndex("MemberId");
 
-                    b.ToTable("Dependents");
+                    b.ToTable("Dependent");
+                });
+
+            modelBuilder.Entity("Algebra.Entities.Models.Fee", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<decimal>("Couple")
+                        .HasColumnType("decimal(10,4)");
+
+                    b.Property<string>("Created")
+                        .HasMaxLength(50);
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<decimal>("Dependent")
+                        .HasColumnType("decimal(10,4)");
+
+                    b.Property<decimal>("GSTAmount")
+                        .HasColumnType("decimal(10,4)");
+
+                    b.Property<string>("GSTRate")
+                        .IsRequired()
+                        .HasMaxLength(50);
+
+                    b.Property<decimal>("Individual")
+                        .HasColumnType("decimal(10,4)");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<int>("LocationId");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate();
+
+                    b.Property<decimal>("TotalAmount")
+                        .HasColumnType("decimal(10,4)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Fee");
                 });
 
             modelBuilder.Entity("Algebra.Entities.Models.Location", b =>
@@ -145,14 +257,17 @@ namespace Algebra.Web.Data.Migrations
                     b.Property<string>("Address")
                         .HasMaxLength(500);
 
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(20);
+
                     b.Property<string>("Created")
                         .HasMaxLength(50);
 
                     b.Property<DateTime>("CreatedDate");
 
-                    b.Property<string>("Initials")
-                        .IsRequired()
-                        .HasConversion(new ValueConverter<string, string>(v => default(string), v => default(string), new ConverterMappingHints(size: 1)));
+                    b.Property<string>("Digits")
+                        .HasMaxLength(20);
 
                     b.Property<bool>("IsDeleted");
 
@@ -169,7 +284,7 @@ namespace Algebra.Web.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Locations");
+                    b.ToTable("Location");
                 });
 
             modelBuilder.Entity("Algebra.Entities.Models.Member", b =>
@@ -234,14 +349,15 @@ namespace Algebra.Web.Data.Migrations
                     b.Property<string>("MiddleName")
                         .HasMaxLength(200);
 
-                    b.Property<string>("MobileNumber")
-                        .HasMaxLength(50);
-
                     b.Property<string>("Organization")
                         .HasMaxLength(200);
 
                     b.Property<string>("PresentAddress")
                         .HasMaxLength(500);
+
+                    b.Property<string>("PrimaryMobileNumber")
+                        .IsRequired()
+                        .HasMaxLength(50);
 
                     b.Property<string>("ProfessionalTitle")
                         .HasMaxLength(100);
@@ -254,6 +370,9 @@ namespace Algebra.Web.Data.Migrations
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate();
 
+                    b.Property<string>("SecondaryMobileNumber")
+                        .HasMaxLength(50);
+
                     b.Property<string>("TelephoneNumber")
                         .HasMaxLength(50);
 
@@ -263,57 +382,40 @@ namespace Algebra.Web.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Members");
+                    b.ToTable("Member");
                 });
 
-            modelBuilder.Entity("Algebra.Entities.Models.MembershipFee", b =>
+            modelBuilder.Entity("Algebra.Entities.Models.Mode", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<decimal>("Couple")
-                        .HasColumnType("decimal(10,4)");
 
                     b.Property<string>("Created")
                         .HasMaxLength(50);
 
                     b.Property<DateTime>("CreatedDate");
 
-                    b.Property<decimal>("Dependent")
-                        .HasColumnType("decimal(10,4)");
-
-                    b.Property<decimal>("GSTAmount")
-                        .HasColumnType("decimal(10,4)");
-
-                    b.Property<string>("GSTRate")
+                    b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(50);
-
-                    b.Property<decimal>("Individual")
-                        .HasColumnType("decimal(10,4)");
+                        .HasMaxLength(500);
 
                     b.Property<bool>("IsDeleted");
-
-                    b.Property<int>("LocationId");
-
-                    b.Property<string>("LocationInitials")
-                        .IsRequired()
-                        .HasConversion(new ValueConverter<string, string>(v => default(string), v => default(string), new ConverterMappingHints(size: 1)));
 
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate();
 
-                    b.Property<decimal>("TotalAmount")
-                        .HasColumnType("decimal(10,4)");
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasMaxLength(50);
 
                     b.HasKey("Id");
 
-                    b.ToTable("MembershipFees");
+                    b.ToTable("Mode");
                 });
 
-            modelBuilder.Entity("Algebra.Entities.Models.PaymentDetails", b =>
+            modelBuilder.Entity("Algebra.Entities.Models.Payment", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -344,8 +446,6 @@ namespace Algebra.Web.Data.Migrations
 
                     b.Property<short>("MembershipFeeId");
 
-                    b.Property<short>("NumberOfDependent");
-
                     b.Property<DateTime>("PaymentDate");
 
                     b.Property<string>("PaymentMode")
@@ -369,28 +469,7 @@ namespace Algebra.Web.Data.Migrations
                     b.HasIndex("MemberId")
                         .IsUnique();
 
-                    b.ToTable("Payments");
-                });
-
-            modelBuilder.Entity("Algebra.Entities.Models.PaymentMode", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(500);
-
-                    b.Property<bool>("IsDeleted");
-
-                    b.Property<string>("Mode")
-                        .IsRequired()
-                        .HasMaxLength(50);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PaymentMode");
+                    b.ToTable("Payment");
                 });
 
             modelBuilder.Entity("Algebra.Entities.Models.Referrer", b =>
@@ -403,6 +482,11 @@ namespace Algebra.Web.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(10);
 
+                    b.Property<string>("Created")
+                        .HasMaxLength(50);
+
+                    b.Property<DateTime>("CreatedDate");
+
                     b.Property<string>("ImagePath")
                         .HasMaxLength(200);
 
@@ -411,6 +495,10 @@ namespace Algebra.Web.Data.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100);
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate();
 
                     b.HasKey("Id");
 
@@ -464,14 +552,15 @@ namespace Algebra.Web.Data.Migrations
                     b.Property<string>("MiddleName")
                         .HasMaxLength(100);
 
-                    b.Property<string>("MobileNumber")
-                        .HasMaxLength(50);
-
                     b.Property<string>("Organization")
                         .HasMaxLength(100);
 
                     b.Property<string>("PresentAddress")
                         .HasMaxLength(200);
+
+                    b.Property<string>("PrimaryMobileNumber")
+                        .IsRequired()
+                        .HasMaxLength(50);
 
                     b.Property<string>("ProfessionalTitle")
                         .HasMaxLength(50);
@@ -479,6 +568,9 @@ namespace Algebra.Web.Data.Migrations
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate();
+
+                    b.Property<string>("SecondaryMobileNumber")
+                        .HasMaxLength(50);
 
                     b.Property<string>("TelephoneNumber")
                         .HasMaxLength(50);
@@ -522,7 +614,7 @@ namespace Algebra.Web.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Tokens");
+                    b.ToTable("Token");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -635,6 +727,14 @@ namespace Algebra.Web.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("Algebra.Entities.Models.Cheque", b =>
+                {
+                    b.HasOne("Algebra.Entities.Models.Payment", "Payments")
+                        .WithMany("Cheques")
+                        .HasForeignKey("PaymentId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("Algebra.Entities.Models.Dependent", b =>
                 {
                     b.HasOne("Algebra.Entities.Models.Member", "Member")
@@ -643,11 +743,11 @@ namespace Algebra.Web.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Algebra.Entities.Models.PaymentDetails", b =>
+            modelBuilder.Entity("Algebra.Entities.Models.Payment", b =>
                 {
                     b.HasOne("Algebra.Entities.Models.Member", "Member")
-                        .WithOne("Payment")
-                        .HasForeignKey("Algebra.Entities.Models.PaymentDetails", "MemberId")
+                        .WithOne("Payments")
+                        .HasForeignKey("Algebra.Entities.Models.Payment", "MemberId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

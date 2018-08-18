@@ -13,25 +13,32 @@ namespace Algebra.Entities.Models
         #region Properties
         [Key]
         [Required]
+        [Column(Order = 0)]
         public int Id { get; set; }
 
         [Required]
+        [Column(Order = 1)]
         [MaxLength(50)]
         public string ClientId { get; set; }
 
+        [Column(Order = 2)]
         public int Type { get; set; }
 
         [Required]
+        [Column(Order = 3)]
         [MaxLength(50)]
         public string Value { get; set; }
 
         [Required]
+        [Column(Order = 4)]
         public string UserId { get; set; }
 
         [Required]
+        [Column(Order = 5)]
         public DateTime CreatedDate { get; set; } = DateTime.Now;
 
         [Required]
+        [Column(Order = 6)]
         public DateTime LastModifiedDate { get; set; }
         #endregion
 

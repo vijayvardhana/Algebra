@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Algebra.Data;
 using Algebra.Data.Repositories;
 using Algebra.Entities.Models;
 using Algebra.Entities.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Mapster;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Algebra.Web.Controllers
 {
@@ -27,7 +23,7 @@ namespace Algebra.Web.Controllers
         [HttpGet("Index")]
         public IActionResult Index()
         {
-            IEnumerable<MembershipFee> list;
+            IEnumerable<Fee> list;
 
             using(var unitOfWork = new UnitOfWork(_dbContext))
             {
@@ -41,12 +37,12 @@ namespace Algebra.Web.Controllers
         //[Route("api/fee/add")]
         public IActionResult Add(int id)
         {
-            MembershipFeeViewModels model;
+            FeeViewModels model;
             ViewBag.Title = (id > 0) ? "Edit" : "Add";
             using(var unitOfWork = new UnitOfWork(_dbContext))
             {
-                model = unitOfWork.Fees.Get(id).Adapt<MembershipFeeViewModels>();
-                ViewData["Locations"] = new SelectList(unitOfWork.Locations.GetLocations(), "Key", "Value", 0);
+                //model = unitOfWork.Fees.Get(id).Adapt<MembershipFeeViewModels>();
+               model = unitOfWork.Fees.CreateFee(id);
             }
             return View(model);
         }
@@ -54,7 +50,7 @@ namespace Algebra.Web.Controllers
         [HttpPost("Add")]
         //[Route("api/fee/add")]
         [ValidateAntiForgeryToken]
-        public IActionResult Add(MembershipFeeViewModels model)
+        public IActionResult Add(FeeViewModels model)
         {
             int id = 0;
             if (ModelState.IsValid)
@@ -71,7 +67,7 @@ namespace Algebra.Web.Controllers
                     }
                     else
                     {
-                        var newFee = model.Adapt<MembershipFee>();
+                        var newFee = model.Adapt<Fee>();
                         newFee.Created = User.Identity.Name;
                         unitOfWork.Fees.Add(newFee);
                         id = unitOfWork.Commit();
@@ -86,11 +82,11 @@ namespace Algebra.Web.Controllers
         [HttpGet("details")]
         public IActionResult Details(int id)
         {
-            MembershipFeeViewModels model;
+            FeeViewModels model;
             using (var unitOfWork = new UnitOfWork(_dbContext))
             {
-                model = unitOfWork.Fees.Get(id).Adapt<MembershipFeeViewModels>();
-                ViewBag.Location = unitOfWork.Locations.GetLocationByInitials(model.LocationInitials);
+                model = unitOfWork.Fees.Get(id).Adapt<FeeViewModels>();
+                model.Locations = unitOfWork.Locations.GetDropDown();
             }
             return View(model);
         }

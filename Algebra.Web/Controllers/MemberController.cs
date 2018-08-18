@@ -54,7 +54,7 @@ namespace Algebra.Web.Controllers
                 ViewBag.Locations = unitOfWork.Locations.GetAll().ToList();
                 ViewBag.Referrers = unitOfWork.Referrers.GetAll().ToList();
                 maxAccId = unitOfWork.Members.GetMaxId(_applicationVariables.InitialAccountNumber);
-                ViewBag.PaymentModes = unitOfWork.PaymentModes.GetAll().ToList();
+                ViewBag.PaymentModes = unitOfWork.Modes.GetAll().ToList();
                 ViewBag.MembershipFee = unitOfWork.Fees.GetAll().ToList();
                 ViewBag.AccountId = GetAccountNumber(maxAccId, _applicationVariables.InitialAccountNumber);
             }
@@ -79,12 +79,12 @@ namespace Algebra.Web.Controllers
                 var member = JsonConvert.DeserializeObject<Member>(str[0]);
                 var spouse = JsonConvert.DeserializeObject<Spouse>(str[1]);
                 List<Dependent> dependents = GetDependentList(str[2]);
-                var payment = JsonConvert.DeserializeObject<PaymentDetails>(str[3]);
+                var payment = JsonConvert.DeserializeObject<Payment>(str[3]);
 
                 member.CreatedBy = User.Identity.Name;
                 member.Spouse = spouse;
                 member.Dependents = dependents;
-                member.Payment = payment;
+                member.Payments = payment;
 
                 using (IUnitOfWork unitOfWork = new UnitOfWork(_dbContext))
                 {

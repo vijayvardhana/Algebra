@@ -25,10 +25,6 @@ namespace Algebra.Entities.ViewModels
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime P_PaymentDate { get; set; }
 
-        [Display(Name = "Number Of Dependent")]
-        [Range(1, 2)]
-        public short P_NumberOfDependent { get; set; }
-
         [Display(Name = "Payment Mode")]
         public string P_PaymentMode { get; set; }
 

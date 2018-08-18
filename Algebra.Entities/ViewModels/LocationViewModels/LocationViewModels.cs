@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿
+using System.ComponentModel.DataAnnotations;
 
 namespace Algebra.Entities.ViewModels
 {
@@ -11,10 +12,10 @@ namespace Algebra.Entities.ViewModels
         [DataType(DataType.Text)]
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "Please input location Initials (i.e. D for Delhi) !")]
-        [Display(Name= "Location Initials")]
+        [Required(ErrorMessage = "Please input location code (i.e. ALD for Delhi) !")]
+        [Display(Name= "Location Code")]
         [DataType(DataType.Text)]
-        public char Initials { get; set; }
+        public string Code { get; set; }
 
         [Required(ErrorMessage = "Please input location Address!")]
         [Display(Name = "Address")]

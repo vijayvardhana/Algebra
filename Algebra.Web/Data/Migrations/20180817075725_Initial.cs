@@ -23,27 +23,69 @@ namespace Algebra.Web.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Locations",
+                name: "Category",
                 columns: table => new
                 {
-                    CreatedDate = table.Column<DateTime>(nullable: false),
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    IsDeleted = table.Column<bool>(nullable: false),
                     Created = table.Column<string>(maxLength: 50, nullable: true),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true),
+                    Type = table.Column<string>(maxLength: 200, nullable: false),
+                    Description = table.Column<string>(maxLength: 400, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Category", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Fee",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Created = table.Column<string>(maxLength: 50, nullable: true),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true),
+                    Individual = table.Column<decimal>(type: "decimal(10,4)", nullable: false),
+                    Couple = table.Column<decimal>(type: "decimal(10,4)", nullable: false),
+                    Dependent = table.Column<decimal>(type: "decimal(10,4)", nullable: false),
+                    GSTRate = table.Column<string>(maxLength: 50, nullable: false),
+                    GSTAmount = table.Column<decimal>(type: "decimal(10,4)", nullable: false),
+                    TotalAmount = table.Column<decimal>(type: "decimal(10,4)", nullable: false),
+                    LocationId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Fee", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Location",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Created = table.Column<string>(maxLength: 50, nullable: true),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false),
                     RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true),
                     Name = table.Column<string>(maxLength: 50, nullable: false),
-                    Initials = table.Column<string>(nullable: false),
+                    Code = table.Column<string>(maxLength: 20, nullable: false),
+                    Digits = table.Column<string>(maxLength: 20, nullable: true),
                     Address = table.Column<string>(maxLength: 500, nullable: true),
                     PhoneNumber = table.Column<string>(maxLength: 100, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Locations", x => x.Id);
+                    table.PrimaryKey("PK_Location", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Members",
+                name: "Member",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -71,53 +113,34 @@ namespace Algebra.Web.Data.Migrations
                     PresentAddress = table.Column<string>(maxLength: 500, nullable: true),
                     TelephoneNumber = table.Column<string>(maxLength: 50, nullable: true),
                     CorrespondenceAddress = table.Column<string>(maxLength: 500, nullable: true),
-                    MobileNumber = table.Column<string>(maxLength: 50, nullable: true),
+                    PrimaryMobileNumber = table.Column<string>(maxLength: 50, nullable: false),
+                    SecondaryMobileNumber = table.Column<string>(maxLength: 50, nullable: true),
                     Location = table.Column<string>(maxLength: 50, nullable: true),
+                    LocationId = table.Column<short>(nullable: false),
                     FormPath = table.Column<string>(maxLength: 255, nullable: true),
                     CreatedBy = table.Column<string>(maxLength: 50, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Members", x => x.Id);
+                    table.PrimaryKey("PK_Member", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "MembershipFees",
+                name: "Mode",
                 columns: table => new
                 {
-                    CreatedDate = table.Column<DateTime>(nullable: false),
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    IsDeleted = table.Column<bool>(nullable: false),
                     Created = table.Column<string>(maxLength: 50, nullable: true),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false),
                     RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true),
-                    Individual = table.Column<decimal>(type: "decimal(10,4)", nullable: false),
-                    Couple = table.Column<decimal>(type: "decimal(10,4)", nullable: false),
-                    Dependent = table.Column<decimal>(type: "decimal(10,4)", nullable: false),
-                    GSTRate = table.Column<string>(maxLength: 50, nullable: false),
-                    GSTAmount = table.Column<decimal>(type: "decimal(10,4)", nullable: false),
-                    TotalAmount = table.Column<decimal>(type: "decimal(10,4)", nullable: false),
-                    LocationId = table.Column<int>(nullable: false),
-                    LocationInitials = table.Column<string>(nullable: false)
+                    Text = table.Column<string>(maxLength: 50, nullable: false),
+                    Description = table.Column<string>(maxLength: 500, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MembershipFees", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "PaymentMode",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Mode = table.Column<string>(maxLength: 50, nullable: false),
-                    Description = table.Column<string>(maxLength: 500, nullable: false),
-                    IsDeleted = table.Column<bool>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PaymentMode", x => x.Id);
+                    table.PrimaryKey("PK_Mode", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -126,10 +149,13 @@ namespace Algebra.Web.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Created = table.Column<string>(maxLength: 50, nullable: true),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true),
                     Name = table.Column<string>(maxLength: 100, nullable: false),
                     Code = table.Column<string>(maxLength: 10, nullable: false),
-                    ImagePath = table.Column<string>(maxLength: 200, nullable: true),
-                    IsDeleted = table.Column<bool>(nullable: false)
+                    ImagePath = table.Column<string>(maxLength: 200, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -137,7 +163,7 @@ namespace Algebra.Web.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Users",
+                name: "User",
                 columns: table => new
                 {
                     AccessFailedCount = table.Column<int>(nullable: false),
@@ -165,7 +191,7 @@ namespace Algebra.Web.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.Id);
+                    table.PrimaryKey("PK_User", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -190,7 +216,7 @@ namespace Algebra.Web.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Dependents",
+                name: "Dependent",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -211,24 +237,24 @@ namespace Algebra.Web.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Dependents", x => x.Id);
+                    table.PrimaryKey("PK_Dependent", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Dependents_Members_MemberId",
+                        name: "FK_Dependent_Member_MemberId",
                         column: x => x.MemberId,
-                        principalTable: "Members",
+                        principalTable: "Member",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Payments",
+                name: "Payment",
                 columns: table => new
                 {
-                    CreatedDate = table.Column<DateTime>(nullable: false),
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    IsDeleted = table.Column<bool>(nullable: false),
                     Created = table.Column<string>(maxLength: 50, nullable: true),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false),
                     RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true),
                     MemberId = table.Column<int>(nullable: false),
                     MembershipFee = table.Column<decimal>(type: "decimal(10,4)", nullable: false),
@@ -236,20 +262,20 @@ namespace Algebra.Web.Data.Migrations
                     TaxAmount = table.Column<decimal>(type: "decimal(10,4)", nullable: false),
                     TotalAmount = table.Column<decimal>(type: "decimal(10,4)", nullable: false),
                     PaymentDate = table.Column<DateTime>(nullable: false),
-                    NumberOfDependent = table.Column<short>(nullable: false),
                     PaymentMode = table.Column<string>(maxLength: 50, nullable: true),
                     ChequeNumber = table.Column<string>(maxLength: 500, nullable: true),
                     TransactionId = table.Column<string>(maxLength: 50, nullable: true),
                     IsDiscountApplicable = table.Column<bool>(nullable: false),
-                    Description = table.Column<string>(maxLength: 500, nullable: true)
+                    Description = table.Column<string>(maxLength: 500, nullable: true),
+                    MembershipFeeId = table.Column<short>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Payments", x => x.Id);
+                    table.PrimaryKey("PK_Payment", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Payments_Members_MemberId",
+                        name: "FK_Payment_Member_MemberId",
                         column: x => x.MemberId,
-                        principalTable: "Members",
+                        principalTable: "Member",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -275,21 +301,22 @@ namespace Algebra.Web.Data.Migrations
                     FirstName = table.Column<string>(maxLength: 100, nullable: false),
                     MiddleName = table.Column<string>(maxLength: 100, nullable: true),
                     LastName = table.Column<string>(maxLength: 100, nullable: false),
+                    PrimaryMobileNumber = table.Column<string>(maxLength: 50, nullable: false),
+                    SecondaryMobileNumber = table.Column<string>(maxLength: 50, nullable: true),
+                    TelephoneNumber = table.Column<string>(maxLength: 50, nullable: true),
                     ProfessionalTitle = table.Column<string>(maxLength: 50, nullable: true),
                     Designation = table.Column<string>(maxLength: 100, nullable: true),
                     Organization = table.Column<string>(maxLength: 100, nullable: true),
                     PresentAddress = table.Column<string>(maxLength: 200, nullable: true),
-                    TelephoneNumber = table.Column<string>(maxLength: 50, nullable: true),
-                    CorrespondenceAddress = table.Column<string>(maxLength: 200, nullable: true),
-                    MobileNumber = table.Column<string>(maxLength: 50, nullable: true)
+                    CorrespondenceAddress = table.Column<string>(maxLength: 200, nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Spouse", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Spouse_Members_MemberId",
+                        name: "FK_Spouse_Member_MemberId",
                         column: x => x.MemberId,
-                        principalTable: "Members",
+                        principalTable: "Member",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -308,9 +335,9 @@ namespace Algebra.Web.Data.Migrations
                 {
                     table.PrimaryKey("PK_AspNetUserClaims", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AspNetUserClaims_Users_UserId",
+                        name: "FK_AspNetUserClaims_User_UserId",
                         column: x => x.UserId,
-                        principalTable: "Users",
+                        principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -328,9 +355,9 @@ namespace Algebra.Web.Data.Migrations
                 {
                     table.PrimaryKey("PK_AspNetUserLogins", x => new { x.LoginProvider, x.ProviderKey });
                     table.ForeignKey(
-                        name: "FK_AspNetUserLogins_Users_UserId",
+                        name: "FK_AspNetUserLogins_User_UserId",
                         column: x => x.UserId,
-                        principalTable: "Users",
+                        principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -352,9 +379,9 @@ namespace Algebra.Web.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AspNetUserRoles_Users_UserId",
+                        name: "FK_AspNetUserRoles_User_UserId",
                         column: x => x.UserId,
-                        principalTable: "Users",
+                        principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -372,15 +399,15 @@ namespace Algebra.Web.Data.Migrations
                 {
                     table.PrimaryKey("PK_AspNetUserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
                     table.ForeignKey(
-                        name: "FK_AspNetUserTokens_Users_UserId",
+                        name: "FK_AspNetUserTokens_User_UserId",
                         column: x => x.UserId,
-                        principalTable: "Users",
+                        principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Tokens",
+                name: "Token",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -394,11 +421,39 @@ namespace Algebra.Web.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Tokens", x => x.Id);
+                    table.PrimaryKey("PK_Token", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Tokens_Users_UserId",
+                        name: "FK_Token_User_UserId",
                         column: x => x.UserId,
-                        principalTable: "Users",
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Cheque",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Created = table.Column<string>(maxLength: 50, nullable: true),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true),
+                    PaymentId = table.Column<int>(nullable: false),
+                    Number = table.Column<string>(maxLength: 50, nullable: true),
+                    Amount = table.Column<decimal>(type: "decimal(10,4)", nullable: false),
+                    Date = table.Column<DateTime>(nullable: false),
+                    BankName = table.Column<string>(maxLength: 100, nullable: true),
+                    DrawnOn = table.Column<string>(maxLength: 100, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Cheque", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Cheque_Payment_PaymentId",
+                        column: x => x.PaymentId,
+                        principalTable: "Payment",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -431,13 +486,18 @@ namespace Algebra.Web.Data.Migrations
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Dependents_MemberId",
-                table: "Dependents",
+                name: "IX_Cheque_PaymentId",
+                table: "Cheque",
+                column: "PaymentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Dependent_MemberId",
+                table: "Dependent",
                 column: "MemberId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Payments_MemberId",
-                table: "Payments",
+                name: "IX_Payment_MemberId",
+                table: "Payment",
                 column: "MemberId",
                 unique: true);
 
@@ -448,18 +508,18 @@ namespace Algebra.Web.Data.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tokens_UserId",
-                table: "Tokens",
+                name: "IX_Token_UserId",
+                table: "Token",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "EmailIndex",
-                table: "Users",
+                table: "User",
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
-                table: "Users",
+                table: "User",
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
@@ -483,19 +543,22 @@ namespace Algebra.Web.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Dependents");
+                name: "Category");
 
             migrationBuilder.DropTable(
-                name: "Locations");
+                name: "Cheque");
 
             migrationBuilder.DropTable(
-                name: "MembershipFees");
+                name: "Dependent");
 
             migrationBuilder.DropTable(
-                name: "PaymentMode");
+                name: "Fee");
 
             migrationBuilder.DropTable(
-                name: "Payments");
+                name: "Location");
+
+            migrationBuilder.DropTable(
+                name: "Mode");
 
             migrationBuilder.DropTable(
                 name: "Referrer");
@@ -504,16 +567,19 @@ namespace Algebra.Web.Data.Migrations
                 name: "Spouse");
 
             migrationBuilder.DropTable(
-                name: "Tokens");
+                name: "Token");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Members");
+                name: "Payment");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "User");
+
+            migrationBuilder.DropTable(
+                name: "Member");
         }
     }
 }

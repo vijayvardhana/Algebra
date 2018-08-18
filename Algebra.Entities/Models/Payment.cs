@@ -1,14 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Algebra.Entities.Models
 {
-    public class PaymentDetails : EntityBase
+    public class Payment : EntityBase
     {
         #region Constructor
-        public PaymentDetails() { }
+        public Payment() { }
         #endregion Constructor
 
         #region Properties
@@ -36,9 +37,6 @@ namespace Algebra.Entities.Models
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime PaymentDate { get; set; }
 
-        [Required]
-        public short NumberOfDependent { get; set; }
-
         [MaxLength(50)]
         public string PaymentMode { get; set; }
 
@@ -63,6 +61,8 @@ namespace Algebra.Entities.Models
 
         [ForeignKey("MemberId")]
         public virtual Member Member { get; set; }
+
+        public virtual ICollection<Cheque> Cheques { get; set; }
 
         #endregion
     }

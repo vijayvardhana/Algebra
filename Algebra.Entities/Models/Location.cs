@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Algebra.Entities.Models
 {
@@ -9,13 +10,19 @@ namespace Algebra.Entities.Models
         public string Name { get; set; }
 
         [Required]
-        public char Initials { get; set; }
+        [MaxLength(20)]
+        public string Code { get; set; }
+
+        [MaxLength(20)]
+        public string Digits { get; set; }
 
         [MaxLength(500)]
         public string Address { get; set; }
 
         [MaxLength(100)]
         public string PhoneNumber { get; set; }
+
+
 
     }
 }

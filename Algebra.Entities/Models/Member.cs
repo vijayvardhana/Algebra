@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Algebra.Entities.Models
 {
@@ -41,10 +42,10 @@ namespace Algebra.Entities.Models
 
         [MaxLength(100)]
         public string ProfessionalTitle { get; set; }
-
+        
         [MaxLength(100)]
         public string Designation { get; set; }
-
+        
         [MaxLength(200)]
         public string Organization { get; set; }
 
@@ -57,8 +58,12 @@ namespace Algebra.Entities.Models
         [MaxLength(500)]
         public string CorrespondenceAddress { get; set; }
 
+        [Required]
         [MaxLength(50)]
-        public string MobileNumber { get; set; }
+        public string PrimaryMobileNumber { get; set; }
+
+        [MaxLength(50)]
+        public string SecondaryMobileNumber { get; set; }
 
         [MaxLength(50)]
         public string Location { get; set; }
@@ -79,7 +84,7 @@ namespace Algebra.Entities.Models
 
         public virtual Spouse Spouse { get; set; }
         public virtual ICollection<Dependent> Dependents { get; set; }
-        public virtual PaymentDetails Payment { get; set; }
+        public virtual Payment Payments { get; set; }
 
         #endregion
     }

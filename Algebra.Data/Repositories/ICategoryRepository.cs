@@ -4,9 +4,8 @@ using System.Collections.Generic;
 
 namespace Algebra.Data.Repositories
 {
-    public interface IReferrerRepository : IRepository<Referrer>
+    public interface ICategoryRepository : IRepository<Category>
     {
-        Referrer GetReferrerByCode(string code);
         IEnumerable<SelectListItem> GetDropDown();
     }
 }

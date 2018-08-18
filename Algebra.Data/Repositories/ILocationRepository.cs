@@ -1,12 +1,15 @@
 ﻿using Algebra.Entities.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 
 namespace Algebra.Data.Repositories
 {
     public interface ILocationRepository : IRepository<Location>
     {
-        Location GetLocationByInitials(char c);
+        Location GetLocationByCode(string lc);
 
         Dictionary<int, string> GetLocations();
+
+        IEnumerable<SelectListItem> GetDropDown();
     }
 }

@@ -28,17 +28,30 @@ namespace Algebra.Data
 
             if (!dbContext.Referrers.Any())
             {
-                CreateReferrer(dbContext, roleManager, userManager);
+                CreateReferrer(dbContext)
+                    .GetAwaiter()
+                    .GetResult();
             }
 
             if (!dbContext.PaymentModes.Any())
             {
-                AddPaymentModes(dbContext);
+                AddPaymentModes(dbContext)
+                    .GetAwaiter()
+                    .GetResult();
             }
 
             if(!dbContext.Locations.Any())
             {
-                AddLocations(dbContext);
+                AddLocations(dbContext)
+                    .GetAwaiter()
+                    .GetResult();
+            }
+
+            if (!dbContext.Categories.Any())
+            {
+                AddMembershipTypes(dbContext)
+                    .GetAwaiter()
+                    .GetResult();
             }
 
         }
@@ -168,10 +181,7 @@ namespace Algebra.Data
 
         }
 
-        private static void CreateReferrer(
-            ApplicationDbContext dbContext,
-            RoleManager<IdentityRole> roleManager,
-            UserManager<ApplicationUser> userManager)
+        private static async Task CreateReferrer(ApplicationDbContext dbContext)
         {
             var refShoma = new Referrer()
             {
@@ -196,101 +206,126 @@ namespace Algebra.Data
             };
 
             dbContext.Referrers.AddRange(refShoma, refSheuli, refAngali, refPayal);
-            dbContext.SaveChanges();
+            await dbContext.SaveChangesAsync();
         }
 
-        private static void AddPaymentModes(ApplicationDbContext dbContext)
+        private static async Task AddPaymentModes(ApplicationDbContext dbContext)
         {
 
-            var cc = new PaymentMode()
+            var cc = new Mode()
             {
-                Mode = "CC",
+                Text = "Credit Card",
                 Description = "Credit Card"
             };
-
-            var dc = new PaymentMode()
+            var dc = new Mode()
             {
-                Mode = "DC",
+                Text = "Debit Card",
                 Description = "Debit Card"
             };
-            var nb = new PaymentMode()
+            var nb = new Mode()
             {
-                Mode = "NB",
+                Text = "Net Banking",
                 Description = "Net Banking"
             };
-
-            var cash = new PaymentMode()
+            var cash = new Mode()
             {
-                Mode = "CS",
+                Text = "Cash",
                 Description = "Cash"
             };
-
-            var draft = new PaymentMode()
+            var draft = new Mode()
             {
-                Mode = "DT",
+                Text = "Draft",
                 Description = "Draft"
             };
-
-            var cheque = new PaymentMode()
+            var cheque = new Mode()
             {
-                Mode = "CQ",
+                Text = "Cheque",
                 Description = "Cheque"
             };
+            var mixMode = new Mode()
+            {
+                Text = "Mix Mode",
+                Description = "Mix Mode (more then one mode of payment)"
+            };
 
-            dbContext.PaymentModes.AddRange(cc, dc, nb, cash, draft, cheque);
-            dbContext.SaveChanges();
+            dbContext.PaymentModes.AddRange(cc, dc, nb, cash, draft, cheque, mixMode);
+            await dbContext.SaveChangesAsync();
 
         }
 
-        private static void AddLocations(ApplicationDbContext dbContext)
+        private static async Task AddLocations(ApplicationDbContext dbContext)
         {
             var blore = new Location() {
                 Name = "Bangalore",
-                Initials='B',
+                Code = "ALB",
                 Address= "Bangalore",
-                PhoneNumber="N.A."
-            };
-
-            var chni = new Location() {
-                Name= "Chennai",
-                Initials='C',
-                Address= "Chennai",
-                PhoneNumber = "N.A."
+                PhoneNumber="N.A.",
+                Digits= "2000"
             };
 
             var dhli = new Location() {
                 Name= "Delhi",
-                Initials='D',
+                Code = "ALD",
                 Address= "Delhi",
-                PhoneNumber = "N.A."
+                PhoneNumber = "N.A.",
+                Digits= "4000"
             };
 
             var ggon = new Location()
             {
                 Name = "Gurgaon",
-                Initials = 'G',
+                Code = "ALG",
                 Address = "Gurgaon",
-                PhoneNumber = "N.A."
+                PhoneNumber = "N.A.",
+                Digits = "0000"
             };
 
-            var kolkta = new Location()
-            {
-                Name = "Kolkata",
-                Initials = 'K',
-                Address = "Kolkata",
-                PhoneNumber = "N.A."
-            };
-            
-            var mbai = new Location()
-            {
-                Name = "Mumbai",
-                Initials = 'M',
-                Address = "Mumbai",
-                PhoneNumber = "N.A."
+            dbContext.Locations.AddRange(blore, dhli, ggon);
+            await dbContext.SaveChangesAsync();
+        }
+
+        private static async Task AddMembershipTypes(ApplicationDbContext dbContext)
+        {
+            var induvidual = new Category() {
+                Type = "Individual",
+                Description= "Individual",
+                Created = "Admin"
             };
 
-            dbContext.Locations.AddRange(blore, chni, dhli, ggon, kolkta, mbai);
-            dbContext.SaveChanges();
+            var couple = new Category()
+            {
+                Type = "Couple",
+                Description= "Couple",
+                Created="Admin"
+            };
+
+            var coupleWithDependent = new Category()
+            {
+                Type = "Couple With Dependent",
+                Description = "Couple With Dependent",
+                Created = "Admin"
+            };
+
+            var individualWithDependent = new Category() {
+                Type = "Individual With Dependent",
+                Description = "Individual With Dependent",
+                Created="Admin"
+            };
+
+            var complimentary = new Category()
+            {
+                Type = "Complimentary",
+                Description= "Complimentary",
+                Created = "Admin"
+            };
+
+            dbContext.Categories.AddRange(induvidual, 
+                couple, 
+                coupleWithDependent, 
+                individualWithDependent, 
+                complimentary);
+
+            await dbContext.SaveChangesAsync();
         }
 
         #endregion

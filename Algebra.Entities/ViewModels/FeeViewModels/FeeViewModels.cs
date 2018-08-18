@@ -1,17 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
 
 namespace Algebra.Entities.ViewModels
 {
-    public class MembershipFeeViewModels
+    public class FeeViewModels
     {
         public int Id { get; set; }
-
-        //[Required]
-        //[Display(Name = "Membership Fee")]
-        //[DataType(DataType.Currency)]
-        //public decimal P_MembershipFee { get; set; }
-
 
         [Required]
         [Display(Name = "Individual Fee")]
@@ -44,12 +39,10 @@ namespace Algebra.Entities.ViewModels
         public decimal TotalAmount { get; set; }
 
         [Required]
-        [Display(Name = "Location Id")]
+        [Display(Name = "Location Name")]
         public int LocationId { get; set; }
 
-        [Required]
-        [Display(Name = "Location Initials")]
-        [DataType(DataType.Text)]
-        public char LocationInitials { get; set; }
+        public IEnumerable<SelectListItem> Locations { get; set; }
+        
     }
 }

@@ -11,8 +11,10 @@ namespace Algebra.Data.Repositories
         IUserRepository Users { get; }
         ILocationRepository Locations { get; }
         IReferrerRepository Referrers { get; }
-        IPaymentModeRepository PaymentModes { get; }
-        IMembershipFeeRepository Fees { get; }
+        IModeRepository Modes { get; }
+        IFeeRepository Fees { get; }
+        ICategoryRepository Categories { get; }
+
         
         int Commit();
         void Rollback();

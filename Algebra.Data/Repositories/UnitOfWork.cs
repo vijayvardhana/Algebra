@@ -14,8 +14,9 @@ namespace Algebra.Data.Repositories
             Locations = new LocationRepository(_dbContext);
             Users = new UserRepository(_dbContext);
             Referrers = new ReferrerRepository(_dbContext);
-            PaymentModes = new PaymentModeRepository(_dbContext);
-            Fees = new MembershipFeeRepository(_dbContext);
+            Modes = new ModeRepository(_dbContext);
+            Fees = new FeeRepository(_dbContext);
+            Categories = new CategoryRepository(_dbContext);
         }
 
         public IMemberRepository Members { get; private set; }
@@ -23,8 +24,9 @@ namespace Algebra.Data.Repositories
         public ILocationRepository Locations { get; private set; }
         public IUserRepository Users { get; set; }
         public IReferrerRepository Referrers { get; set; }
-        public IPaymentModeRepository PaymentModes { get; set; }
-        public IMembershipFeeRepository Fees { get; set; }
+        public IModeRepository Modes { get; set; }
+        public IFeeRepository Fees { get; set; }
+        public ICategoryRepository Categories { get; set; }
 
 
         int IUnitOfWork.Commit()
