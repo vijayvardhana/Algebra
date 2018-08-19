@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Algebra.Entities.Models
 {
@@ -19,8 +18,7 @@ namespace Algebra.Entities.Models
         public string AccountId { get; set; }
 
         [Required]
-        [MaxLength(100)]
-        public string ReferredBy { get; set; }
+        public short ReferredBy { get; set; }
 
         [Required]
         public short MembershipType { get; set; }

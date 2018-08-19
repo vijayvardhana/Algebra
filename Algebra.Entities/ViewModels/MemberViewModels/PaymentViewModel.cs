@@ -1,10 +1,18 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Algebra.Entities.ViewModels
 {
     public class PaymentViewModel
     {
+        public PaymentViewModel()
+        {
+            Cheques = new List<ChequeViewModels>();
+        }
+        public IList<ChequeViewModels> Cheques { get; set; }
+
         [Required]
         public int P_MemberId { get; set; }
 
@@ -28,6 +36,8 @@ namespace Algebra.Entities.ViewModels
         [Display(Name = "Payment Mode")]
         public string P_PaymentMode { get; set; }
 
+        public IEnumerable<SelectListItem> Modes { get; set; }
+
         [Required]
         [Display(Name = "Total Amount")]
         public decimal P_TotalAmount { get; set; }
@@ -44,7 +54,9 @@ namespace Algebra.Entities.ViewModels
         [Display(Name = "Description")]
         public string P_Description { get; set; }
 
-        public short P_MembershipFeeId { get; set; }
+        public int P_MembershipFeeId { get; set; } 
+
+        public FeeViewModels P_FeeBreakUp { get; set; }
 
     }
 }

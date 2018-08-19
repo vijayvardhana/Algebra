@@ -1,4 +1,5 @@
 ﻿using Algebra.Entities.Models;
+using Algebra.Entities.ViewModels;
 using System.Collections.Generic;
 
 namespace Algebra.Data.Repositories
@@ -10,5 +11,9 @@ namespace Algebra.Data.Repositories
         int GetMaxId(int _initialAccountNumber);
 
         IEnumerable<Member> GetMembersWithSpouseAndDependents();
+
+        RegistrationFormViewModel CreateMember(int id);
+
+        RegistrationFormViewModel CreateRegistration(RegistrationFormViewModel m);
     }
 }

@@ -62,7 +62,7 @@ namespace Algebra.Data
         public DbSet<Spouse> Spouse { get; set; }
         public DbSet<Dependent> Dependents { get; set; }
         public DbSet<Payment> Payments { get; set; }
-        public DbSet<Mode> PaymentModes { get; set; }
+        public DbSet<Mode> Modes { get; set; }
         public DbSet<Referrer> Referrers { get; set; }
         public DbSet<Token> Tokens { get; set; }
         public DbSet<Location> Locations { get; set; }

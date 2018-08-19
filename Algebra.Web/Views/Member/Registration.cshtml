@@ -2,9 +2,7 @@
 @using Algebra.Entities.ViewModels
 @using Newtonsoft.Json;
 @model RegistrationFormViewModel
-@{
-    string Fee = JsonConvert.SerializeObject(ViewBag.MembershipFee);
-}
+
 <div class="container">
     <form method="post" id="registration-form">
         <input name="__RequestVerificationToken" type="hidden" value="CfDJ8KW5cuB058RCnNyZSLI7AUjUAtTwe54jQ4Z9Goyn3WKPcpVFYSFUM5J-JDFC3E-MZIUcyR0UnbrvrC_sHv6MbUONStuIMhqDc7i00pQiGkrzf3hK6t5gZFVrjUpyAcargow4zvKU_ISjdPfoLTNF588" />
@@ -41,6 +39,7 @@
         </div>
         <div class="form-group">
             <button type="button" class="btn btn-primary" id="btn-submit">Submit</button>
+            <button type="button" class="btn btn-default" id="btn-cancel" onclick="history.back()">Cancel</button>
         </div>
     </form>
 
@@ -68,32 +67,83 @@
     @await Html.PartialAsync("_ValidationScriptsPartial")
 
     <script type="text/javascript">
+        var r = {
+            Location: @Model.LocationId,
+            Type: @Model.MembershipType,
+            Reffered: @Model.ReferredBy
+        };
+
+
 
         $(document).ready(function () {
-            var o = new Registration('@Html.Raw(Fee)');
+            var o = new Registration(r);
 
             $("#btn-submit").click(function () {
-                console.log('inside btn submit');
                 o.SubmitForm();
             });
 
-            $("#M_MembershipType").change(function () {
-                console.log('inside membership type change');
-                $("#M_LocationId").val("0");
-                var member_type = $(this).val();
-                o.TabsSelection(member_type);
-            });
+            //$("#M_MembershipType").change(function () {
+            //    $("#M_LocationId").val("0");
+            //    var member_type = $(this).val();
+            //    o.TabsSelection(member_type);
+            //});
 
-            $("#M_LocationId").change(function () {
-                console.log('inside location change');
-                let locCtrl = $(this);
-                let locationId = $(this).val();
-                let locationTxt = locCtrl.find(':selected').text();
-                $("#M_Location").val(locationTxt);
-                o.SetCardNumber(locationTxt.charAt(0));
-                o.PopulatePaymentControls(locationId)
+            //$("#M_LocationId").change(function () {
+            //    console.log('inside location change');
+            //    let locCtrl = $(this);
+            //    let locationId = $(this).val();
+            //    let locationTxt = locCtrl.find(':selected').text();
+            //    $("#M_Location").val(locationTxt);
+            //    o.SetCardNumber(locationTxt.charAt(0));
+            //    o.PopulatePaymentControls(locationId)
+            //});
+
+            $("#P_PaymentMode").change(function () {
+                //let mode = $(this).val();
+                if (this.value == '6' || this.value == '7')
+                {
+                    $("#cheque-section").show();
+                }
+                else {
+                    $("#cheque-section").hide();
+                }
             });
 
         });
+
+        /*
+         * This below code segment will 
+         * add/remove the cheque detail rows 
+         * */
+
+        var regex = /^(.+?)(\d+)$/i;
+        var cloneIndex = $(".clonedInput").length;
+        
+        function clone() {
+            $(this).parents(".clonedInput").clone()
+                .appendTo("#cheque-section")
+                .attr("id", "clonedInput" + cloneIndex)
+                .find(".form-group")
+                .each(function () {
+                    var id = this.id || "";
+                    console.log('Id : '+id);
+                    var match = id.match(regex) || [];
+                    console.log('match : ' + match);
+                    if (match.length == 3) {
+                        this.id = match[1] + (cloneIndex);
+                    }
+                })
+                .on('click', 'button.clone', clone)
+                .on('click', 'button.remove', remove);
+            cloneIndex++;
+            
+        }
+        function remove() {
+            $(this).parents(".clonedInput").remove();
+        }
+
+        $("button.clone").on("click", clone);
+        $("button.remove").on("click", remove);
+
     </script>
 }

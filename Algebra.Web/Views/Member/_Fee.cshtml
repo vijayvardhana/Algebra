@@ -1,0 +1,11 @@
+﻿@using Algebra.Entities.ViewModels
+@model FeeViewModels
+
+<ul id="fee-details" style="font-weight:bold;">
+    <li>Individual : @Model.Individual</li>
+    <li>Couple : @(Model.Couple + Model.Individual)</li>
+    <li>Dependent(s) : @Model.Dependent</li>
+    <li>GST (%) : @Model.GSTRate</li>
+    <li>Tax Amount : @Model.GSTAmount</li>
+    <li>Total : @Model.TotalAmount</li>
+</ul>

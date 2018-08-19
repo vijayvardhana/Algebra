@@ -33,7 +33,7 @@ namespace Algebra.Data
                     .GetResult();
             }
 
-            if (!dbContext.PaymentModes.Any())
+            if (!dbContext.Modes.Any())
             {
                 AddPaymentModes(dbContext)
                     .GetAwaiter()
@@ -186,23 +186,27 @@ namespace Algebra.Data
             var refShoma = new Referrer()
             {
                 Name = "Shoma Chaudhury",
-                Code = "SC"
+                Code = "SC",
+                Created = "Admin"
             };
 
             var refSheuli = new Referrer()
             {
                 Name = "Sheuli Sethi",
-                Code = "SS"
+                Code = "SS",
+                Created = "Admin"
             };
             var refPayal = new Referrer()
             {
                 Name = "Payal Puri",
-                Code = "PP"
+                Code = "PP",
+                Created = "Admin"
             };
             var refAngali = new Referrer()
             {
                 Name = "Angali Gulati",
-                Code = "AG"
+                Code = "AG",
+                Created = "Admin"
             };
 
             dbContext.Referrers.AddRange(refShoma, refSheuli, refAngali, refPayal);
@@ -215,40 +219,47 @@ namespace Algebra.Data
             var cc = new Mode()
             {
                 Text = "Credit Card",
-                Description = "Credit Card"
+                Description = "Credit Card",
+                Created = "Admin"
             };
             var dc = new Mode()
             {
                 Text = "Debit Card",
-                Description = "Debit Card"
+                Description = "Debit Card",
+                Created = "Admin"
             };
             var nb = new Mode()
             {
                 Text = "Net Banking",
-                Description = "Net Banking"
+                Description = "Net Banking",
+                Created = "Admin"
             };
             var cash = new Mode()
             {
                 Text = "Cash",
-                Description = "Cash"
+                Description = "Cash",
+                Created = "Admin"
             };
             var draft = new Mode()
             {
                 Text = "Draft",
-                Description = "Draft"
+                Description = "Draft",
+                Created = "Admin"
             };
             var cheque = new Mode()
             {
                 Text = "Cheque",
-                Description = "Cheque"
+                Description = "Cheque",
+                Created = "Admin"
             };
             var mixMode = new Mode()
             {
                 Text = "Mix Mode",
-                Description = "Mix Mode (more then one mode of payment)"
+                Description = "Mix Mode (more then one mode of payment)",
+                Created = "Admin"
             };
 
-            dbContext.PaymentModes.AddRange(cc, dc, nb, cash, draft, cheque, mixMode);
+            dbContext.Modes.AddRange(cc, dc, nb, cash, draft, cheque, mixMode);
             await dbContext.SaveChangesAsync();
 
         }
@@ -260,7 +271,8 @@ namespace Algebra.Data
                 Code = "ALB",
                 Address= "Bangalore",
                 PhoneNumber="N.A.",
-                Digits= "2000"
+                Digits= "2000",
+                Created = "Admin"
             };
 
             var dhli = new Location() {
@@ -268,7 +280,8 @@ namespace Algebra.Data
                 Code = "ALD",
                 Address= "Delhi",
                 PhoneNumber = "N.A.",
-                Digits= "4000"
+                Digits= "4000",
+                Created = "Admin"
             };
 
             var ggon = new Location()
@@ -277,7 +290,8 @@ namespace Algebra.Data
                 Code = "ALG",
                 Address = "Gurgaon",
                 PhoneNumber = "N.A.",
-                Digits = "0000"
+                Digits = "0000",
+                Created = "Admin"
             };
 
             dbContext.Locations.AddRange(blore, dhli, ggon);

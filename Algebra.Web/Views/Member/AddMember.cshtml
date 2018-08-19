@@ -1,0 +1,49 @@
+﻿@using Algebra.Entities.ViewModels
+@model RegistrationFormViewModel
+
+<div class="container">
+    <form method="post" id="add-member-form">
+        @Html.AntiForgeryToken()
+        <div id="add-member" class="small">
+            <h4>Member <small>(@ViewBag.Title)</small></h4>
+            <hr class="colorgraph">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label asp-for="@Model.LocationId"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
+                        <select asp-for="@Model.LocationId" asp-items="@Model.Locations" class="form-control input-sm"></select>
+                        <span asp-validation-for="@Model.LocationId" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label asp-for="@Model.MembershipType"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
+                        <select asp-for="@Model.MembershipType" asp-items="@Model.Categories" class="form-control input-sm"></select>
+                        <span asp-validation-for="@Model.MembershipType" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label asp-for="@Model.ReferredBy"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
+                        <select asp-for="@Model.ReferredBy" asp-items="@Model.Referrers" class="form-control input-sm"></select>
+                        <span asp-validation-for="@Model.ReferredBy" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary" id="btn-submit">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

@@ -7,6 +7,6 @@ namespace Algebra.Data.Repositories
     public interface IReferrerRepository : IRepository<Referrer>
     {
         Referrer GetReferrerByCode(string code);
-        IEnumerable<SelectListItem> GetDropDown();
+        IEnumerable<SelectListItem> GetDropDown(IUnitOfWork unitOfWork);
     }
 }

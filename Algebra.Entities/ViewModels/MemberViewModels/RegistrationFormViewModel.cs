@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Algebra.Entities.ViewModels
 {
@@ -12,6 +14,7 @@ namespace Algebra.Entities.ViewModels
             this.Payment = new PaymentViewModel();
 
         }
+        public int Id { get; set; }
 
         public MemberViewModels Member { get; set; }
 
@@ -21,5 +24,25 @@ namespace Algebra.Entities.ViewModels
 
         public PaymentViewModel Payment { get; set; }
 
+        [Required]
+        [Display(Name = "Location")]
+        public short LocationId { get; set; }
+
+        public IEnumerable<SelectListItem> Locations { get; set; }
+
+        [Required]
+        [Display(Name = "Category of Membership")]
+        public short MembershipType { get; set; }
+
+        public IEnumerable<SelectListItem> Categories { get; set; }
+
+        [Required]
+        [Display(Name = "Referred By")]
+        public short ReferredBy { get; set; }
+
+        public IEnumerable<SelectListItem> Referrers { get; set; }
+
+        //public string LocationCode { get; set; }
+        //public string LocationDigit { get; set; }
     }
 }

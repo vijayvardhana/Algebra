@@ -4,10 +4,8 @@
 @model PaymentViewModel
 
 <div id="payment" class="small">
-
-    
-        <h4>Membership Fee <small>(Fill payment details)</small></h4>
-        <ul id="fee-details" style="font-weight:bold;"></ul>
+    <h4>Membership Fee <small>(Fill payment details)</small></h4>
+    <div>@await Html.PartialAsync("_Fee", Model.P_FeeBreakUp)</div>
     <hr class="colorgraph">
     <div class="row">
         <div class="col-lg-4">
@@ -33,7 +31,8 @@
     <div class="row">
         <div class="col-lg-4">
             <div class="form-group">
-               
+                <label asp-for="@Model.P_TotalAmount"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
+                <input asp-for="@Model.P_TotalAmount" class="form-control input-sm" />
             </div>
         </div>
         <div class="col-lg-4">
@@ -44,40 +43,17 @@
         </div>
         <div class="col-lg-4">
             <div class="form-group">
-                <label asp-for="@Model.P_TotalAmount"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
-                <input asp-for="@Model.P_TotalAmount" class="form-control input-sm" />
+                <label asp-for="@Model.P_PaymentMode"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
+                <select asp-for="@Model.P_PaymentMode" asp-items="@Model.Modes" class="form-control input-sm"></select>
+                <span asp-validation-for="@Model.P_PaymentMode" class="text-danger"></span>
             </div>
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-4">
-            <div class="form-group">
-                <label asp-for="@Model.P_PaymentMode"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
-                <select asp-for="@Model.P_PaymentMode" asp-items="@(new SelectList(ViewBag.PaymentModes, "Mode", "Description"))" class="form-control input-sm">
-                    <option value="">select</option>
-                </select>
-                <span asp-validation-for="@Model.P_PaymentMode" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="col-lg-4">
-            <div class="form-group">
-                <label asp-for="@Model.P_ChequeNumber"></label>
-                <input asp-for="@Model.P_ChequeNumber" class="form-control input-sm" />
-                <small>(Input comma separated cheque number, for multiple cheques)</small>
-            </div>
-        </div>
         <div class="col-lg-4">
             <div class="form-group">
                 <label asp-for="@Model.P_TransactionId"></label>
                 <input asp-for="@Model.P_TransactionId" class="form-control input-sm" />
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-4">
-            <div class="form-group">
-                <label asp-for="@Model.P_IsDiscountApplicable"></label>
-                <input asp-for="@Model.P_IsDiscountApplicable" class="form-control form-check-input" />
             </div>
         </div>
         <div class="col-lg-4">
@@ -88,9 +64,20 @@
         </div>
         <div class="col-lg-4">
             <div class="form-group">
+                <label asp-for="@Model.P_IsDiscountApplicable"></label>
+                <input type="checkbox" asp-for="@Model.P_IsDiscountApplicable" class="form-control form-check-input" style="width:20px; height:20px; " />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="form-group">
                 <input type="hidden" asp-for="@Model.P_MembershipFeeId" value="" oldid="@Model.P_MembershipFeeId" class="form-control input-sm" />
             </div>
         </div>
+    </div>
+    <div id="cheque-section" style='display:none;'>
+        @await Html.PartialAsync("_Cheque", Model.Cheques)
     </div>
 </div>
 

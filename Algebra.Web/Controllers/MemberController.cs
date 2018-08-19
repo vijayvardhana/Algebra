@@ -41,6 +41,29 @@ namespace Algebra.Web.Controllers
         }
 
         [HttpGet]
+        public IActionResult AddMember(int id)
+        {
+            RegistrationFormViewModel model;
+            ViewBag.Title = (id > 0) ? "Edit" : "Add";
+            using(var unitOfWork = new UnitOfWork(_dbContext)) {
+                model = unitOfWork.Members.CreateMember(id);
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult AddMember(RegistrationFormViewModel m)
+        {
+            RegistrationFormViewModel model = new RegistrationFormViewModel();
+            using(var unitOfWork = new UnitOfWork(_dbContext))
+            {
+                model = unitOfWork.Members.CreateRegistration(m);
+            }
+            //return View();
+            return View("Registration", model);
+        }
+
+        [HttpGet]
         public IActionResult Registration(string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
@@ -61,7 +84,7 @@ namespace Algebra.Web.Controllers
             //ViewBag.Locations = locations;
            // ViewBag.Referrers = referrer;
            // ViewBag.AccountId = GetAccountNumber(maxAccId, _applicationVariables.InitialAccountNumber);
-           // ViewBag.PaymentModes = paymentModes;
+           // ViewBag.Modes = paymentModes;
 
             RegistrationFormViewModel RegistrationForm = new RegistrationFormViewModel();
             return View(RegistrationForm);

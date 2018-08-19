@@ -55,8 +55,12 @@ namespace Algebra.Entities.ViewModels
         [Display(Name = "Correspondence Address")]
         public string S_CorrespondenceAddress { get; set; }
 
-        [Display(Name = "Mobile Number")]
-        public string S_MobileNumber { get; set; }
+        [Required]
+        [Display(Name = "Primary Mobile Number")]
+        public string S_PrimaryMobileNumber { get; set; }
+
+        [Display(Name = "Secondary Mobile Number")]
+        public string S_SecondaryMobileNumber { get; set; }
 
         [Display(Name = "Email")]
         public string S_Email { get; set; }

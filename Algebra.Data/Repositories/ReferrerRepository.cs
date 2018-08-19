@@ -15,25 +15,23 @@ namespace Algebra.Data.Repositories
             return _dbContext.Referrers.FirstOrDefault(c => c.Code == code);
         }
 
-        IEnumerable<SelectListItem> IReferrerRepository.GetDropDown()
+        IEnumerable<SelectListItem> IReferrerRepository.GetDropDown(IUnitOfWork unitOfWork)
         {
-            using(var unitOfWork = new UnitOfWork(_dbContext))
+            List<SelectListItem> referrers = unitOfWork.Referrers.GetAll()
+               .OrderBy(n => n.Name)
+                   .Select(n =>
+                   new SelectListItem
+                   {
+                       Value = n.Id.ToString(),
+                       Text = n.Name
+                   }).ToList();
+            var defaultReferrer = new SelectListItem()
             {
-                List<SelectListItem> referrers = unitOfWork.Referrers.GetAll()
-                    .OrderBy(i => i.Id)
-                    .Select(t =>
-                    new SelectListItem {
-                        Value = t.Id.ToString(),
-                        Text = t.Name
-                    }).ToList();
-
-                var defaultReferrer = new SelectListItem() {
-                    Value = null,
-                    Text = "--- Select Referrer ---"
-                };
-                referrers.Insert(0, defaultReferrer);
-                return new SelectList(referrers, "Value", "Text");
-            }
+                Value = null,
+                Text = "--- Select Referrer ---"
+            };
+            referrers.Insert(0, defaultReferrer);
+            return new SelectList(referrers, "Value", "Text");
         }
     }
 }

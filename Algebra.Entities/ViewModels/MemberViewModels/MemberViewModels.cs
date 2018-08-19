@@ -21,8 +21,7 @@ namespace Algebra.Entities.ViewModels
 
         [Required]
         [Display(Name = "Referred By")]
-        [DataType(DataType.Text)]
-        public string M_ReferredBy { get; set; }
+        public short M_ReferredBy { get; set; }
 
         [Required]
         [Display(Name = "Category of Membership")]
@@ -69,8 +68,12 @@ namespace Algebra.Entities.ViewModels
         [Display(Name = "Correspondence Address")]
         public string M_CorrespondenceAddress { get; set; }
 
-        [Display(Name = "Mobile Number")]
-        public string M_MobileNumber { get; set; }
+        [Required]
+        [Display(Name = "Primary Mobile Number")]
+        public string M_PrimaryMobileNumber { get; set; }
+
+        [Display(Name = "Secondary Mobile Number")]
+        public string M_SecondaryMobileNumber { get; set; }
 
         [Display(Name = "Email")]
         public string M_Email { get; set; }

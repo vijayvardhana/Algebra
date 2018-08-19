@@ -9,45 +9,64 @@ namespace Algebra.Data.Repositories
     {
         public LocationRepository(ApplicationDbContext dbContext) : base(dbContext) { }
 
-        Location ILocationRepository.GetLocationByCode(string lc)
+        public Location GetLocationByCode(string lc)
         {
             return _dbContext.Locations.FirstOrDefault(i => i.Code == lc);
         }
 
-        Dictionary<int, string> ILocationRepository.GetLocations()
+        //public Dictionary<int, string> ILocationRepository.GetLocations()
+        //{
+        //    Dictionary<int, string> loc = new Dictionary<int, string>();
+        //    var locations = _dbContext.Locations;
+        //    if (locations.Any())
+        //    {
+        //        foreach (var location in _dbContext.Locations)
+        //        {
+        //            loc.Add(location.Id, location.Name);
+        //        }
+        //    }
+        //    return loc;
+        //}
+
+        public IEnumerable<SelectListItem> GetDropDown(IUnitOfWork unitOfWork)
         {
-            Dictionary<int, string> loc = new Dictionary<int, string>();
-            var locations = _dbContext.Locations;
-            if (locations.Any())
+            List<SelectListItem> locations = unitOfWork.Locations.GetAll()
+               .OrderBy(n => n.Name)
+                   .Select(n =>
+                   new SelectListItem
+                   {
+                       Value = n.Id.ToString(),
+                       Text = n.Name
+                   }).ToList();
+            var defaultLocation = new SelectListItem()
             {
-                foreach (var location in _dbContext.Locations)
-                {
-                    loc.Add(location.Id, location.Name);
-                }
-            }
-            return loc;
+                Value = null,
+                Text = "--- Select Location ---"
+            };
+            locations.Insert(0, defaultLocation);
+            return new SelectList(locations, "Value", "Text");
         }
 
-        public IEnumerable<SelectListItem> GetDropDown()
+        public IEnumerable<SelectListItem> GetLocationFeeDropDown(IUnitOfWork unitOfWork)
         {
-            using(var unitOfWork = new UnitOfWork(_dbContext))
-            {
-                List<SelectListItem> locations = unitOfWork.Locations.GetAll()
-                    .OrderBy(n => n.Name)
-                        .Select(n =>
-                        new SelectListItem
-                        {
-                            Value = n.Id.ToString(),
-                            Text = n.Name
-                        }).ToList();
-                var defaultLocation = new SelectListItem()
+            var locations = unitOfWork.Locations.GetAll();
+            var fee = unitOfWork.Fees.GetAll();
+
+            List<SelectListItem> ddLocations = locations
+                .Join(fee, l => l.Id, f => f.LocationId, ((l, f) 
+                => new SelectListItem
                 {
-                    Value = null,
-                    Text = "--- Select Location ---"
-                };
-                locations.Insert(0, defaultLocation);
-                return new SelectList(locations, "Value", "Text");
-            }
+                    Value = l.Id.ToString(),
+                    Text = l.Name
+                })).ToList();
+
+            var defaultLocation = new SelectListItem()
+            {
+                Value = null,
+                Text = "--- Select Location ---"
+            };
+            ddLocations.Insert(0, defaultLocation);
+            return new SelectList(ddLocations, "Value", "Text");
         }
     }
 }

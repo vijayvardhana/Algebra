@@ -6,6 +6,6 @@ namespace Algebra.Data.Repositories
 {
     public interface IModeRepository : IRepository<Mode>
     {
-        IEnumerable<SelectListItem> GetDropDownModes();
+        IEnumerable<SelectListItem> GetDropDown(IUnitOfWork unitOfWork);
     }
 }

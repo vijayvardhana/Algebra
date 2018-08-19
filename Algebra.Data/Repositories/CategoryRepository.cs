@@ -11,27 +11,24 @@ namespace Algebra.Data.Repositories
     {
         public CategoryRepository(ApplicationDbContext dbContext) : base(dbContext) { }
 
-        public IEnumerable<SelectListItem> GetDropDown()
+        public IEnumerable<SelectListItem> GetDropDown(IUnitOfWork unitOfWork)
         {
-            using(var unitOfWork = new UnitOfWork(_dbContext))
-            {
-                List<SelectListItem> types = unitOfWork.Categories.GetAll()
-                    .OrderBy(i => i.Id)
-                    .Select(t => new SelectListItem
+            List<SelectListItem> types = unitOfWork.Categories.GetAll()
+                .OrderBy(n => n.Id)
+                    .Select(n => new SelectListItem
                     {
-                        Value = t.Id.ToString(),
-                        Text = t.Type
+                        Value = n.Id.ToString(),
+                        Text = n.Type
                     }).ToList();
 
-                var defaultType = new SelectListItem()
-                {
-                    Value = null,
-                    Text = "--- Select membership type ---"
-                };
-                types.Insert(0, defaultType);
-                return new SelectList(types, "Value", "Text");
-            }
-            
+            var defaultType = new SelectListItem()
+            {
+                Value = null,
+                Text = "--- Select membership type ---"
+            };
+            types.Insert(0, defaultType);
+            return new SelectList(types, "Value", "Text");
+
         }
     }
 }

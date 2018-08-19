@@ -8,5 +8,6 @@ namespace Algebra.Data.Repositories
     public interface IFeeRepository: IRepository<Fee>
     {
         FeeViewModels CreateFee(int id);
+        Fee GetFeeByLocationId(int locationId);
     }
 }

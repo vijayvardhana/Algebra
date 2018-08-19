@@ -28,7 +28,7 @@ namespace Algebra.Web.Controllers
             using(var unitOfWork = new UnitOfWork(_dbContext))
             {
                 list = unitOfWork.Fees.GetAll();
-                ViewBag.Locations = unitOfWork.Locations.GetLocations();
+                ViewBag.Locations = unitOfWork.Locations.GetDropDown(unitOfWork);
             }
             return View(list);
         }
@@ -86,7 +86,7 @@ namespace Algebra.Web.Controllers
             using (var unitOfWork = new UnitOfWork(_dbContext))
             {
                 model = unitOfWork.Fees.Get(id).Adapt<FeeViewModels>();
-                model.Locations = unitOfWork.Locations.GetDropDown();
+                model.Locations = unitOfWork.Locations.GetDropDown(unitOfWork);
             }
             return View(model);
         }

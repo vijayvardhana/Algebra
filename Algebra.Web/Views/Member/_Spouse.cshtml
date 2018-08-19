@@ -40,13 +40,15 @@
         </div>
         <div class="col-lg-4">
             <div class="form-group">
-                <label asp-for="@Model.S_DateOfBirth"></label>
-                <input asp-for="@Model.S_DateOfBirth" class="form-control input-sm" />
+                <label asp-for="@Model.S_PrimaryMobileNumber"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
+                <input asp-for="@Model.S_PrimaryMobileNumber" class="form-control input-sm" />
+                <span asp-validation-for="@Model.S_PrimaryMobileNumber" class="text-danger"></span>
             </div>
         </div>
         <div class="col-lg-4">
             <div class="form-group">
-
+                <label asp-for="@Model.S_SecondaryMobileNumber"></label>
+                <input asp-for="@Model.S_SecondaryMobileNumber" class="form-control input-sm" />
             </div>
         </div>
     </div>
@@ -73,20 +75,20 @@
     <div class="row">
         <div class="col-lg-4">
             <div class="form-group">
-                <label asp-for="@Model.S_TelephoneNumber"></label>
-                <input asp-for="@Model.S_TelephoneNumber" class="form-control input-sm" />
-            </div>
-        </div>
-        <div class="col-lg-4">
-            <div class="form-group">
-                <label asp-for="@Model.S_MobileNumber"></label>
-                <input asp-for="@Model.S_MobileNumber" class="form-control input-sm" />
+                <label asp-for="@Model.S_DateOfBirth"></label>
+                <input asp-for="@Model.S_DateOfBirth" class="form-control input-sm" />
             </div>
         </div>
         <div class="col-lg-4">
             <div class="form-group">
                 <label asp-for="@Model.S_Email"></label>
                 <input asp-for="@Model.S_Email" class="form-control input-sm" />
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label asp-for="@Model.S_TelephoneNumber"></label>
+                <input asp-for="@Model.S_TelephoneNumber" class="form-control input-sm" />
             </div>
         </div>
     </div>
