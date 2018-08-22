@@ -11,11 +11,11 @@
             <div id="Tabs" role="tabpanel">
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs" role="tablist">
-                    <li class="disabled"><a href="#member" aria-controls="personal" role="tab" data-toggle="tab">Member Details</a></li>
-                    <li class="disabled"><a href="#spouse" aria-controls="employment" role="tab">Spouse Details</a></li>
-                    <li class="disabled"><a href="#dependent" aria-controls="dependent" role="tab">Dependent(s)</a></li>
-                    <li class="disabled"><a href="#membership-fee" aria-controls="membership-fee" role="tab">Membership Fee</a></li>
-                    <li class="disabled"><a href="#assets" aria-controls="assets" role="tab">Assets</a></li>
+                    <li class="active"><a href="#member" aria-controls="member" role="tab" data-toggle="tab">Member Details</a></li>
+                    <li><a href="#spouse" aria-controls="spouse" role="tab" data-toggle="tab">Spouse Details</a></li>
+                    <li><a href="#dependent" aria-controls="dependent" role="tab" data-toggle="tab">Dependent(s)</a></li>
+                    <li><a href="#membership-fee" aria-controls="membership-fee" role="tab" data-toggle="tab">Membership Fee</a></li>
+                    <li><a href="#assets" aria-controls="assets" role="tab" data-toggle="tab">Assets</a></li>
                 </ul>
                 <!-- Tab panes -->
                 <div class="tab-content" style="padding-top: 20px">
@@ -66,7 +66,7 @@
 @section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial")
 
-    <script type="text/javascript">
+<script type="text/javascript">
         var r = {
             Location: @Model.LocationId,
             Type: @Model.MembershipType,
@@ -82,24 +82,7 @@
                 o.SubmitForm();
             });
 
-            //$("#M_MembershipType").change(function () {
-            //    $("#M_LocationId").val("0");
-            //    var member_type = $(this).val();
-            //    o.TabsSelection(member_type);
-            //});
-
-            //$("#M_LocationId").change(function () {
-            //    console.log('inside location change');
-            //    let locCtrl = $(this);
-            //    let locationId = $(this).val();
-            //    let locationTxt = locCtrl.find(':selected').text();
-            //    $("#M_Location").val(locationTxt);
-            //    o.SetCardNumber(locationTxt.charAt(0));
-            //    o.PopulatePaymentControls(locationId)
-            //});
-
             $("#P_PaymentMode").change(function () {
-                //let mode = $(this).val();
                 if (this.value == '6' || this.value == '7')
                 {
                     $("#cheque-section").show();
@@ -108,35 +91,37 @@
                     $("#cheque-section").hide();
                 }
             });
-
         });
 
         /*
-         * This below code segment will 
-         * add/remove the cheque detail rows 
+         * This below code segment will
+         * add/remove the cheque detail rows
          * */
 
         var regex = /^(.+?)(\d+)$/i;
         var cloneIndex = $(".clonedInput").length;
-        
+
         function clone() {
             $(this).parents(".clonedInput").clone()
                 .appendTo("#cheque-section")
                 .attr("id", "clonedInput" + cloneIndex)
                 .find(".form-group")
                 .each(function () {
-                    var id = this.id || "";
-                    console.log('Id : '+id);
-                    var match = id.match(regex) || [];
-                    console.log('match : ' + match);
-                    if (match.length == 3) {
-                        this.id = match[1] + (cloneIndex);
+                    var ctrl = $(this).find('input:first')[0] || "";
+                    if (ctrl) {
+                        var id = ctrl.id;
+                        console.log('Id : ' + id);
+                        var match = id.match(regex) || [];
+                        if (match.length == 3) {
+                            this.id = match[1] + (cloneIndex + 1);
+                            console.log("New Id : " + match[1] + (cloneIndex + 1));
+                        }
                     }
                 })
                 .on('click', 'button.clone', clone)
                 .on('click', 'button.remove', remove);
             cloneIndex++;
-            
+
         }
         function remove() {
             $(this).parents(".clonedInput").remove();
@@ -145,5 +130,5 @@
         $("button.clone").on("click", clone);
         $("button.remove").on("click", remove);
 
-    </script>
+</script>
 }

@@ -23,8 +23,7 @@ namespace Algebra.Data.Repositories
                 .Take(count)
                 .ToList();
         }
-
-        public int GetMaxId(int _initialAccountNumber)
+        public int GetMaxId()
         {
             if (_dbContext.Members.Any())
             {
@@ -32,10 +31,30 @@ namespace Algebra.Data.Repositories
             }
             else
             {
-                return _initialAccountNumber;
+                return 0;
             }
 
         }
+        //public string GetAccountNumber(string _code, string _baseDigits)
+        //{
+        //    string accountNumber = string.Empty; 
+        //    if (_dbContext.Members.Any())
+        //    {
+        //        int m = _dbContext.Members.Max(i => i.Id);
+        //        if (m != 0)
+        //        {
+        //            accountNumber = string.Format("{0}{1}",_baseDigits,m.ToString());
+        //            int exceslen = accountNumber.Length - 4;
+        //            accountNumber = accountNumber.Remove(1, exceslen);
+        //        }
+        //        return string.Format("{0}{1}", _code, accountNumber);
+        //    }
+        //    else
+        //    {
+        //        return string.Format("{0}{1}", _code, _baseDigits); 
+        //    }
+
+        //}
 
         public IEnumerable<Member> GetMembersWithSpouseAndDependents()
         {
@@ -85,7 +104,7 @@ namespace Algebra.Data.Repositories
                 model.Categories = unitOfWork.Categories.GetDropDown(unitOfWork);
                 model.Referrers = unitOfWork.Referrers.GetDropDown(unitOfWork);
 
-                 
+
 
                 model.Member = MemberBuilder(unitOfWork, r);
                 model.Payment = PaymentBuilder(unitOfWork, r);
@@ -108,15 +127,36 @@ namespace Algebra.Data.Repositories
                 model.M_LocationId = m.LocationId;
                 model.M_MembershipType = m.MembershipType;
                 model.M_ReferredBy = m.ReferredBy;
+                model.M_AccountId = m.AccountId;
             }
             else
             {
                 model.M_LocationId = r.LocationId;
                 model.M_MembershipType = r.MembershipType;
                 model.M_ReferredBy = r.ReferredBy;
+                model.M_AccountId = GetAccountNumber(unitOfWork, r.LocationId);
+            }
+
+            return model;
+        }
+
+        private string GetAccountNumber(IUnitOfWork unitOfWork, int locId)
+        {
+            string accountNumber = string.Empty;
+            Location l = unitOfWork.Locations.Get(locId);
+            int m = unitOfWork.Members.GetMaxId();
+
+            if (m != 0)
+            {
+                accountNumber = string.Format("{0}{1}", l.Digits, m.ToString());
+            }
+            else
+            {
+                accountNumber = string.Format("{0}{1}", l.Digits, "1");
             }
             
-            return model;
+            int exceslen = accountNumber.Length - 4;
+            return string.Format("{0}{1}", l.Code, accountNumber.Remove(1, exceslen));
         }
 
         private PaymentViewModel PaymentBuilder(IUnitOfWork unitOfWork, RegistrationFormViewModel r)

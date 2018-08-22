@@ -8,7 +8,7 @@ namespace Algebra.Data.Repositories
     {
         IEnumerable<Member> GetLatestMembers(int count);
 
-        int GetMaxId(int _initialAccountNumber);
+        int GetMaxId();
 
         IEnumerable<Member> GetMembersWithSpouseAndDependents();
 

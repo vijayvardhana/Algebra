@@ -76,7 +76,7 @@ namespace Algebra.Web.Controllers
             {
                 ViewBag.Locations = unitOfWork.Locations.GetAll().ToList();
                 ViewBag.Referrers = unitOfWork.Referrers.GetAll().ToList();
-                maxAccId = unitOfWork.Members.GetMaxId(_applicationVariables.InitialAccountNumber);
+                //maxAccId = unitOfWork.Members.GetMaxId(_applicationVariables.InitialAccountNumber);
                 ViewBag.PaymentModes = unitOfWork.Modes.GetAll().ToList();
                 ViewBag.MembershipFee = unitOfWork.Fees.GetAll().ToList();
                 ViewBag.AccountId = GetAccountNumber(maxAccId, _applicationVariables.InitialAccountNumber);

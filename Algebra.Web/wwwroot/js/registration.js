@@ -1,4 +1,12 @@
-﻿class Registration {
+﻿const Tabs = {
+    MEM: 'member',
+    SPO: 'spouse',
+    DEP: 'dependent',
+    FEE: 'membership-fee',
+    AST: 'assets'
+}
+
+class Registration {
 
     constructor(m) {
 
@@ -11,68 +19,47 @@
         this.ctrl = new Array();
         this.member = {};
         this.spouse = {};
-        this.register = {};
+        // this.register = {};
         this.dependent = {};
         this.payment = {};
+        this.cheque = {};
         this.ctrl = [];
 
         this.url = "/api/member/AddMember";
 
         this.TabsSelection(this.mType);
-
     }
 
     TabsSelection(m) {
         let t = this;
         t.mType = m;
-        console.log(m);
         switch (t.mType) {
             case 1:
-                t.DisableTabs();
-                t.EnableTabs([0, 3, 4]);
+            case 5:
+                t.RemoveTabs([Tabs.SPO, Tabs.DEP]);
                 break;
             case 2:
-                t.DisableTabs();
-                t.EnableTabs([0, 1, 3, 4]);
+                t.RemoveTabs([Tabs.DEP]);
                 break;
             case 3:
-                t.DisableTabs();
-                t.EnableTabs([0, 1, 2, 3, 4]);
+                //All tabs needs to display
                 break;
             case 4:
-                t.DisableTabs();
-                t.EnableTabs([0, 2, 3, 4]);
-                break;
-            case 5:
-                t.DisableTabs();
-                t.EnableTabs([0, 3, 4]);
-                break;
-            default:
-                t.DisableTabs();
+                t.RemoveTabs([Tabs.SPO]);
                 break;
         }
     }
 
-    EnableTabs(index) {
-        for (var i = 0; i < index.length; i++) {
-            let li = this.tabCtrl[0].children[index[i]];
-            if (index[i] == 0) { $(li).addClass("active"); }
-            $(li).removeClass('disabled');
-            $(li).find('a:first').attr("data-toggle", "tab");
-            $(li).show();
-        }
-
-    }
-
-    DisableTabs() {
-        let idx = [0, 1, 2, 3, 4, 5];
-        for (var i = 0; i < idx.length; i++) {
-            let li = this.tabCtrl[0].children[idx[i]];
-            if (idx[i] == 0) { $(li).removeClass("active"); }
-            $(li).addClass('disabled');
-            $(li).find('a:first').removeAttr("data-toggle");
-            $(li).hide();
-        }
+    RemoveTabs(tabs) {
+        $('.nav-tabs li').each(function (i) {
+            let index = $(this).index();
+            let value = $(this).find('a:first').attr('aria-controls');
+            let _idx = tabs.indexOf(value);
+            if (_idx >= 0) {
+                $(this).hide();
+                let elm = $("#" + value).remove();
+            }
+        });
     }
 
     FormControlExtraction() {
@@ -85,7 +72,7 @@
             var errorMessage = $(this).attr('data-val-required');
             var model = $(this).parents(':eq(3)').attr('id');;
             o = { 'id': id, 'value': value, 'isRequired': required, 'errorMessage': errorMessage, 'model': model };
-            //console.log(o);
+            console.log(o);
             c[index] = o;
             o = {};
         });
@@ -104,9 +91,9 @@
             let val = c["value"];
 
             switch (model) {
-                case 'registration':
-                    this.register[key.substr(2)] = val;
-                    break;
+                //case 'registration':
+                //    this.register[key.substr(2)] = val;
+                //    break;
                 case 'member':
                     this.member[key.substr(2)] = val;
                     console.log("Model: " + model + ", Key : " + key + " Value : " + val);
@@ -116,7 +103,7 @@
                     break;
                 case 'dependent_1':
                 case 'dependent_2':
-                    if (model == "dependent_1") {
+                    if (model === "dependent_1") {
                         d1[key.substr(6)] = val;
                     } else {
                         d2[key.substr(6)] = val;
@@ -124,6 +111,10 @@
                     break;
                 case 'payment':
                     this.payment[key.substr(2)] = val;
+                    console.log("Model: " + model + ", Key : " + key + " Value : " + val);
+                    break;
+                case 'cheque':
+                    this.cheque[key.substr(2)] = val;
                     console.log("Model: " + model + ", Key : " + key + " Value : " + val);
                     break;
                 default:

@@ -20,35 +20,35 @@
             <div class="col-lg-2">
                 <div class="form-group">
                     <label asp-for="@Model[i].C_Number"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
-                    <input asp-for="@Model[i].C_Number" class="form-control input-sm" id="C_Number_@i.ToString()" />
+                    <input asp-for="@Model[i].C_Number" class="form-control input-sm" id="C_Number_@index.ToString()" />
                     <span asp-validation-for="@Model[i].C_Number" class="text-danger"></span>
                 </div>
             </div>
             <div class="col-lg-2">
                 <div class="form-group">
                     <label asp-for="@Model[i].C_Amount"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
-                    <input asp-for="@Model[i].C_Amount" class="form-control input-sm" id="C_Amount_@i.ToString()" />
+                    <input asp-for="@Model[i].C_Amount" class="form-control input-sm" id="C_Amount_@index.ToString()" />
                     <span asp-validation-for="@Model[i].C_Amount" class="text-danger"></span>
                 </div>
             </div>
             <div class="col-lg-2">
                 <div class="form-group">
                     <label asp-for="@Model[i].C_Date"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
-                    <input asp-for="@Model[i].C_Date" class="form-control input-sm" id="C_Date_@i.ToString()" />
+                    <input asp-for="@Model[i].C_Date" class="form-control input-sm" id="C_Date_@index.ToString()" />
                     <span asp-validation-for="@Model[i].C_Date" class="text-danger"></span>
                 </div>
             </div>
             <div class="col-lg-2">
                 <div class="form-group">
                     <label asp-for="@Model[i].C_BankName"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
-                    <input asp-for="@Model[i].C_BankName" class="form-control input-sm" id="C_BankName_@i.ToString()" />
+                    <input asp-for="@Model[i].C_BankName" class="form-control input-sm" id="C_BankName_@index.ToString()" />
                     <span asp-validation-for="@Model[i].C_BankName" class="text-danger"></span>
                 </div>
             </div>
             <div class="col-lg-2">
                 <div class="form-group">
                     <label asp-for="@Model[i].C_DrawnOn"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
-                    <input asp-for="@Model[i].C_DrawnOn" class="form-control input-sm" id="C_DrawnOn_@i.ToString()" />
+                    <input asp-for="@Model[i].C_DrawnOn" class="form-control input-sm" id="C_DrawnOn_@index.ToString()" />
                     <span asp-validation-for="@Model[i].C_DrawnOn" class="text-danger"></span>
                 </div>
             </div>
@@ -56,7 +56,7 @@
                 <div class="form-group">
                     <label>Copy</label><br />
                     <span data-placement="left" data-toggle="tooltip" title="Copy">
-                        <button type="button" id="copy-btn-cheque-@i.ToString()" value="@index" class="btn btn-primary btn-xs clone">
+                        <button type="button" id="copy-btn-cheque-@index.ToString()" value="@index" class="btn btn-primary btn-xs clone">
                             <span class="glyphicon glyphicon-copy"></span>
                         </button>
                     </span>
@@ -66,7 +66,7 @@
                 <div class="form-group">
                     <label>Delete</label><br />
                     <span data-placement="left" data-toggle="tooltip" title="Delete">
-                        <button type="button" id="remove-btn-cheque-@i.ToString()" value="@index" class="btn btn-danger btn-xs remove">
+                        <button type="button" id="remove-btn-cheque-@index.ToString()" value="@index" class="btn btn-danger btn-xs remove">
                             <span class="glyphicon glyphicon-trash"></span>
                         </button>
                     </span>
