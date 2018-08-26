@@ -13,6 +13,7 @@ class Registration {
         this.mType = m.Type;
         this.Location = m.Location;
         this.RefferBy = m.Reffered;
+        this.CreatedBy = m.CreatedBy;
 
 
         this.tabCtrl = $(".nav-tabs");
@@ -70,13 +71,37 @@ class Registration {
             var value = $(this).val();
             var required = $(this).attr('data-val-required') ? true : false;
             var errorMessage = $(this).attr('data-val-required');
-            var model = $(this).parents(':eq(3)').attr('id');;
-            o = { 'id': id, 'value': value, 'isRequired': required, 'errorMessage': errorMessage, 'model': model };
-            console.log(o);
+            var model = $(this).parents(':eq(3)').attr('id');
+            var isCheque = (model.indexOf("cheque") != -1) ? true : false;
+            o = { 'id': id, 'value': value, 'isRequired': required, 'errorMessage': errorMessage, 'model': model, 'isCheque': isCheque };
+
+            // console.log(o);
             c[index] = o;
             o = {};
         });
         this.ctrl = c;
+    }
+
+    ChequeModelBuilder(cheques) {
+
+        var ids = $('div .clonedInput').map(function () {
+            return this.id
+        }).get()
+
+        for (var i = 0; i < ids.length; i++) {
+            this.cheque["c" + i] = {
+                'Number': this.ChequeValues(cheques, ids[i], 0),
+                'Amount': this.ChequeValues(cheques, ids[i], 1),
+                'Date': this.ChequeValues(cheques, ids[i], 2),
+                'BankName': this.ChequeValues(cheques, ids[i], 3),
+                'DrawnOn': this.ChequeValues(cheques, ids[i], 4),
+                'Created': this.CreatedBy
+            };
+        }
+    }
+
+    ChequeValues(items, modelId, pos) {
+        return items.filter(m => m.model == modelId)[pos].value;
     }
 
     ModelBuilder() {
@@ -91,12 +116,8 @@ class Registration {
             let val = c["value"];
 
             switch (model) {
-                //case 'registration':
-                //    this.register[key.substr(2)] = val;
-                //    break;
                 case 'member':
                     this.member[key.substr(2)] = val;
-                    console.log("Model: " + model + ", Key : " + key + " Value : " + val);
                     break;
                 case 'spouse':
                     this.spouse[key.substr(2)] = val;
@@ -111,17 +132,18 @@ class Registration {
                     break;
                 case 'payment':
                     this.payment[key.substr(2)] = val;
-                    console.log("Model: " + model + ", Key : " + key + " Value : " + val);
-                    break;
-                case 'cheque':
-                    this.cheque[key.substr(2)] = val;
-                    console.log("Model: " + model + ", Key : " + key + " Value : " + val);
                     break;
                 default:
+                    break;
             }
         }
-        this.dependent["d1"] = d1;
-        this.dependent["d2"] = d2;
+        this.dependent["d0"] = d1;
+        this.dependent["d1"] = d2;
+
+        var cheques = this.ctrl.filter(function (item) {
+            return item.isCheque === true;
+        });
+        this.ChequeModelBuilder(cheques);
     }
 
     ValidateForm() {
@@ -135,7 +157,7 @@ class Registration {
             let tab = c["model"];
             if (required && !val) {
                 sb_msg.append("<li> Tab " + tab + " - " + message + "</li>");
-                console.log('Model : ' + model + ', Control: ' + c.id + ', Value : ' + val);
+                //console.log('Model : ' + model + ', Control: ' + c.id + ', Value : ' + val);
             }
         }
 
@@ -153,7 +175,8 @@ class Registration {
     SubmitForm() {
 
         this.FormControlExtraction();
-
+        //this.ModelBuilder();
+        //return false;
         if (!this.ValidateForm()) {
             return false;
         }
@@ -161,10 +184,12 @@ class Registration {
             this.ModelBuilder();
 
             var models = {};
-            models["o1"] = this.member;
-            models["o2"] = this.spouse;
-            models["o3"] = this.dependent;
-            models["o4"] = this.payment;
+            models["o0"] = this.member;
+            models["o1"] = this.spouse;
+            models["o2"] = this.dependent;
+            models["o3"] = this.payment;
+            models["o4"] = this.cheque;
+            console.log(JSON.stringify(models));
             //  return false;
             $.ajax({
                 url: "/api/member/post",
@@ -180,15 +205,5 @@ class Registration {
                 }
             });
         }
-    }
-
-    SetCardNumber(char) {
-        var cardNoControls = $(".form-group input[type=hidden]").each(function () {
-            let e = $(this);
-            let c = e.attr('acid');
-            let v = 'AL' + char + '' + c;
-            e.val(v);
-            //console.log("current value : " + c + ", New Value : " + v);
-        });
     }
 }

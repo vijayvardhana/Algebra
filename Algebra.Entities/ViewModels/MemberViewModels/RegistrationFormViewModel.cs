@@ -42,7 +42,6 @@ namespace Algebra.Entities.ViewModels
 
         public IEnumerable<SelectListItem> Referrers { get; set; }
 
-        //public string LocationCode { get; set; }
-        //public string LocationDigit { get; set; }
+        public string CreatedBy { get; set; }
     }
 }

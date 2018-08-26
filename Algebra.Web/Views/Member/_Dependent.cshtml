@@ -12,13 +12,12 @@
     int index = i + 1;
     <div id="dependent_@index.ToString()" class="small">
         <h4>Dependent <small>@index</small></h4>
-
         <hr class="colorgraph">
         <div class="row">
             <div class="col-lg-4">
                 <div class="form-group">
                     <label asp-for="@Model[i].D_Name"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
-                    <input asp-for="@Model[i].D_Name" class="form-control input-sm" />
+                    <input asp-for="@Model[i].D_Name" class="form-control input-sm" value="" />
                     <span asp-validation-for="@Model[i].D_Name" class="text-danger"></span>
                 </div>
             </div>
@@ -27,11 +26,6 @@
                     <label asp-for="@Model[i].D_DateOfBirth"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
                     <input asp-for="@Model[i].D_DateOfBirth" class="form-control input-sm" />
                     <span asp-validation-for="@Model[i].D_DateOfBirth" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="form-group">
-                    <input type="hidden" asp-for="@Model[i].D_CardId" value="@ViewBag.AccountId-0@(i+3)" class="form-control input-sm" />
                 </div>
             </div>
         </div>
@@ -51,7 +45,9 @@
                 </div>
             </div>
             <div class="col-lg-4">
-
+                <div class="form-group">
+                    <input type="hidden" asp-for="@Model[i].D_CardId" value="@Model[i].D_CardId-0@(i+3)" class="form-control input-sm" />
+                </div>
             </div>
         </div>
     </div>

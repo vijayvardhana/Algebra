@@ -64,6 +64,30 @@ namespace Algebra.Data
             SecondDependent = 4
         }
 
+        public enum Gender
+        {
+            Male,
+            Female
+        }
+
+        public enum Occupation
+        {
+            [Display(Name = "Self Employed")]
+            SelfEmployed,
+            [Display(Name = "Salaried")]
+            Salaried,
+            [Display(Name = "Business")]
+            Business
+        }
+
+        public enum MaritalStatus
+        {
+            Single,
+            Married,
+            Divorced,
+            Widowed,
+            Separated
+        }
 
     }
 }

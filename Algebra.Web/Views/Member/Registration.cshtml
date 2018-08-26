@@ -5,7 +5,7 @@
 
 <div class="container">
     <form method="post" id="registration-form">
-        <input name="__RequestVerificationToken" type="hidden" value="CfDJ8KW5cuB058RCnNyZSLI7AUjUAtTwe54jQ4Z9Goyn3WKPcpVFYSFUM5J-JDFC3E-MZIUcyR0UnbrvrC_sHv6MbUONStuIMhqDc7i00pQiGkrzf3hK6t5gZFVrjUpyAcargow4zvKU_ISjdPfoLTNF588" />
+        <input name="RequestVerificationToken" type="hidden" value="CfDJ8KW5cuB058RCnNyZSLI7AUjUAtTwe54jQ4Z9Goyn3WKPcpVFYSFUM5J-JDFC3E-MZIUcyR0UnbrvrC_sHv6MbUONStuIMhqDc7i00pQiGkrzf3hK6t5gZFVrjUpyAcargow4zvKU_ISjdPfoLTNF588" />
         @Html.AntiForgeryToken()
         <div class="panel panel-default row" style="padding: 10px; margin: 10px">
             <div id="Tabs" role="tabpanel">
@@ -65,12 +65,14 @@
 </div>
 @section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial")
-
-<script type="text/javascript">
-        var r = {
-            Location: @Model.LocationId,
-            Type: @Model.MembershipType,
-            Reffered: @Model.ReferredBy
+    <script src="~/js/registration.js" asp-append-version="true"></script>
+    <script src="~/js/validator.js" asp-append-version="true"></script>
+    <script type="text/javascript">
+    var r = {
+        Location: @Model.LocationId,
+        Type: @Model.MembershipType,
+        Reffered: @Model.ReferredBy,
+        CreatedBy: '@Model.CreatedBy'
         };
 
 
@@ -104,17 +106,21 @@
         function clone() {
             $(this).parents(".clonedInput").clone()
                 .appendTo("#cheque-section")
-                .attr("id", "clonedInput" + cloneIndex)
+                .attr("id", "cheque-" + cloneIndex)
                 .find(".form-group")
                 .each(function () {
                     var ctrl = $(this).find('input:first')[0] || "";
                     if (ctrl) {
                         var id = ctrl.id;
-                        console.log('Id : ' + id);
+                       // console.log('Id : ' + id);
                         var match = id.match(regex) || [];
                         if (match.length == 3) {
                             this.id = match[1] + (cloneIndex + 1);
-                            console.log("New Id : " + match[1] + (cloneIndex + 1));
+                            //console.log("New Id : " + match[1] + (cloneIndex + 1));
+                            var inputCtrl = $(this).find('input')[0];
+                            $(inputCtrl).removeAttr('id');
+                            $(inputCtrl).attr('id', match[1] + (cloneIndex + 1));
+                           // console.log("Ctrl Id: " +inputCtrl.id);
                         }
                     }
                 })
@@ -130,5 +136,28 @@
         $("button.clone").on("click", clone);
         $("button.remove").on("click", remove);
 
-</script>
+
+
+
+    $.validator.unobtrusive.adapters.add("agerangevalidator", ["minage", "maxage"], function (options) {
+        options.rules["agerangevalidator"] = options.params;
+        options.messages["agerangevalidator"] = options.message;
+    });
+
+    $.validator.addMethod("agerangevalidator", function (value, elements, params) {
+        if (value) {
+            var valDate = new Date(value);
+            if ((new Date().getFullYear() - valDate.getFullYear()) < parseInt(params.minage) ||
+                (new Date().getFullYear() - valDate.getFullYear()) > parseInt(params.maxage)
+            ) {
+                return false;
+                //validation failed
+            }
+        }
+        return true;
+    });
+
+
+
+    </script>
 }

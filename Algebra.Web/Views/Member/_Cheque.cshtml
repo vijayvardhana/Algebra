@@ -14,42 +14,42 @@
 @for (int i = 0; i < Model.Count; i++)
 {
     int index = i + 1;
-    <div id="cheque-@index.ToString()" class="small clonedInput">
+    <div id="cheque-@i.ToString()" class="small clonedInput">
 
         <div class="row">
             <div class="col-lg-2">
                 <div class="form-group">
-                    <label asp-for="@Model[i].C_Number"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
-                    <input asp-for="@Model[i].C_Number" class="form-control input-sm" id="C_Number_@index.ToString()" />
-                    <span asp-validation-for="@Model[i].C_Number" class="text-danger"></span>
+                    <label asp-for="@Model[i].Number"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
+                    <input asp-for="@Model[i].Number" class="form-control input-sm" id="Number_@index.ToString()" />
+                    <span asp-validation-for="@Model[i].Number" class="text-danger"></span>
                 </div>
             </div>
             <div class="col-lg-2">
                 <div class="form-group">
-                    <label asp-for="@Model[i].C_Amount"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
-                    <input asp-for="@Model[i].C_Amount" class="form-control input-sm" id="C_Amount_@index.ToString()" />
-                    <span asp-validation-for="@Model[i].C_Amount" class="text-danger"></span>
+                    <label asp-for="@Model[i].Amount"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
+                    <input asp-for="@Model[i].Amount" class="form-control input-sm" id="Amount_@index.ToString()" />
+                    <span asp-validation-for="@Model[i].Amount" class="text-danger"></span>
                 </div>
             </div>
             <div class="col-lg-2">
                 <div class="form-group">
-                    <label asp-for="@Model[i].C_Date"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
-                    <input asp-for="@Model[i].C_Date" class="form-control input-sm" id="C_Date_@index.ToString()" />
-                    <span asp-validation-for="@Model[i].C_Date" class="text-danger"></span>
+                    <label asp-for="@Model[i].Date"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
+                    <input asp-for="@Model[i].Date" class="form-control input-sm" id="Date_@index.ToString()" />
+                    <span asp-validation-for="@Model[i].Date" class="text-danger"></span>
                 </div>
             </div>
             <div class="col-lg-2">
                 <div class="form-group">
-                    <label asp-for="@Model[i].C_BankName"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
-                    <input asp-for="@Model[i].C_BankName" class="form-control input-sm" id="C_BankName_@index.ToString()" />
-                    <span asp-validation-for="@Model[i].C_BankName" class="text-danger"></span>
+                    <label asp-for="@Model[i].BankName"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
+                    <input asp-for="@Model[i].BankName" class="form-control input-sm" id="BankName_@index.ToString()" />
+                    <span asp-validation-for="@Model[i].BankName" class="text-danger"></span>
                 </div>
             </div>
             <div class="col-lg-2">
                 <div class="form-group">
-                    <label asp-for="@Model[i].C_DrawnOn"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
-                    <input asp-for="@Model[i].C_DrawnOn" class="form-control input-sm" id="C_DrawnOn_@index.ToString()" />
-                    <span asp-validation-for="@Model[i].C_DrawnOn" class="text-danger"></span>
+                    <label asp-for="@Model[i].DrawnOn"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
+                    <input asp-for="@Model[i].DrawnOn" class="form-control input-sm" id="DrawnOn_@index.ToString()" />
+                    <span asp-validation-for="@Model[i].DrawnOn" class="text-danger"></span>
                 </div>
             </div>
             <div class="col-lg-1">
@@ -66,7 +66,7 @@
                 <div class="form-group">
                     <label>Delete</label><br />
                     <span data-placement="left" data-toggle="tooltip" title="Delete">
-                        <button type="button" id="remove-btn-cheque-@index.ToString()" value="@index" class="btn btn-danger btn-xs remove">
+                        <button type="button" id="remove-btn-cheque-@index.ToString()" value="@i" class="btn btn-danger btn-xs remove">
                             <span class="glyphicon glyphicon-trash"></span>
                         </button>
                     </span>

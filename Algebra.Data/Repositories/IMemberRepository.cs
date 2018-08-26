@@ -1,5 +1,6 @@
 ﻿using Algebra.Entities.Models;
 using Algebra.Entities.ViewModels;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 
 namespace Algebra.Data.Repositories
@@ -15,5 +16,7 @@ namespace Algebra.Data.Repositories
         RegistrationFormViewModel CreateMember(int id);
 
         RegistrationFormViewModel CreateRegistration(RegistrationFormViewModel m);
+
+        Member SetMemberEntities(JObject model);
     }
 }

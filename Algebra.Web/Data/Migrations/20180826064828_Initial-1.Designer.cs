@@ -4,14 +4,16 @@ using Algebra.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Algebra.Web.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180826064828_Initial-1")]
+    partial class Initial1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -297,12 +299,12 @@ namespace Algebra.Web.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(50);
 
-                    b.Property<string>("Addressed")
-                        .HasMaxLength(100);
-
                     b.Property<string>("CardId")
                         .IsRequired()
                         .HasMaxLength(50);
+
+                    b.Property<string>("CorrespondenceAddress")
+                        .HasMaxLength(500);
 
                     b.Property<string>("CreatedBy")
                         .HasMaxLength(50);
@@ -361,29 +363,8 @@ namespace Algebra.Web.Data.Migrations
                     b.Property<string>("Organization")
                         .HasMaxLength(200);
 
-                    b.Property<string>("PermanentAddress")
-                        .HasMaxLength(500);
-
-                    b.Property<string>("PermanentCity")
-                        .HasMaxLength(100);
-
-                    b.Property<string>("PermanentPin")
-                        .HasMaxLength(10);
-
-                    b.Property<string>("PermanentState")
-                        .HasMaxLength(100);
-
                     b.Property<string>("PresentAddress")
                         .HasMaxLength(500);
-
-                    b.Property<string>("PresentCity")
-                        .HasMaxLength(100);
-
-                    b.Property<string>("PresentPin")
-                        .HasMaxLength(10);
-
-                    b.Property<string>("PresentState")
-                        .HasMaxLength(100);
 
                     b.Property<string>("PrimaryMobileNumber")
                         .IsRequired()
@@ -400,8 +381,6 @@ namespace Algebra.Web.Data.Migrations
 
                     b.Property<string>("SecondaryMobileNumber")
                         .HasMaxLength(50);
-
-                    b.Property<int>("SponcerId");
 
                     b.Property<string>("TelephoneNumber")
                         .HasMaxLength(50);
@@ -541,12 +520,12 @@ namespace Algebra.Web.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Addressed")
-                        .HasMaxLength(100);
-
                     b.Property<string>("CardId")
                         .IsRequired()
                         .HasMaxLength(50);
+
+                    b.Property<string>("CorrespondenceAddress")
+                        .HasMaxLength(200);
 
                     b.Property<DateTime>("CreatedDate");
 
@@ -594,29 +573,8 @@ namespace Algebra.Web.Data.Migrations
                     b.Property<string>("Organization")
                         .HasMaxLength(100);
 
-                    b.Property<string>("PermanentAddress")
-                        .HasMaxLength(500);
-
-                    b.Property<string>("PermanentCity")
-                        .HasMaxLength(100);
-
-                    b.Property<string>("PermanentPin")
-                        .HasMaxLength(10);
-
-                    b.Property<string>("PermanentState")
-                        .HasMaxLength(100);
-
                     b.Property<string>("PresentAddress")
                         .HasMaxLength(200);
-
-                    b.Property<string>("PresentCity")
-                        .HasMaxLength(100);
-
-                    b.Property<string>("PresentPin")
-                        .HasMaxLength(10);
-
-                    b.Property<string>("PresentState")
-                        .HasMaxLength(100);
 
                     b.Property<string>("PrimaryMobileNumber")
                         .IsRequired()
@@ -631,8 +589,6 @@ namespace Algebra.Web.Data.Migrations
 
                     b.Property<string>("SecondaryMobileNumber")
                         .HasMaxLength(50);
-
-                    b.Property<int>("SponcerId");
 
                     b.Property<string>("TelephoneNumber")
                         .HasMaxLength(50);

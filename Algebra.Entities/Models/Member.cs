@@ -40,21 +40,39 @@ namespace Algebra.Entities.Models
 
         [MaxLength(100)]
         public string ProfessionalTitle { get; set; }
-        
+
         [MaxLength(100)]
         public string Designation { get; set; }
-        
+
         [MaxLength(200)]
         public string Organization { get; set; }
-
-        [MaxLength(500)]
-        public string PresentAddress { get; set; }
 
         [MaxLength(50)]
         public string TelephoneNumber { get; set; }
 
         [MaxLength(500)]
-        public string CorrespondenceAddress { get; set; }
+        public string PresentAddress { get; set; }
+
+        [MaxLength(100)]
+        public string PresentCity { get; set; }
+
+        [MaxLength(100)]
+        public string PresentState { get; set; }
+
+        [MaxLength(10)]
+        public string PresentPin { get; set; }
+
+        [MaxLength(500)]
+        public string PermanentAddress { get; set; }
+
+        [MaxLength(100)]
+        public string PermanentCity { get; set; }
+
+        [MaxLength(100)]
+        public string PermanentState { get; set; }
+
+        [MaxLength(10)]
+        public string PermanentPin { get; set; }
 
         [Required]
         [MaxLength(50)]
@@ -75,6 +93,19 @@ namespace Algebra.Entities.Models
         [MaxLength(50)]
         public string CreatedBy { get; set; }
 
+        [MaxLength(50)]
+        public string Gender { get; set; }
+
+        [MaxLength(50)]
+        public string MaritalStatus { get; set; }
+
+        [MaxLength(50)]
+        public string Occupation { get; set; }
+
+        public int SponcerId { get; set; }
+
+        [MaxLength(100)]
+        public string Addressed { get; set; }
 
         #endregion
 

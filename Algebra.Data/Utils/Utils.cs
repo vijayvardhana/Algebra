@@ -1,7 +1,11 @@
 ﻿using Algebra.Data.Repositories;
 using Algebra.Entities.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Algebra.Data
 {
@@ -15,10 +19,34 @@ namespace Algebra.Data
 
             for (int i = 0; i < o.Count; i++)
             {
-                string var = objectName + (i + 1).ToString();
+                string var = objectName + i.ToString();
                 str[i] = o[var].ToString();
             }
             return str;
         }
+
+        public static List<T> GetObjectList<T>(string _str, char c)
+        {
+            List<T> list = new List<T>();
+            string[] _strObjects = UnWrapObjects(JObject.Parse(_str), c);
+            for (int i = 0; i < _strObjects.Length; i++)
+            {
+                T d = JsonConvert.DeserializeObject<T>(_strObjects[i]);
+                list.Add(d);
+            }
+
+            return list;
+        }
+
+        public static IEnumerable<SelectListItem> GetEnumSelectList<T>(string _selected = null)
+        {
+            return (Enum.GetValues(typeof(T)).Cast<T>().Select(
+                enu => new SelectListItem() {
+                    Text = enu.ToString(),
+                    Value = enu.ToString(),
+                    Selected = _selected == enu.ToString()
+                })).ToList();
+        }
+
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using Algebra.Entities.Models;
+using Algebra.Entities.CustomValidator;
 
 namespace Algebra.Entities.ViewModels
 {
@@ -45,10 +46,13 @@ namespace Algebra.Entities.ViewModels
         [DataType(DataType.Text)]
         public string M_LastName { get; set; }
 
+        [Required]
+        [TwentyOneYears(21)]
+        //[ClassicMovie(1960)]
         [Display(Name = "Date Of Birth")]
         [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
-        public DateTime? M_DateOfBirth { get; set; }
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/mm/yyyy}")]
+        public DateTime M_DateOfBirth { get; set; }
 
         [Display(Name = "Title/Profession")]
         public string M_ProfessionalTitle { get; set; }
@@ -59,26 +63,60 @@ namespace Algebra.Entities.ViewModels
         [Display(Name = "Organization")]
         public string M_Organization { get; set; }
 
-        [Display(Name = "Present Address")]
-        public string M_PresentAddress { get; set; }
-
         [Display(Name = "Telephone Number")]
         public string M_TelephoneNumber { get; set; }
 
-        [Display(Name = "Correspondence Address")]
-        public string M_CorrespondenceAddress { get; set; }
+        [Display(Name = "Present / Correspondence Address")]
+        public string M_PresentAddress { get; set; }
 
-        [Required]
+        [Display(Name = "City")]
+        public string M_PresentCity { get; set; }
+
+        [Display(Name = "State")]
+        public string M_PresentState { get; set; }
+
+        [Display(Name = "Pin")]
+        [RegularExpression(@"^([0-9]{6})$", ErrorMessage = "Invalid pin code.")]
+        public string M_PresentPin { get; set; }
+
+        [Display(Name = "Permanent Address")]
+        public string M_PermanentAddress { get; set; }
+
+        [Display(Name = "City")]
+        public string M_PermanentCity { get; set; }
+
+        [Display(Name = "State")]
+        public string M_PermanentState { get; set; }
+
+        [Display(Name = "Pin")]
+        [RegularExpression(@"^([0-9]{6})$", ErrorMessage = "Invalid pin code.")]
+        public string M_PermanentPin { get; set; }
+
         [Display(Name = "Primary Mobile Number")]
+        [Required(ErrorMessage = "Mobile Number is required.")]
+        [RegularExpression(@"^([0-9]{10})$", ErrorMessage = "Invalid Mobile Number.")]
         public string M_PrimaryMobileNumber { get; set; }
 
         [Display(Name = "Secondary Mobile Number")]
         public string M_SecondaryMobileNumber { get; set; }
 
         [Display(Name = "Email")]
+        [DisplayFormat(ConvertEmptyStringToNull = true)]
+        [DataType(DataType.EmailAddress)]
         public string M_Email { get; set; }
 
-        
+        [Display(Name = "Gender")]
+        public string M_Gender { get; set; }
+
+        [Display(Name = "Marital Status")]
+        public string M_MaritalStatus { get; set; }
+
+        [Display(Name = "Occupation")]
+        public string M_Occupation { get; set; }
+
+        [Display(Name = "How would you like to be addressed?")]
+        public string Addressed { get; set; }
+
         public string M_Location { get; set; }
 
         [Display(Name = "Location")]

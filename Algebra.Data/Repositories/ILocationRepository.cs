@@ -8,7 +8,7 @@ namespace Algebra.Data.Repositories
     {
         Location GetLocationByCode(string lc);
 
-        //Dictionary<int, string> GetLocations();
+        string GetLocationById(int id);
 
         IEnumerable<SelectListItem> GetDropDown(IUnitOfWork unitOfWork);
 

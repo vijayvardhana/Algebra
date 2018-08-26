@@ -37,7 +37,7 @@
         </div>
         <div class="col-lg-4">
             <div class="form-group">
-                <label asp-for="@Model.P_PaymentDate"></label>
+                <label asp-for="@Model.P_PaymentDate"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
                 <input asp-for="@Model.P_PaymentDate" class="form-control input-sm" />
             </div>
         </div>
@@ -73,6 +73,11 @@
         <div class="col-lg-4">
             <div class="form-group">
                 <input type="hidden" asp-for="@Model.P_MembershipFeeId" value="@Model.P_MembershipFeeId" class="form-control input-sm" />
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="form-group">
+                <input type="hidden" asp-for="@Model.P_Created" value="@Model.P_Created" class="form-control input-sm" />
             </div>
         </div>
     </div>

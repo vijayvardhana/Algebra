@@ -11,22 +11,18 @@ namespace Algebra.Data.Repositories
 
         public Location GetLocationByCode(string lc)
         {
-            return _dbContext.Locations.FirstOrDefault(i => i.Code == lc);
+            return _dbContext
+                .Locations
+                .SingleOrDefault(i => i.Code == lc);
         }
 
-        //public Dictionary<int, string> ILocationRepository.GetLocations()
-        //{
-        //    Dictionary<int, string> loc = new Dictionary<int, string>();
-        //    var locations = _dbContext.Locations;
-        //    if (locations.Any())
-        //    {
-        //        foreach (var location in _dbContext.Locations)
-        //        {
-        //            loc.Add(location.Id, location.Name);
-        //        }
-        //    }
-        //    return loc;
-        //}
+        public string GetLocationById(int id)
+        {
+            var location = _dbContext
+                .Locations
+                .SingleOrDefault(i => i.Id == id);
+            return location.Name;
+        }
 
         public IEnumerable<SelectListItem> GetDropDown(IUnitOfWork unitOfWork)
         {
@@ -53,7 +49,7 @@ namespace Algebra.Data.Repositories
             var fee = unitOfWork.Fees.GetAll();
 
             List<SelectListItem> ddLocations = locations
-                .Join(fee, l => l.Id, f => f.LocationId, ((l, f) 
+                .Join(fee, l => l.Id, f => f.LocationId, ((l, f)
                 => new SelectListItem
                 {
                     Value = l.Id.ToString(),

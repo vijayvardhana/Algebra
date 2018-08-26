@@ -4,14 +4,8 @@ using Algebra.Entities.ViewModels;
 using Algebra.Data;
 using Algebra.Data.Repositories;
 using Algebra.Entities.Models;
-using System.Linq;
 using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
-using System;
 using Microsoft.Extensions.Options;
-
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Algebra.Web.Controllers
 {
@@ -45,7 +39,8 @@ namespace Algebra.Web.Controllers
         {
             RegistrationFormViewModel model;
             ViewBag.Title = (id > 0) ? "Edit" : "Add";
-            using(var unitOfWork = new UnitOfWork(_dbContext)) {
+            using (var unitOfWork = new UnitOfWork(_dbContext))
+            {
                 model = unitOfWork.Members.CreateMember(id);
             };
             return View(model);
@@ -55,39 +50,13 @@ namespace Algebra.Web.Controllers
         public IActionResult AddMember(RegistrationFormViewModel m)
         {
             RegistrationFormViewModel model = new RegistrationFormViewModel();
-            using(var unitOfWork = new UnitOfWork(_dbContext))
+            using (var unitOfWork = new UnitOfWork(_dbContext))
             {
                 model = unitOfWork.Members.CreateRegistration(m);
+                model.CreatedBy = User.Identity.Name;
             }
             //return View();
             return View("Registration", model);
-        }
-
-        [HttpGet]
-        public IActionResult Registration(string returnUrl = null)
-        {
-            ViewData["ReturnUrl"] = returnUrl;
-
-           // IEnumerable<Location> locations;
-            //IEnumerable<Referrer> referrer;
-          //  IEnumerable<PaymentMode> paymentModes;
-            int maxAccId = 0;
-            using (var unitOfWork = new UnitOfWork(_dbContext))
-            {
-                ViewBag.Locations = unitOfWork.Locations.GetAll().ToList();
-                ViewBag.Referrers = unitOfWork.Referrers.GetAll().ToList();
-                //maxAccId = unitOfWork.Members.GetMaxId(_applicationVariables.InitialAccountNumber);
-                ViewBag.PaymentModes = unitOfWork.Modes.GetAll().ToList();
-                ViewBag.MembershipFee = unitOfWork.Fees.GetAll().ToList();
-                ViewBag.AccountId = GetAccountNumber(maxAccId, _applicationVariables.InitialAccountNumber);
-            }
-            //ViewBag.Locations = locations;
-           // ViewBag.Referrers = referrer;
-           // ViewBag.AccountId = GetAccountNumber(maxAccId, _applicationVariables.InitialAccountNumber);
-           // ViewBag.Modes = paymentModes;
-
-            RegistrationFormViewModel RegistrationForm = new RegistrationFormViewModel();
-            return View(RegistrationForm);
         }
 
         [HttpPost]
@@ -97,55 +66,17 @@ namespace Algebra.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                // ViewBag.LoginUser = User.Identity.Name;
-                string[] str = Utils.UnWrapObjects(model, 'o');
-                var member = JsonConvert.DeserializeObject<Member>(str[0]);
-                var spouse = JsonConvert.DeserializeObject<Spouse>(str[1]);
-                List<Dependent> dependents = GetDependentList(str[2]);
-                var payment = JsonConvert.DeserializeObject<Payment>(str[3]);
-
-                member.CreatedBy = User.Identity.Name;
-                member.Spouse = spouse;
-                member.Dependents = dependents;
-                member.Payments = payment;
-
+                
                 using (IUnitOfWork unitOfWork = new UnitOfWork(_dbContext))
                 {
-                    unitOfWork.Members.Add(member);
-                    int memberId = unitOfWork.Commit();                    
+                    Member m = unitOfWork.Members.SetMemberEntities(model);
+                    m.CreatedBy = User.Identity.Name;
+                    unitOfWork.Members.Add(m);
+                    int memberId = unitOfWork.Commit();
                 }
             }
 
-            return View("Registration", model);
-        }
-
-
-        private List<Dependent> GetDependentList(string _str)
-        {
-            List<Dependent> list = new List<Dependent>();
-
-            string[] _dependents = Utils.UnWrapObjects(JObject.Parse(_str), 'd');
-            for (int i = 0; i < _dependents.Length; i++)
-            {
-                Dependent d = JsonConvert.DeserializeObject<Dependent>(_dependents[i]);
-                list.Add(d);
-            }
-
-            return list;
-        }
-
-        private int GetAccountNumber(int maxAccId, int _initialAccountNumber)
-        {
-            int accountNo = 0;
-            if (maxAccId > 0)
-            {
-                accountNo = _initialAccountNumber + maxAccId;
-            }
-            else
-            {
-                accountNo = _initialAccountNumber;
-            }
-            return accountNo;
+            return View("Index");
         }
     }
 }

@@ -2,11 +2,11 @@
 using Algebra.Entities.Models;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using Algebra.Entities.ViewModels;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using Mapster;
+using Algebra.Entities.ViewModels;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace Algebra.Data.Repositories
 {
@@ -35,26 +35,6 @@ namespace Algebra.Data.Repositories
             }
 
         }
-        //public string GetAccountNumber(string _code, string _baseDigits)
-        //{
-        //    string accountNumber = string.Empty; 
-        //    if (_dbContext.Members.Any())
-        //    {
-        //        int m = _dbContext.Members.Max(i => i.Id);
-        //        if (m != 0)
-        //        {
-        //            accountNumber = string.Format("{0}{1}",_baseDigits,m.ToString());
-        //            int exceslen = accountNumber.Length - 4;
-        //            accountNumber = accountNumber.Remove(1, exceslen);
-        //        }
-        //        return string.Format("{0}{1}", _code, accountNumber);
-        //    }
-        //    else
-        //    {
-        //        return string.Format("{0}{1}", _code, _baseDigits); 
-        //    }
-
-        //}
 
         public IEnumerable<Member> GetMembersWithSpouseAndDependents()
         {
@@ -99,21 +79,48 @@ namespace Algebra.Data.Repositories
                 model.MembershipType = r.MembershipType;
                 model.ReferredBy = r.ReferredBy;
 
-                // model.Locations = unitOfWork.Locations.GetDropDown(unitOfWork);
                 model.Locations = unitOfWork.Locations.GetLocationFeeDropDown(unitOfWork);
                 model.Categories = unitOfWork.Categories.GetDropDown(unitOfWork);
                 model.Referrers = unitOfWork.Referrers.GetDropDown(unitOfWork);
 
-
-
                 model.Member = MemberBuilder(unitOfWork, r);
+                model.Spouse = SpouseBuilder(unitOfWork, r);
+                model.Dependent = DependentsBuilder(unitOfWork, r);
                 model.Payment = PaymentBuilder(unitOfWork, r);
             }
 
             return model;
         }
 
+        public Member SetMemberEntities(JObject model)
+        {
+            string[] str = Utils.UnWrapObjects(model, 'o');
+            var member = JsonConvert.DeserializeObject<Member>(str[0]);
+            var spouse = JsonConvert.DeserializeObject<Spouse>(str[1]);
+            List<Dependent> dependents = Utils.GetObjectList<Dependent>(str[2], 'd');
+            var payment = JsonConvert.DeserializeObject<Payment>(str[3]);
+            List<Cheque> cheques = Utils.GetObjectList<Cheque>(str[4], 'c');
 
+            dependents.RemoveAll(c=>c.CardId == null);
+
+            if (!string.IsNullOrEmpty(spouse.CardId))
+            {
+                member.Spouse = spouse;
+            }
+
+            if (dependents.Count > 0)
+            {
+                member.Dependents = dependents;
+            }
+
+            if (cheques.Count > 0)
+            {
+                payment.Cheques = cheques;
+            }
+            member.Payments = payment;
+
+            return member;
+        }
 
         #region Healper Methods
 
@@ -128,6 +135,7 @@ namespace Algebra.Data.Repositories
                 model.M_MembershipType = m.MembershipType;
                 model.M_ReferredBy = m.ReferredBy;
                 model.M_AccountId = m.AccountId;
+                model.M_CardId = m.CardId;
             }
             else
             {
@@ -135,28 +143,46 @@ namespace Algebra.Data.Repositories
                 model.M_MembershipType = r.MembershipType;
                 model.M_ReferredBy = r.ReferredBy;
                 model.M_AccountId = GetAccountNumber(unitOfWork, r.LocationId);
+                model.M_CardId = model.M_AccountId;
+                model.M_Location = unitOfWork.Locations.GetLocationById(r.LocationId);
             }
 
             return model;
         }
 
-        private string GetAccountNumber(IUnitOfWork unitOfWork, int locId)
+        private SpouseViewModels SpouseBuilder(IUnitOfWork unitOfWork, RegistrationFormViewModel r)
         {
-            string accountNumber = string.Empty;
-            Location l = unitOfWork.Locations.Get(locId);
-            int m = unitOfWork.Members.GetMaxId();
-
-            if (m != 0)
+            SpouseViewModels spouse = new SpouseViewModels();
+            var s = unitOfWork.Spouses.GetSpouseByMemberId(r.Id);
+            if (s != null)
             {
-                accountNumber = string.Format("{0}{1}", l.Digits, m.ToString());
+                spouse.S_CardId = s.CardId;
             }
             else
             {
-                accountNumber = string.Format("{0}{1}", l.Digits, "1");
+                spouse.S_CardId = GetAccountNumber(unitOfWork, r.LocationId);
             }
-            
-            int exceslen = accountNumber.Length - 4;
-            return string.Format("{0}{1}", l.Code, accountNumber.Remove(1, exceslen));
+            return spouse;
+        }
+
+        private List<DependentViewModels> DependentsBuilder(UnitOfWork unitOfWork, RegistrationFormViewModel r)
+        {
+            List<DependentViewModels> dependents = new List<DependentViewModels>();
+            var dependentList = unitOfWork.Dependents.GetDependentsByMemberId(r.Id);
+            var cardNumber = GetAccountNumber(unitOfWork, r.LocationId);
+            if (dependentList.Count > 0)
+            {
+                foreach (var d in dependentList)
+                {
+                    dependents.Add(d.Adapt<DependentViewModels>());
+                }
+            }
+            else
+            {
+                dependents.Add(new DependentViewModels() { D_CardId = cardNumber });
+                dependents.Add(new DependentViewModels() { D_CardId = cardNumber });
+            }
+            return dependents;
         }
 
         private PaymentViewModel PaymentBuilder(IUnitOfWork unitOfWork, RegistrationFormViewModel r)
@@ -195,6 +221,25 @@ namespace Algebra.Data.Repositories
             }
             m.Modes = modes;
             return m;
+        }
+
+        private string GetAccountNumber(IUnitOfWork unitOfWork, int locId)
+        {
+            string accountNumber = string.Empty;
+            Location l = unitOfWork.Locations.Get(locId);
+            int m = unitOfWork.Members.GetMaxId();
+
+            if (m != 0)
+            {
+                accountNumber = string.Format("{0}{1}", l.Digits, m.ToString());
+            }
+            else
+            {
+                accountNumber = string.Format("{0}{1}", l.Digits, "1");
+            }
+
+            int exceslen = accountNumber.Length - 4;
+            return string.Format("{0}{1}", l.Code, accountNumber.Remove(1, exceslen));
         }
 
         #endregion Healper Methods

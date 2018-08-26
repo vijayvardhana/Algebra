@@ -12,26 +12,26 @@ namespace Algebra.Entities.ViewModels
         [Required]
         [MaxLength(50)]
         [Display(Name="Cheque Number")]
-        public string C_Number { get; set; }
+        public string Number { get; set; }
 
         [Required]
         [Display(Name="Amount")]
-        public decimal C_Amount { get; set; }
+        public decimal Amount { get; set; }
 
         [Required]
         [Display(Name = "Date")]
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
-        public DateTime C_Date { get; set; }
+        public DateTime Date { get; set; }
 
         [Required]
         [MaxLength(100)]
         [Display(Name = "Bank Name")]
-        public string C_BankName { get; set; }
+        public string BankName { get; set; }
 
         [MaxLength(100)]
         [Display(Name = "Drawn On")]
-        public string C_DrawnOn { get; set; }
+        public string DrawnOn { get; set; }
 
     }
 }

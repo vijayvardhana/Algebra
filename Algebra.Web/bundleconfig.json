@@ -12,7 +12,8 @@
     "outputFileName": "wwwroot/js/site.min.js",
     "inputFiles": [
       "wwwroot/js/site.js",
-      "wwwroot/js/registration.js"
+      "wwwroot/js/registration.js",
+      "wwwroot/js/validator.js"
     ],
     // Optionally specify minification options
     "minify": {

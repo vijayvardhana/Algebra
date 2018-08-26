@@ -14,8 +14,10 @@ namespace Algebra.Data.Repositories
         IModeRepository Modes { get; }
         IFeeRepository Fees { get; }
         ICategoryRepository Categories { get; }
+        IDependentRepository Dependents { get; }
 
-        
+
+
         int Commit();
         void Rollback();
     }
