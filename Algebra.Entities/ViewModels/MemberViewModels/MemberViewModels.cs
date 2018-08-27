@@ -10,6 +10,8 @@ namespace Algebra.Entities.ViewModels
 {
     public class MemberViewModels
     {
+        public int M_Id { get; set; }
+
         [Required(ErrorMessage = "Please enter Account Number")]
         [Display(Name = "Account Number")]
         [DataType(DataType.Text)]
@@ -115,7 +117,7 @@ namespace Algebra.Entities.ViewModels
         public string M_Occupation { get; set; }
 
         [Display(Name = "How would you like to be addressed?")]
-        public string Addressed { get; set; }
+        public string M_Addressed { get; set; }
 
         public string M_Location { get; set; }
 

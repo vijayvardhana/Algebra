@@ -18,5 +18,9 @@ namespace Algebra.Data.Repositories
         RegistrationFormViewModel CreateRegistration(RegistrationFormViewModel m);
 
         Member SetMemberEntities(JObject model);
+
+        Member GetMemberById(int id);
+
+        RegistrationFormViewModel GetRegistrationViewModels(int id);
     }
 }

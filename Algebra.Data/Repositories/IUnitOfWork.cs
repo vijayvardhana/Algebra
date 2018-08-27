@@ -15,6 +15,8 @@ namespace Algebra.Data.Repositories
         IFeeRepository Fees { get; }
         ICategoryRepository Categories { get; }
         IDependentRepository Dependents { get; }
+        IPaymentRepository Payments { get; }
+        IChequeRepository Cheques { get; }
 
 
 

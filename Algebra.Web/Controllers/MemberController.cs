@@ -6,6 +6,7 @@ using Algebra.Data.Repositories;
 using Algebra.Entities.Models;
 using Newtonsoft.Json.Linq;
 using Microsoft.Extensions.Options;
+using System;
 
 namespace Algebra.Web.Controllers
 {
@@ -64,19 +65,42 @@ namespace Algebra.Web.Controllers
         [Route("api/member/post")]
         public IActionResult Post([FromBody] JObject model)
         {
+            IEnumerable<Member> members = null;
             if (ModelState.IsValid)
             {
-                
-                using (IUnitOfWork unitOfWork = new UnitOfWork(_dbContext))
-                {
-                    Member m = unitOfWork.Members.SetMemberEntities(model);
-                    m.CreatedBy = User.Identity.Name;
-                    unitOfWork.Members.Add(m);
-                    int memberId = unitOfWork.Commit();
+                try {
+                    using (IUnitOfWork unitOfWork = new UnitOfWork(_dbContext))
+                    {
+                        Member m = unitOfWork.Members.SetMemberEntities(model);
+                        m.CreatedBy = User.Identity.Name;
+                        unitOfWork.Members.Add(m);
+                        int successId = unitOfWork.Commit();
+                        if (successId > 0)
+                        {
+                            members = unitOfWork.Members.GetMembersWithSpouseAndDependents();
+                        }
+                    }
                 }
+                catch(Exception)
+                {
+                    throw;
+                }
+                
             }
+            return View("Index", members);
+        }
 
-            return View("Index");
+        // GET api/<controller>/5
+        [HttpGet]
+        [Route("api/member/get/{id}")]
+        public IActionResult Get(int id)
+        {
+            RegistrationFormViewModel model;
+            using (var unitOfWork = new UnitOfWork(_dbContext))
+            {
+                model = unitOfWork.Members.GetRegistrationViewModels(id);
+            };
+            return View("Details", model);
         }
     }
 }

@@ -44,6 +44,13 @@ namespace Algebra.Data.Repositories
                 .ToList();
         }
 
+        public Member GetMemberById(int id)
+        {
+            return _dbContext
+                .Members
+                .SingleOrDefault(i => i.Id == id);
+        }
+
         public RegistrationFormViewModel CreateMember(int id)
         {
             RegistrationFormViewModel model = new RegistrationFormViewModel();
@@ -101,7 +108,7 @@ namespace Algebra.Data.Repositories
             var payment = JsonConvert.DeserializeObject<Payment>(str[3]);
             List<Cheque> cheques = Utils.GetObjectList<Cheque>(str[4], 'c');
 
-            dependents.RemoveAll(c=>c.CardId == null);
+            dependents.RemoveAll(c => c.CardId == null);
 
             if (!string.IsNullOrEmpty(spouse.CardId))
             {
@@ -122,13 +129,70 @@ namespace Algebra.Data.Repositories
             return member;
         }
 
+        public RegistrationFormViewModel GetRegistrationViewModels(int id)
+        {
+
+            RegistrationFormViewModel model = new RegistrationFormViewModel();
+            //MemberViewModels member = new MemberViewModels();
+            //SpouseViewModels spouse = new SpouseViewModels();
+            using (var unitOfWork = new UnitOfWork(_dbContext))
+            {
+
+                Member member = unitOfWork
+                    .Members.Get(id);
+                    //.GetMemberById(id)
+                    //.Adapt<MemberViewModels>();
+                if (member != null)
+                {
+                    model.Member = member.Adapt<MemberViewModels>();
+                }
+
+                SpouseViewModels spouse = unitOfWork
+                    .Spouses
+                    .GetSpouseByMemberId(id)
+                    .Adapt<SpouseViewModels>();
+                if (spouse != null)
+                {
+                    model.Spouse = spouse;
+                }
+
+                List<DependentViewModels> dependents = unitOfWork
+                    .Dependents
+                    .GetDependentsByMemberId(id)
+                    .Adapt<List<DependentViewModels>>();
+                if (dependents.Count > 0)
+                {
+                    model.Dependent = dependents;
+                }
+
+                PaymentViewModel payment = unitOfWork
+                    .Payments
+                    .GetPaymentByMemberId(id)
+                    .Adapt<PaymentViewModel>();
+                if (payment != null)
+                {
+                    model.Payment = payment;
+                    List<ChequeViewModels> cheques = unitOfWork
+                        .Cheques
+                        .GetChequesByPaymentId(payment.P_Id)
+                        .Adapt<List<ChequeViewModels>>();
+                    if(cheques.Count > 0)
+                    {
+
+                        model.Payment.Cheques = cheques;
+                    }
+                }
+            }
+            return model;
+        }
+
         #region Healper Methods
 
         private MemberViewModels MemberBuilder(IUnitOfWork unitOfWork, RegistrationFormViewModel r)
         {
             MemberViewModels model = new MemberViewModels();
 
-            var m = unitOfWork.Members.Get(r.Id);
+            var m = unitOfWork.Members.Get(r.Member.M_Id);
             if (m != null)
             {
                 model.M_LocationId = m.LocationId;
@@ -153,7 +217,7 @@ namespace Algebra.Data.Repositories
         private SpouseViewModels SpouseBuilder(IUnitOfWork unitOfWork, RegistrationFormViewModel r)
         {
             SpouseViewModels spouse = new SpouseViewModels();
-            var s = unitOfWork.Spouses.GetSpouseByMemberId(r.Id);
+            var s = unitOfWork.Spouses.GetSpouseByMemberId(r.Member.M_Id);
             if (s != null)
             {
                 spouse.S_CardId = s.CardId;
@@ -168,7 +232,7 @@ namespace Algebra.Data.Repositories
         private List<DependentViewModels> DependentsBuilder(UnitOfWork unitOfWork, RegistrationFormViewModel r)
         {
             List<DependentViewModels> dependents = new List<DependentViewModels>();
-            var dependentList = unitOfWork.Dependents.GetDependentsByMemberId(r.Id);
+            var dependentList = unitOfWork.Dependents.GetDependentsByMemberId(r.Member.M_Id);
             var cardNumber = GetAccountNumber(unitOfWork, r.LocationId);
             if (dependentList.Count > 0)
             {

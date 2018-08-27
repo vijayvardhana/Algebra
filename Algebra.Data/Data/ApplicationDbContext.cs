@@ -55,6 +55,9 @@ namespace Algebra.Data
             builder.Entity<Category>().ToTable("Category");
             builder.Entity<Category>().Property(i => i.Id).ValueGeneratedOnAdd();
 
+            builder.Entity<Cheque>().ToTable("Cheque");
+            builder.Entity<Cheque>().Property(i => i.Id).ValueGeneratedOnAdd();
+
         }
 
         #region Properties
@@ -68,6 +71,7 @@ namespace Algebra.Data
         public DbSet<Location> Locations { get; set; }
         public DbSet<Fee> Fees { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Cheque> Cheques { get; set; }
         #endregion Properties
     }
 }

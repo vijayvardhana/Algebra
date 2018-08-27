@@ -7,9 +7,11 @@ namespace Algebra.Data.Repositories
     {
         public SpouseRepository(ApplicationDbContext dbContext) : base(dbContext) { }
 
-        Spouse ISpouseRepository.GetSpouseByMemberId(int id)
+        public Spouse GetSpouseByMemberId(int id)
         {
-           return _dbContext.Spouse.SingleOrDefault(s=>s.MemberId == id);
+           return _dbContext
+                .Spouse
+                .SingleOrDefault(s=>s.MemberId == id);
         }
     }
 }

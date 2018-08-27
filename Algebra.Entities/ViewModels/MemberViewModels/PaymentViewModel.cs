@@ -13,6 +13,8 @@ namespace Algebra.Entities.ViewModels
         }
         public IList<ChequeViewModels> Cheques { get; set; }
 
+        public int P_Id { get; set; }
+
         [Required]
         public int P_MemberId { get; set; }
 

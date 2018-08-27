@@ -1,0 +1,60 @@
+﻿@using Algebra.Entities.ViewModels
+@model RegistrationFormViewModel
+
+<div class="container">
+    <div class="panel panel-default row" style="padding: 10px; margin: 10px">
+        <div id="Tabs" role="tabpanel">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="active"><a href="#member" aria-controls="member" role="tab" data-toggle="tab">Member Details</a></li>
+                <li><a href="#spouse" aria-controls="spouse" role="tab" data-toggle="tab">Spouse Details</a></li>
+                <li><a href="#dependent" aria-controls="dependent" role="tab" data-toggle="tab">Dependent(s)</a></li>
+                <li><a href="#membership-fee" aria-controls="membership-fee" role="tab" data-toggle="tab">Membership Fee</a></li>
+                <li><a href="#assets" aria-controls="assets" role="tab" data-toggle="tab">Assets</a></li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content" style="padding-top: 20px">
+                @*Member Details*@
+                <div role="tabpanel" class="tab-pane active small" id="member">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label asp-for="@Model.Member.M_Title"></label>
+                                <span>@Model.Member.M_Title</span>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label asp-for="@Model.Member.M_FirstName"></label>
+                                <span>@Model.Member.M_FirstName</span>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label asp-for="@Model.Member.M_MiddleName"></label>
+                                <span>@Model.Member.M_MiddleName</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div role="tabpanel" class="tab-pane" id="spouse">
+                    @*@await Html.PartialAsync("_Spouse", Model.Spouse)*@
+                </div>
+                <div role="tabpanel" class="tab-pane" id="dependent">
+                    @*@await Html.PartialAsync("_Dependent", Model.Dependent)*@
+                </div>
+                <div role="tabpanel" class="tab-pane" id="membership-fee">
+                    @*@await Html.PartialAsync("_Payment", Model.Payment)*@
+                </div>
+                <div role="tabpanel" class="tab-pane" id="assets">
+                    Assets
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <button type="button" class="btn btn-primary" id="btn-submit">Submit</button>
+        <button type="button" class="btn btn-default" id="btn-cancel" onclick="history.back()">Cancel</button>
+    </div>
+</div>

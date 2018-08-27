@@ -18,6 +18,8 @@ namespace Algebra.Data.Repositories
             Fees = new FeeRepository(_dbContext);
             Categories = new CategoryRepository(_dbContext);
             Dependents = new DependentRepository(_dbContext);
+            Cheques = new ChequeRepository(_dbContext);
+            Payments = new PaymentRepository(_dbContext);
         }
 
         public IMemberRepository Members { get; private set; }
@@ -29,6 +31,8 @@ namespace Algebra.Data.Repositories
         public IFeeRepository Fees { get; set; }
         public ICategoryRepository Categories { get; set; }
         public IDependentRepository Dependents { get; set; }
+        public IPaymentRepository Payments { get; set; }
+        public IChequeRepository Cheques { get; set; }
 
 
         int IUnitOfWork.Commit()

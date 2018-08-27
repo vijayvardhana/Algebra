@@ -7,7 +7,7 @@ namespace Algebra.Entities.ViewModels
 {
     public class SpouseViewModels
     {
-        public int Id { get; set; }
+        public int S_Id { get; set; }
 
         [Required]
         [Display(Name = "Card Number")]
@@ -100,7 +100,7 @@ namespace Algebra.Entities.ViewModels
         public string S_Occupation { get; set; }
 
         [Display(Name = "How would you like to be addressed?")]
-        public string Addressed { get; set; }
+        public string S_Addressed { get; set; }
 
         [Required]
         public DateTime S_CreatedDate { get; set; }
