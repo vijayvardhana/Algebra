@@ -16,37 +16,37 @@
         <div class="row">
             <div class="col-lg-4">
                 <div class="form-group">
-                    <label asp-for="@Model[i].D_Name"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
-                    <input asp-for="@Model[i].D_Name" class="form-control input-sm" value="" />
-                    <span asp-validation-for="@Model[i].D_Name" class="text-danger"></span>
+                    <label asp-for="@Model[i].Name"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
+                    <input asp-for="@Model[i].Name" class="form-control input-sm" value="" />
+                    <span asp-validation-for="@Model[i].Name" class="text-danger"></span>
                 </div>
             </div>
             <div class="col-lg-4">
                 <div class="form-group">
-                    <label asp-for="@Model[i].D_DateOfBirth"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
-                    <input asp-for="@Model[i].D_DateOfBirth" class="form-control input-sm" />
-                    <span asp-validation-for="@Model[i].D_DateOfBirth" class="text-danger"></span>
+                    <label asp-for="@Model[i].DateOfBirth"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
+                    <input asp-for="@Model[i].DateOfBirth" class="form-control input-sm" />
+                    <span asp-validation-for="@Model[i].DateOfBirth" class="text-danger"></span>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-lg-4">
                 <div class="form-group">
-                    <label asp-for="@Model[i].D_MobileNumber"></label> (if any)
-                    <input asp-for="@Model[i].D_MobileNumber" class="form-control input-sm" />
-                    <span asp-validation-for="@Model[i].D_MobileNumber" class="text-danger"></span>
+                    <label asp-for="@Model[i].MobileNumber"></label> (if any)
+                    <input asp-for="@Model[i].MobileNumber" class="form-control input-sm" />
+                    <span asp-validation-for="@Model[i].MobileNumber" class="text-danger"></span>
                 </div>
             </div>
             <div class="col-lg-4">
                 <div class="form-group">
-                    <label asp-for="@Model[i].D_Email"></label>(if any)
-                    <input asp-for="@Model[i].D_Email" class="form-control input-sm" />
-                    <span asp-validation-for="@Model[i].D_Email" class="text-danger"></span>
+                    <label asp-for="@Model[i].Email"></label>(if any)
+                    <input asp-for="@Model[i].Email" class="form-control input-sm" />
+                    <span asp-validation-for="@Model[i].Email" class="text-danger"></span>
                 </div>
             </div>
             <div class="col-lg-4">
                 <div class="form-group">
-                    <input type="hidden" asp-for="@Model[i].D_CardId" value="@Model[i].D_CardId-0@(i+3)" class="form-control input-sm" />
+                    <input type="hidden" asp-for="@Model[i].CardId" value="@Model[i].CardId-0@(i+3)" class="form-control input-sm" />
                 </div>
             </div>
         </div>

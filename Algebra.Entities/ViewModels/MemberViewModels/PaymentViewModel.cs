@@ -13,54 +13,54 @@ namespace Algebra.Entities.ViewModels
         }
         public IList<ChequeViewModels> Cheques { get; set; }
 
-        public int P_Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
-        public int P_MemberId { get; set; }
+        public int MemberId { get; set; }
 
         [Required]
         [Display(Name = "Membership Fee")]
         [DataType(DataType.Currency)]
-        public decimal P_MembershipFee { get; set; }
+        public decimal MembershipFee { get; set; }
 
         [Display(Name = "GST (%)")]
-        public string P_GST { get; set; }
+        public string GST { get; set; }
 
         [Display(Name = "Tax Amount")]
         [DataType(DataType.Currency)]
-        public decimal P_TaxAmount { get; set; }
+        public decimal TaxAmount { get; set; }
 
         [Display(Name = "Payment Date")]
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
-        public DateTime P_PaymentDate { get; set; }
+        public DateTime PaymentDate { get; set; }
 
         [Display(Name = "Payment Mode")]
-        public string P_PaymentMode { get; set; }
+        public string PaymentMode { get; set; }
 
         public IEnumerable<SelectListItem> Modes { get; set; }
 
         [Required]
         [Display(Name = "Total Amount")]
-        public decimal P_TotalAmount { get; set; }
+        public decimal TotalAmount { get; set; }
 
         [Display(Name = "Discount")]
-        public bool P_IsDiscountApplicable { get; set; }
+        public bool IsDiscountApplicable { get; set; }
 
         [Display(Name = "Cheque Number")]
-        public string P_ChequeNumber { get; set; }
+        public string ChequeNumber { get; set; }
 
         [Display(Name = "Transaction Id")]
-        public string P_TransactionId { get; set; }
+        public string TransactionId { get; set; }
 
         [Display(Name = "Description")]
-        public string P_Description { get; set; }
+        public string Description { get; set; }
 
-        public string P_Created { get; set; }
+        public string Created { get; set; }
 
-        public int P_MembershipFeeId { get; set; } 
+        public int MembershipFeeId { get; set; } 
 
-        public FeeViewModels P_FeeBreakUp { get; set; }
+        public FeeViewModels FeeBreakUp { get; set; }
 
     }
 }

@@ -110,20 +110,18 @@ namespace Algebra.Data.Repositories
 
             dependents.RemoveAll(c => c.CardId == null);
 
-            if (!string.IsNullOrEmpty(spouse.CardId))
-            {
-                member.Spouse = spouse;
-            }
+            member.Spouse = (!string.IsNullOrEmpty(spouse.CardId)) 
+                ? member.Spouse = spouse 
+                : null;
 
-            if (dependents.Count > 0)
-            {
-                member.Dependents = dependents;
-            }
+            member.Dependents = (dependents.Count > 0) 
+                ? dependents 
+                : null;
 
-            if (cheques.Count > 0)
-            {
-                payment.Cheques = cheques;
-            }
+            payment.Cheques = (cheques.Count > 0) 
+                ? cheques 
+                : null;
+
             member.Payments = payment;
 
             return member;
@@ -131,17 +129,12 @@ namespace Algebra.Data.Repositories
 
         public RegistrationFormViewModel GetRegistrationViewModels(int id)
         {
-
             RegistrationFormViewModel model = new RegistrationFormViewModel();
-            //MemberViewModels member = new MemberViewModels();
-            //SpouseViewModels spouse = new SpouseViewModels();
             using (var unitOfWork = new UnitOfWork(_dbContext))
             {
 
                 Member member = unitOfWork
                     .Members.Get(id);
-                    //.GetMemberById(id)
-                    //.Adapt<MemberViewModels>();
                 if (member != null)
                 {
                     model.Member = member.Adapt<MemberViewModels>();
@@ -174,11 +167,10 @@ namespace Algebra.Data.Repositories
                     model.Payment = payment;
                     List<ChequeViewModels> cheques = unitOfWork
                         .Cheques
-                        .GetChequesByPaymentId(payment.P_Id)
+                        .GetChequesByPaymentId(payment.Id)
                         .Adapt<List<ChequeViewModels>>();
                     if(cheques.Count > 0)
                     {
-
                         model.Payment.Cheques = cheques;
                     }
                 }
@@ -192,23 +184,23 @@ namespace Algebra.Data.Repositories
         {
             MemberViewModels model = new MemberViewModels();
 
-            var m = unitOfWork.Members.Get(r.Member.M_Id);
+            var m = unitOfWork.Members.Get(r.Member.Id);
             if (m != null)
             {
-                model.M_LocationId = m.LocationId;
-                model.M_MembershipType = m.MembershipType;
-                model.M_ReferredBy = m.ReferredBy;
-                model.M_AccountId = m.AccountId;
-                model.M_CardId = m.CardId;
+                model.LocationId = m.LocationId;
+                model.MembershipType = m.MembershipType;
+                model.ReferredBy = m.ReferredBy;
+                model.AccountId = m.AccountId;
+                model.CardId = m.CardId;
             }
             else
             {
-                model.M_LocationId = r.LocationId;
-                model.M_MembershipType = r.MembershipType;
-                model.M_ReferredBy = r.ReferredBy;
-                model.M_AccountId = GetAccountNumber(unitOfWork, r.LocationId);
-                model.M_CardId = model.M_AccountId;
-                model.M_Location = unitOfWork.Locations.GetLocationById(r.LocationId);
+                model.LocationId = r.LocationId;
+                model.MembershipType = r.MembershipType;
+                model.ReferredBy = r.ReferredBy;
+                model.AccountId = GetAccountNumber(unitOfWork, r.LocationId);
+                model.CardId = model.AccountId;
+                model.Location = unitOfWork.Locations.GetLocationById(r.LocationId);
             }
 
             return model;
@@ -217,14 +209,14 @@ namespace Algebra.Data.Repositories
         private SpouseViewModels SpouseBuilder(IUnitOfWork unitOfWork, RegistrationFormViewModel r)
         {
             SpouseViewModels spouse = new SpouseViewModels();
-            var s = unitOfWork.Spouses.GetSpouseByMemberId(r.Member.M_Id);
+            var s = unitOfWork.Spouses.GetSpouseByMemberId(r.Member.Id);
             if (s != null)
             {
-                spouse.S_CardId = s.CardId;
+                spouse.CardId = s.CardId;
             }
             else
             {
-                spouse.S_CardId = GetAccountNumber(unitOfWork, r.LocationId);
+                spouse.CardId = GetAccountNumber(unitOfWork, r.LocationId);
             }
             return spouse;
         }
@@ -232,7 +224,7 @@ namespace Algebra.Data.Repositories
         private List<DependentViewModels> DependentsBuilder(UnitOfWork unitOfWork, RegistrationFormViewModel r)
         {
             List<DependentViewModels> dependents = new List<DependentViewModels>();
-            var dependentList = unitOfWork.Dependents.GetDependentsByMemberId(r.Member.M_Id);
+            var dependentList = unitOfWork.Dependents.GetDependentsByMemberId(r.Member.Id);
             var cardNumber = GetAccountNumber(unitOfWork, r.LocationId);
             if (dependentList.Count > 0)
             {
@@ -243,8 +235,8 @@ namespace Algebra.Data.Repositories
             }
             else
             {
-                dependents.Add(new DependentViewModels() { D_CardId = cardNumber });
-                dependents.Add(new DependentViewModels() { D_CardId = cardNumber });
+                dependents.Add(new DependentViewModels() { CardId = cardNumber });
+                dependents.Add(new DependentViewModels() { CardId = cardNumber });
             }
             return dependents;
         }
@@ -260,28 +252,28 @@ namespace Algebra.Data.Repositories
                 switch (r.MembershipType)
                 {
                     case 1:
-                        m.P_MembershipFee = f.Individual;
+                        m.MembershipFee = f.Individual;
                         break;
                     case 2:
-                        m.P_MembershipFee = f.Individual + f.Couple;
+                        m.MembershipFee = f.Individual + f.Couple;
                         break;
                     case 3:
-                        m.P_MembershipFee = f.Individual + f.Couple + f.Dependent;
+                        m.MembershipFee = f.Individual + f.Couple + f.Dependent;
                         break;
                     case 4:
-                        m.P_MembershipFee = f.Individual + f.Dependent;
+                        m.MembershipFee = f.Individual + f.Dependent;
                         break;
                     default:
                         //in case of Complimentary membership
-                        m.P_MembershipFee = 0;
+                        m.MembershipFee = 0;
                         break;
                 }
 
-                m.P_GST = f.GSTRate;
-                m.P_TaxAmount = (m.P_MembershipFee * GST / 100);
-                m.P_TotalAmount = m.P_MembershipFee + m.P_TaxAmount;
-                m.P_MembershipFeeId = f.Id;
-                m.P_FeeBreakUp = f.Adapt<FeeViewModels>();
+                m.GST = f.GSTRate;
+                m.TaxAmount = (m.MembershipFee * GST / 100);
+                m.TotalAmount = m.MembershipFee + m.TaxAmount;
+                m.MembershipFeeId = f.Id;
+                m.FeeBreakUp = f.Adapt<FeeViewModels>();
             }
             m.Modes = modes;
             return m;

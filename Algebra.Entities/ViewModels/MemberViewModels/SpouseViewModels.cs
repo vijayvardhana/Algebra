@@ -7,116 +7,118 @@ namespace Algebra.Entities.ViewModels
 {
     public class SpouseViewModels
     {
-        public int S_Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [Display(Name = "Card Number")]
         [DataType(DataType.Text)]
-        public string S_CardId { get; set; }
+        public string CardId { get; set; }
 
         [Required]
         [Display(Name = "Title")]
-        public string S_Title { get; set; }
+        public string Title { get; set; }
 
         [Required]
         [Display(Name = "First Name")]
         [DataType(DataType.Text)]
-        public string S_FirstName { get; set; }
+        public string FirstName { get; set; }
 
         [Display(Name = "Middle Name")]
         [DataType(DataType.Text)]
-        public string S_MiddleName { get; set; }
+        public string MiddleName { get; set; }
 
         [Required]
         [Display(Name = "Last Name")]
         [DataType(DataType.Text)]
-        public string S_LastName { get; set; }
+        public string LastName { get; set; }
 
         [Required]
         [TwentyOneYears(21)]
         [Display(Name = "Date Of Birth")]
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/mm/yyyy}")]
-        public DateTime S_DateOfBirth { get; set; }
+        public DateTime DateOfBirth { get; set; }
 
         [Display(Name = "Title/Profession")]
-        public string S_ProfessionalTitle { get; set; }
+        public string ProfessionalTitle { get; set; }
 
         [Display(Name = "Designation")]
-        public string S_Designation { get; set; }
+        public string Designation { get; set; }
 
         [Display(Name = "Organization")]
-        public string S_Organization { get; set; }
+        public string Organization { get; set; }
 
         [Display(Name = "Telephone Number")]
-        public string S_TelephoneNumber { get; set; }
+        public string TelephoneNumber { get; set; }
 
         [Display(Name = "Present / Correspondence Address")]
-        public string S_PresentAddress { get; set; }
+        public string PresentAddress { get; set; }
 
         [Display(Name = "City")]
-        public string S_PresentCity { get; set; }
+        public string PresentCity { get; set; }
 
         [Display(Name = "State")]
-        public string S_PresentState { get; set; }
+        public string PresentState { get; set; }
 
         [Display(Name = "Pin")]
         [RegularExpression(@"^([0-9]{6})$", ErrorMessage = "Invalid pin code.")]
-        public string S_PresentPin { get; set; }
+        public string PresentPin { get; set; }
 
         [Display(Name = "Permanent Address")]
-        public string S_PermanentAddress { get; set; }
+        public string PermanentAddress { get; set; }
 
         [Display(Name = "City")]
-        public string S_PermanentCity { get; set; }
+        public string PermanentCity { get; set; }
 
         [Display(Name = "State")]
-        public string S_PermanentState { get; set; }
+        public string PermanentState { get; set; }
 
         [Display(Name = "Pin")]
         [RegularExpression(@"^([0-9]{6})$", ErrorMessage = "Invalid pin code.")]
-        public string S_PermanentPin { get; set; }
+        public string PermanentPin { get; set; }
 
         [Display(Name = "Primary Mobile Number")]
         [Required(ErrorMessage = "Mobile Number is required.")]
         [RegularExpression(@"^([0-9]{10})$", ErrorMessage = "Invalid Mobile Number.")]
-        public string S_PrimaryMobileNumber { get; set; }
+        public string PrimaryMobileNumber { get; set; }
 
         [Display(Name = "Secondary Mobile Number")]
-        public string S_SecondaryMobileNumber { get; set; }
+        public string SecondaryMobileNumber { get; set; }
 
         [Display(Name = "Email")]
         [EmailAddress]
         [DataType(DataType.EmailAddress)]
-        public string S_Email { get; set; }
+        public string Email { get; set; }
 
         [Display(Name = "Gender")]
-        public string S_Gender { get; set; }
+        public string Gender { get; set; }
 
         [Display(Name = "Marital Status")]
-        public string S_MaritalStatus { get; set; }
+        public string MaritalStatus { get; set; }
 
         [Display(Name = "Occupation")]
-        public string S_Occupation { get; set; }
+        public string Occupation { get; set; }
 
         [Display(Name = "How would you like to be addressed?")]
-        public string S_Addressed { get; set; }
+        public string Addressed { get; set; }
 
         [Required]
-        public DateTime S_CreatedDate { get; set; }
+        public DateTime CreatedDate { get; set; }
 
         [Required]
-        public DateTime S_MembershipStartDate { get; set; }
+        [Display(Name = "Membership Start Date")]
+        public DateTime MembershipStartDate { get; set; }
 
         [Required]
-        public DateTime S_MembershipEndDate { get; set; }
+        [Display(Name = "Membership End Date")]
+        public DateTime MembershipEndDate { get; set; }
 
-        public string S_ImagePath { get; set; }
+        public string ImagePath { get; set; }
 
-        public string S_CreatedBy { get; set; }
+        public string CreatedBy { get; set; }
 
-        public bool S_IsActive { get; set; }
+        public bool IsActive { get; set; }
 
-        public bool S_IsDeleted { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

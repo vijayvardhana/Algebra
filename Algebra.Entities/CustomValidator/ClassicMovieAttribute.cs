@@ -21,7 +21,7 @@ namespace Algebra.Entities.CustomValidator
         {
             MemberViewModels movie = (MemberViewModels)validationContext.ObjectInstance;
 
-            if (movie.M_DateOfBirth.AddYears(21) < DateTime.Now)
+            if (movie.DateOfBirth.AddYears(21) < DateTime.Now)
             {
                 return new ValidationResult(GetErrorMessage());
             }

@@ -20,7 +20,7 @@ namespace Algebra.Entities.CustomValidator
             var container = validationContext.ObjectInstance;
             if (container.GetType() == typeof(MemberViewModels))
             {
-                if (((MemberViewModels)container).M_DateOfBirth.AddYears(21) < DateTime.Now)
+                if (((MemberViewModels)container).DateOfBirth.AddYears(21) < DateTime.Now)
                 {
                     return new ValidationResult(GetErrorMessage());
                 }
@@ -31,7 +31,7 @@ namespace Algebra.Entities.CustomValidator
             }
             else if (container.GetType() == typeof(SpouseViewModels))
             {
-                if (((SpouseViewModels)container).S_DateOfBirth.AddYears(21) < DateTime.Now)
+                if (((SpouseViewModels)container).DateOfBirth.AddYears(21) < DateTime.Now)
                 {
                     return new ValidationResult(GetErrorMessage());
                 }
@@ -45,7 +45,7 @@ namespace Algebra.Entities.CustomValidator
 
         private string GetErrorMessage()
         {
-            return $"Member age must be greater than {_year}.";
+            return $"Age must be greater than equal to '{_year}' years.";
         }
 
         public void AddValidation(ClientModelValidationContext context)
@@ -56,6 +56,9 @@ namespace Algebra.Entities.CustomValidator
             }
             context.Attributes["data-val"] = "true";
             context.Attributes["data-val-twentyoneyears"] = GetErrorMessage();
+            //context.Attributes["min"] = DateTime.Now.AddYears(-21).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+            //context.Attributes["max"] = DateTime.Now.AddYears(-121).ToString(CultureInfo.InvariantCulture);
+           // context.Attributes["pattern"] = "[0-9]{4}-[0-9]{2}-[0-9]{2}";
 
             var year = _year.ToString(CultureInfo.InvariantCulture);
             context.Attributes["data-val-twentyoneyears-year"] = year;

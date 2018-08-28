@@ -90,17 +90,17 @@ class Registration {
 
         for (var i = 0; i < ids.length; i++) {
             this.cheque["c" + i] = {
-                'Number': this.ChequeValues(cheques, ids[i], 0),
-                'Amount': this.ChequeValues(cheques, ids[i], 1),
-                'Date': this.ChequeValues(cheques, ids[i], 2),
-                'BankName': this.ChequeValues(cheques, ids[i], 3),
-                'DrawnOn': this.ChequeValues(cheques, ids[i], 4),
+                'Number': this.PropertyValue(cheques, ids[i], 0),
+                'Amount': this.PropertyValue(cheques, ids[i], 1),
+                'Date': this.PropertyValue(cheques, ids[i], 2),
+                'BankName': this.PropertyValue(cheques, ids[i], 3),
+                'DrawnOn': this.PropertyValue(cheques, ids[i], 4),
                 'Created': this.CreatedBy
             };
         }
     }
 
-    ChequeValues(items, modelId, pos) {
+    PropertyValue(items, modelId, pos) {
         return items.filter(m => m.model == modelId)[pos].value;
     }
 
@@ -117,21 +117,21 @@ class Registration {
 
             switch (model) {
                 case 'member':
-                    this.member[key.substr(2)] = val;
+                    this.member[key] = val;
                     break;
                 case 'spouse':
-                    this.spouse[key.substr(2)] = val;
+                    this.spouse[key] = val;
                     break;
                 case 'dependent_1':
                 case 'dependent_2':
                     if (model === "dependent_1") {
-                        d1[key.substr(6)] = val;
+                        d1[key.substr(4)] = val;
                     } else {
-                        d2[key.substr(6)] = val;
+                        d2[key.substr(4)] = val;
                     }
                     break;
                 case 'payment':
-                    this.payment[key.substr(2)] = val;
+                    this.payment[key] = val;
                     break;
                 default:
                     break;

@@ -5,79 +5,79 @@
 
 <div id="payment" class="small">
     <h4>Membership Fee <small>(Fill payment details)</small></h4>
-    <div>@await Html.PartialAsync("_Fee", Model.P_FeeBreakUp)</div>
+    <div>@await Html.PartialAsync("_Fee", Model.FeeBreakUp)</div>
     <hr class="colorgraph">
     <div class="row">
         <div class="col-lg-4">
             <div class="form-group">
-                <label asp-for="@Model.P_MembershipFee"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
-                <input asp-for="@Model.P_MembershipFee" class="form-control input-sm" />
-                <span asp-validation-for="@Model.P_MembershipFee" class="text-danger"></span>
+                <label asp-for="@Model.MembershipFee"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
+                <input asp-for="@Model.MembershipFee" class="form-control input-sm" />
+                <span asp-validation-for="@Model.MembershipFee" class="text-danger"></span>
             </div>
         </div>
         <div class="col-lg-4">
             <div class="form-group">
-                <label asp-for="@Model.P_GST"></label>
-                <input asp-for="@Model.P_GST" class="form-control input-sm" />
+                <label asp-for="@Model.GST"></label>
+                <input asp-for="@Model.GST" class="form-control input-sm" />
             </div>
         </div>
         <div class="col-lg-4">
             <div class="form-group">
-                <label asp-for="@Model.P_TaxAmount"></label>
-                <input asp-for="@Model.P_TaxAmount" class="form-control input-sm" />
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-4">
-            <div class="form-group">
-                <label asp-for="@Model.P_TotalAmount"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
-                <input asp-for="@Model.P_TotalAmount" class="form-control input-sm" />
-            </div>
-        </div>
-        <div class="col-lg-4">
-            <div class="form-group">
-                <label asp-for="@Model.P_PaymentDate"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
-                <input asp-for="@Model.P_PaymentDate" class="form-control input-sm" />
-            </div>
-        </div>
-        <div class="col-lg-4">
-            <div class="form-group">
-                <label asp-for="@Model.P_PaymentMode"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
-                <select asp-for="@Model.P_PaymentMode" asp-items="@Model.Modes" class="form-control input-sm"></select>
-                <span asp-validation-for="@Model.P_PaymentMode" class="text-danger"></span>
+                <label asp-for="@Model.TaxAmount"></label>
+                <input asp-for="@Model.TaxAmount" class="form-control input-sm" />
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-lg-4">
             <div class="form-group">
-                <label asp-for="@Model.P_TransactionId"></label>
-                <input asp-for="@Model.P_TransactionId" class="form-control input-sm" />
+                <label asp-for="@Model.TotalAmount"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
+                <input asp-for="@Model.TotalAmount" class="form-control input-sm" />
             </div>
         </div>
         <div class="col-lg-4">
             <div class="form-group">
-                <label asp-for="@Model.P_Description"></label>
-                <input asp-for="@Model.P_Description" class="form-control input-sm" />
+                <label asp-for="@Model.PaymentDate"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
+                <input asp-for="@Model.PaymentDate" class="form-control input-sm" />
             </div>
         </div>
         <div class="col-lg-4">
             <div class="form-group">
-                <label asp-for="@Model.P_IsDiscountApplicable"></label>
-                <input type="checkbox" asp-for="@Model.P_IsDiscountApplicable" class="form-control form-check-input" style="width:20px; height:20px; " />
+                <label asp-for="@Model.PaymentMode"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
+                <select asp-for="@Model.PaymentMode" asp-items="@Model.Modes" class="form-control input-sm"></select>
+                <span asp-validation-for="@Model.PaymentMode" class="text-danger"></span>
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-lg-4">
             <div class="form-group">
-                <input type="hidden" asp-for="@Model.P_MembershipFeeId" value="@Model.P_MembershipFeeId" class="form-control input-sm" />
+                <label asp-for="@Model.TransactionId"></label>
+                <input asp-for="@Model.TransactionId" class="form-control input-sm" />
             </div>
         </div>
         <div class="col-lg-4">
             <div class="form-group">
-                <input type="hidden" asp-for="@Model.P_Created" value="@Model.P_Created" class="form-control input-sm" />
+                <label asp-for="@Model.Description"></label>
+                <input asp-for="@Model.Description" class="form-control input-sm" />
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label asp-for="@Model.IsDiscountApplicable"></label>
+                <input type="checkbox" asp-for="@Model.IsDiscountApplicable" class="form-control form-check-input" style="width:20px; height:20px; " />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="form-group">
+                <input type="hidden" asp-for="@Model.MembershipFeeId" value="@Model.MembershipFeeId" class="form-control input-sm" />
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="form-group">
+                <input type="hidden" asp-for="@Model.Created" value="@Model.Created" class="form-control input-sm" />
             </div>
         </div>
     </div>
