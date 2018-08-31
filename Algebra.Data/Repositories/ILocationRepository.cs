@@ -10,6 +10,8 @@ namespace Algebra.Data.Repositories
 
         string GetLocationById(int id);
 
+        string GetCodeDigitByLocationId(int id);
+
         IEnumerable<SelectListItem> GetDropDown(IUnitOfWork unitOfWork);
 
         IEnumerable<SelectListItem> GetLocationFeeDropDown(IUnitOfWork unitOfWork);

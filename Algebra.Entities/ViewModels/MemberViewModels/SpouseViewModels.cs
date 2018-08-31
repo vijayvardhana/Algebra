@@ -16,7 +16,7 @@ namespace Algebra.Entities.ViewModels
 
         [Required]
         [Display(Name = "Title")]
-        public string Title { get; set; }
+        public short Title { get; set; }
 
         [Required]
         [Display(Name = "First Name")]
@@ -33,11 +33,11 @@ namespace Algebra.Entities.ViewModels
         public string LastName { get; set; }
 
         [Required]
-        [TwentyOneYears(21)]
+        [ValidateAge(21,65)]
         [Display(Name = "Date Of Birth")]
         [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/mm/yyyy}")]
-        public DateTime DateOfBirth { get; set; }
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+        public DateTime SpouseDOB { get; set; }
 
         [Display(Name = "Title/Profession")]
         public string ProfessionalTitle { get; set; }
@@ -91,13 +91,13 @@ namespace Algebra.Entities.ViewModels
         public string Email { get; set; }
 
         [Display(Name = "Gender")]
-        public string Gender { get; set; }
+        public short Gender { get; set; }
 
         [Display(Name = "Marital Status")]
-        public string MaritalStatus { get; set; }
+        public short MaritalStatus { get; set; }
 
         [Display(Name = "Occupation")]
-        public string Occupation { get; set; }
+        public short Occupation { get; set; }
 
         [Display(Name = "How would you like to be addressed?")]
         public string Addressed { get; set; }

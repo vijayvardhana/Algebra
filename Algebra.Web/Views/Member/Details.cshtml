@@ -5,6 +5,8 @@
     bool hasSpouse = (Model.Spouse != null) ? true : false;
     bool hasDependents = (Model.Dependent?.Count > 0) ? true : false;
     bool hasCheques = (Model.Payment.Cheques?.Count) > 0 ? true : false;
+
+    //string cat = Model.Member.Categories).Items).Items[4]).Text
 }
 <div class="container">
     <div class="panel panel-default row" style="padding: 10px; margin: 10px">
@@ -23,11 +25,11 @@
                         <li><a href="#dependent" aria-controls="dependent" role="tab" data-toggle="tab">Dependent(s)</a></li>
                     }
                 }
-                <li><a href="#membership-fee" aria-controls="membership-fee" role="tab" data-toggle="tab">Membership Fee</a></li>
+                <li><a href="#membership-fee" aria-controls="membership-fee" role="tab" data-toggle="tab">Payment</a></li>
                 <li><a href="#assets" aria-controls="assets" role="tab" data-toggle="tab">Assets</a></li>
             </ul>
             <!-- Tab panes -->
-            <div class="tab-content" style="padding-top: 20px">
+            <div class="tab-content small" style="padding-top: 20px">
                 @* MEMBER DETAILS START HERE *@
                 <div role="tabpanel" class="tab-pane active" id="member">
                     <h4>Member </h4><h5 style="font-weight:bold;">
@@ -51,12 +53,12 @@
                         </div>
                         <div class="col-lg-3">
                             <div class="form-group">
-                                <label asp-for="@Model.Member.MembershipType"></label><p class="active">@Model.Member.MembershipType</p>
+                                <label asp-for="@Model.Member.MembershipType"></label><p class="active">@GetText(Model.Member.Categories, Model.Member.MembershipType)</p>
                             </div>
                         </div>
                         <div class="col-lg-3">
                             <div class="form-group">
-                                <label asp-for="@Model.Member.ReferredBy"></label><p class="active">@Model.Member.ReferredBy</p>
+                                <label asp-for="@Model.Member.ReferredBy"></label><p class="active">@GetText(Model.Member.Referrers, Model.Member.ReferredBy)</p>
                             </div>
                         </div>
 
@@ -81,7 +83,7 @@
                     <div class="row">
                         <div class="col-lg-3">
                             <div class="form-group">
-                                <label asp-for="@Model.Member.Title"></label><p>@Model.Member.Title</p>
+                                <label asp-for="@Model.Member.Title"></label><p>@GetText(Html.GetEnumSelectList(typeof(Enums.Title)), Model.Member.Title)</p>
                             </div>
                         </div>
                         <div class="col-lg-3">
@@ -113,7 +115,7 @@
                         </div>
                         <div class="col-lg-3">
                             <div class="form-group">
-                                <label asp-for="@Model.Member.DateOfBirth"></label><p>@Model.Member.DateOfBirth.ToShortDateString()</p>
+                                <label asp-for="@Model.Member.MemberDOB"></label><p>@Model.Member.MemberDOB.ToShortDateString()</p>
                             </div>
                         </div>
                         <div class="col-lg-3">
@@ -130,17 +132,17 @@
                         </div>
                         <div class="col-lg-3">
                             <div class="form-group">
-                                <label asp-for="@Model.Member.Gender"></label><p>@Model.Member.Gender</p>
+                                <label asp-for="@Model.Member.Gender"></label><p>@GetText(Html.GetEnumSelectList(typeof(Enums.Gender)), Model.Member.Gender)</p>
                             </div>
                         </div>
                         <div class="col-lg-3">
                             <div class="form-group">
-                                <label asp-for="@Model.Member.MaritalStatus"></label><p>@Model.Member.MaritalStatus</p>
+                                <label asp-for="@Model.Member.MaritalStatus"></label><p>@GetText(Html.GetEnumSelectList(typeof(Enums.MaritalStatus)), Model.Member.MaritalStatus)</p>
                             </div>
                         </div>
                         <div class="col-lg-3">
                             <div class="form-group">
-                                <label asp-for="@Model.Member.Occupation"></label><p>@Model.Member.Occupation</p>
+                                <label asp-for="@Model.Member.Occupation"></label><p>@GetText(Html.GetEnumSelectList(typeof(Enums.Occupation)), Model.Member.Occupation)</p>
                             </div>
                         </div>
                     </div>
@@ -214,220 +216,227 @@
                 @* MEMBER DETAILS END HERE *@
 
                 @* SPOUSE DETAILS START HERE *@
-                <div role="tabpanel" class="tab-pane" id="spouse">
-                    <h4>Spouse </h4><h5 style="font-weight:bold;">
-                        (
-                        <label asp-for="@Model.Spouse.CardId" class="small"></label> - <span>@Model.Spouse.CardId</span>
-                        <label class="small">, Membership start from</label>  <span>@Model.Spouse.MembershipStartDate.ToShortDateString()</span>
-                        <label class="small">till midnight</label>  <span>@Model.Spouse.MembershipEndDate.ToShortDateString()</span>
-                        )
-                    </h5>
-                    <hr class="colorgraph">
-                    <div class="row">
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <label asp-for="@Model.Spouse.CardId"></label><p class="active">@Model.Member.CardId</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <label asp-for="@Model.Spouse.MembershipStartDate"></label><p class="active">@Model.Spouse.MembershipStartDate.ToShortDateString()</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <label asp-for="@Model.Spouse.MembershipStartDate"></label><p class="active">@Model.Spouse.MembershipStartDate.ToShortDateString()</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <label asp-for="@Model.Spouse.Title"></label><p>@Model.Spouse.Title</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <label asp-for="@Model.Spouse.FirstName"></label><p>@Model.Spouse.FirstName</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <label asp-for="@Model.Spouse.MiddleName"></label><p>@Model.Spouse.MiddleName</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <label asp-for="@Model.Spouse.LastName"></label><p>@Model.Spouse.LastName</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <label asp-for="@Model.Spouse.PrimaryMobileNumber"></label><p>@Model.Spouse.PrimaryMobileNumber</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <label asp-for="@Model.Spouse.SecondaryMobileNumber"></label><p>@Model.Spouse.SecondaryMobileNumber</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <label asp-for="@Model.Spouse.DateOfBirth"></label><p>@Model.Spouse.DateOfBirth.ToShortDateString()</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <label asp-for="@Model.Spouse.Email"></label><p>@Model.Spouse.Email</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <label asp-for="@Model.Spouse.TelephoneNumber"></label><p>@Model.Spouse.TelephoneNumber</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <label asp-for="@Model.Spouse.Gender"></label><p>@Model.Spouse.Gender</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <label asp-for="@Model.Spouse.MaritalStatus"></label><p>@Model.Spouse.MaritalStatus</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <label asp-for="@Model.Spouse.Occupation"></label><p>@Model.Spouse.Occupation</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <label asp-for="@Model.Spouse.ProfessionalTitle"></label><p>@Model.Spouse.ProfessionalTitle</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <label asp-for="@Model.Spouse.Designation"></label><p>@Model.Spouse.Designation</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <label asp-for="@Model.Spouse.Organization"></label><p>@Model.Spouse.Organization</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label asp-for="@Model.Spouse.PresentAddress"></label><p>@Model.Spouse.PresentAddress</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-2">
-                            <div class="form-group">
-                                <label asp-for="@Model.Spouse.PresentCity"></label><p>@Model.Spouse.PresentCity</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-2">
-                            <div class="form-group">
-                                <label asp-for="@Model.Spouse.PresentState"></label><p>@Model.Spouse.PresentState</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-2">
-                            <div class="form-group">
-                                <label asp-for="@Model.Spouse.PresentPin"></label><p>@Model.Spouse.PresentPin</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label asp-for="@Model.Spouse.PermanentAddress"></label><p>@Model.Spouse.PermanentAddress</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-2">
-                            <div class="form-group">
-                                <label asp-for="@Model.Spouse.PermanentCity"></label><p>@Model.Spouse.PermanentCity</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-2">
-                            <div class="form-group">
-                                <label asp-for="@Model.Spouse.PermanentState"></label><p>@Model.Spouse.PermanentState</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-2">
-                            <div class="form-group">
-                                <label asp-for="@Model.Spouse.PermanentPin"></label><p>@Model.Spouse.PermanentPin</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                @* SPOUSE DETAILS END HERE *@
-
-                @* DEPENDENT DETAILS START HERE *@
-                <div role="tabpanel" class="tab-pane" id="dependent">
-                    @for (int i = 0; i < Model.Dependent.Count; i++)
-                    {
-                        <h4>Dependent - <small>@(i + 1)</small></h4><h5 style="font-weight:bold;">
+                @if (hasSpouse)
+                {
+                    <div role="tabpanel" class="tab-pane" id="spouse">
+                        <h4>Spouse </h4><h5 style="font-weight:bold;">
                             (
-                            <label asp-for="@Model.Dependent[i].CardId" class="small"></label> - <span>@Model.Dependent[i].CardId</span>
-                            <label class="small">, Membership start from</label>  <span>@Model.Dependent[i].MembershipStartDate.ToShortDateString()</span>
-                            <label class="small">till midnight</label>  <span>@Model.Dependent[i].MembershipEndDate.ToShortDateString()</span>
+                            <label asp-for="@Model.Spouse.CardId" class="small"></label> - <span>@Model.Spouse.CardId</span>
+                            <label class="small">, Membership start from</label>  <span>@Model.Spouse.MembershipStartDate.ToShortDateString()</span>
+                            <label class="small">till midnight</label>  <span>@Model.Spouse.MembershipEndDate.ToShortDateString()</span>
                             )
                         </h5>
                         <hr class="colorgraph">
                         <div class="row">
                             <div class="col-lg-3">
                                 <div class="form-group">
-                                    <label asp-for="@Model.Dependent[i].CardId"></label><p class="active">@Model.Dependent[i].CardId</p>
+                                    <label asp-for="@Model.Spouse.CardId"></label><p class="active">@Model.Member.CardId</p>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="form-group">
-                                    <label asp-for="@Model.Dependent[i].MembershipStartDate"></label><p class="active">@Model.Dependent[i].MembershipStartDate.ToShortDateString()</p>
+                                    <label asp-for="@Model.Spouse.MembershipStartDate"></label><p class="active">@Model.Spouse.MembershipStartDate.ToShortDateString()</p>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="form-group">
-                                    <label asp-for="@Model.Dependent[i].MembershipEndDate"></label><p class="active">@Model.Dependent[i].MembershipEndDate.ToShortDateString()</p>
+                                    <label asp-for="@Model.Spouse.MembershipStartDate"></label><p class="active">@Model.Spouse.MembershipStartDate.ToShortDateString()</p>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-lg-3">
                                 <div class="form-group">
-                                    <label asp-for="@Model.Dependent[i].Name"></label><p class="active">@Model.Dependent[i].Name</p>
+                                    <label asp-for="@Model.Spouse.Title"></label><p>@GetText(Html.GetEnumSelectList(typeof(Enums.Title)), Model.Spouse.Title)</p>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="form-group">
-                                    <label asp-for="@Model.Dependent[i].DateOfBirth"></label><p class="active">@Model.Dependent[i].DateOfBirth.ToShortDateString()</p>
+                                    <label asp-for="@Model.Spouse.FirstName"></label><p>@Model.Spouse.FirstName</p>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="form-group">
-                                    <label asp-for="@Model.Dependent[i].Email"></label><p class="active">@Model.Dependent[i].Email</p>
+                                    <label asp-for="@Model.Spouse.MiddleName"></label><p>@Model.Spouse.MiddleName</p>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="form-group">
-                                    <label asp-for="@Model.Dependent[i].MobileNumber"></label><p class="active">@Model.Dependent[i].MobileNumber</p>
+                                    <label asp-for="@Model.Spouse.LastName"></label><p>@Model.Spouse.LastName</p>
                                 </div>
                             </div>
                         </div>
-                    }
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label asp-for="@Model.Spouse.PrimaryMobileNumber"></label><p>@Model.Spouse.PrimaryMobileNumber</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label asp-for="@Model.Spouse.SecondaryMobileNumber"></label><p>@Model.Spouse.SecondaryMobileNumber</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label asp-for="@Model.Spouse.SpouseDOB"></label><p>@Model.Spouse.SpouseDOB.ToShortDateString()</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label asp-for="@Model.Spouse.Email"></label><p>@Model.Spouse.Email</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label asp-for="@Model.Spouse.TelephoneNumber"></label><p>@Model.Spouse.TelephoneNumber</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label asp-for="@Model.Spouse.Gender"></label><p>@GetText(Html.GetEnumSelectList(typeof(Enums.Gender)), Model.Spouse.Gender)</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label asp-for="@Model.Spouse.MaritalStatus"></label><p>@GetText(Html.GetEnumSelectList(typeof(Enums.MaritalStatus)), Model.Spouse.MaritalStatus)</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label asp-for="@Model.Spouse.Occupation"></label><p>@GetText(Html.GetEnumSelectList(typeof(Enums.Occupation)), Model.Spouse.MaritalStatus)</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label asp-for="@Model.Spouse.ProfessionalTitle"></label><p>@Model.Spouse.ProfessionalTitle</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label asp-for="@Model.Spouse.Designation"></label><p>@Model.Spouse.Designation</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label asp-for="@Model.Spouse.Organization"></label><p>@Model.Spouse.Organization</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label asp-for="@Model.Spouse.PresentAddress"></label><p>@Model.Spouse.PresentAddress</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    <label asp-for="@Model.Spouse.PresentCity"></label><p>@Model.Spouse.PresentCity</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    <label asp-for="@Model.Spouse.PresentState"></label><p>@Model.Spouse.PresentState</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    <label asp-for="@Model.Spouse.PresentPin"></label><p>@Model.Spouse.PresentPin</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label asp-for="@Model.Spouse.PermanentAddress"></label><p>@Model.Spouse.PermanentAddress</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    <label asp-for="@Model.Spouse.PermanentCity"></label><p>@Model.Spouse.PermanentCity</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    <label asp-for="@Model.Spouse.PermanentState"></label><p>@Model.Spouse.PermanentState</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="form-group">
+                                    <label asp-for="@Model.Spouse.PermanentPin"></label><p>@Model.Spouse.PermanentPin</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
 
-                </div>
+                @* SPOUSE DETAILS END HERE *@
+
+                @* DEPENDENT DETAILS START HERE *@
+                @if (hasDependents)
+                {
+                    <div role="tabpanel" class="tab-pane" id="dependent">
+                        @for (int i = 0; i < Model.Dependent.Count; i++)
+                        {
+                            <h4>Dependent - <small>@(i + 1)</small></h4><h5 style="font-weight:bold;">
+                                (
+                                <label asp-for="@Model.Dependent[i].CardId" class="small"></label> - <span>@Model.Dependent[i].CardId</span>
+                                <label class="small">, Membership start from</label>  <span>@Model.Dependent[i].MembershipStartDate.ToShortDateString()</span>
+                                <label class="small">till midnight</label>  <span>@Model.Dependent[i].MembershipEndDate.ToShortDateString()</span>
+                                )
+                            </h5>
+                            <hr class="colorgraph">
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label asp-for="@Model.Dependent[i].CardId"></label><p class="active">@Model.Dependent[i].CardId</p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label asp-for="@Model.Dependent[i].MembershipStartDate"></label><p class="active">@Model.Dependent[i].MembershipStartDate.ToShortDateString()</p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label asp-for="@Model.Dependent[i].MembershipEndDate"></label><p class="active">@Model.Dependent[i].MembershipEndDate.ToShortDateString()</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label asp-for="@Model.Dependent[i].Name"></label><p class="active">@Model.Dependent[i].Name</p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label asp-for="@Model.Dependent[i].DependentDOB"></label><p class="active">@Model.Dependent[i].DependentDOB.ToShortDateString()</p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label asp-for="@Model.Dependent[i].Email"></label><p class="active">@Model.Dependent[i].Email</p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label asp-for="@Model.Dependent[i].MobileNumber"></label><p class="active">@Model.Dependent[i].MobileNumber</p>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+
                 @* DEPENDENT DETAILS END HERE *@
 
                 @* PAYMENT DETAILS START HERE *@
@@ -462,7 +471,7 @@
                         </div>
                         <div class="col-lg-3">
                             <div class="form-group">
-                                <label asp-for="@Model.Payment.PaymentMode"></label><p>@Model.Payment.PaymentMode</p>
+                                <label asp-for="@Model.Payment.PaymentMode"></label><p>@GetText(Model.Payment.Modes, Convert.ToInt16(Model.Payment.PaymentMode))</p>
                             </div>
                         </div>
                         <div class="col-lg-3">
@@ -530,3 +539,17 @@
         <button type="button" class="btn btn-primary glyphicon-list-alt" onclick="location.href='@Url.Action("Index", "Member")'">Back</button>
     </div>
 </div>
+@{
+    string GetText(IEnumerable<SelectListItem> items, short id)
+    {
+        string selectedValue = string.Empty;
+        foreach (var item in items)
+        {
+            if (item.Value == id.ToString())
+            {
+                selectedValue = item.Text;
+            }
+        }
+        return selectedValue;
+    }
+}

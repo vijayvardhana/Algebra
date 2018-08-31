@@ -66,27 +66,27 @@ namespace Algebra.Data
 
         public enum Gender
         {
-            Male,
-            Female
+            Male=1,
+            Female=2
         }
 
         public enum Occupation
         {
             [Display(Name = "Self Employed")]
-            SelfEmployed,
+            SelfEmployed=1,
             [Display(Name = "Salaried")]
-            Salaried,
+            Salaried=2,
             [Display(Name = "Business")]
-            Business
+            Business=3
         }
 
         public enum MaritalStatus
         {
-            Single,
-            Married,
-            Divorced,
-            Widowed,
-            Separated
+            Single=1,
+            Married=2,
+            Divorced=3,
+            Widowed=4,
+            Separated=5
         }
 
     }

@@ -15,8 +15,6 @@ namespace Algebra.Entities.Models
         [MaxLength(50)]
         public string CardId { get; set; }
 
-        public DateTime DateOfBirth { get; set; }
-
         [MaxLength(50)]
         public string Email { get; set; }
 
@@ -37,6 +35,9 @@ namespace Algebra.Entities.Models
 
         [DefaultValue(false)]
         public bool IsDeleted { get; set; }
+
+        [MaxLength(20)]
+        public string IpAddress { get; set; }
 
         [Timestamp]
         public byte[] RowVersion { get; set; }

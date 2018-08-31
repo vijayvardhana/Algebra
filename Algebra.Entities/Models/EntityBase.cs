@@ -19,6 +19,9 @@ namespace Algebra.Entities.Models
         [DefaultValue(false)]
         public bool IsDeleted { get; set; }
 
+        [MaxLength(20)]
+        public string IpAddress { get; set; }
+
         [Timestamp]
         public byte[] RowVersion { get; set; }
     }

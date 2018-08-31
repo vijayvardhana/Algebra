@@ -1,11 +1,49 @@
 ﻿@using Algebra.Entities.ViewModels
 @model FeeViewModels
+@*<ul id="fee-details" style="font-weight:bold;">
+        <li>Individual : @Model.Individual</li>
+        <li>Couple : @(Model.Couple + Model.Individual)</li>
+        <li>Dependent(s) : @Model.Dependent</li>
+        <li>GST (%) : @Model.GSTRate</li>
+        <li>Tax Amount : @Model.GSTAmount</li>
+        <li>Total : @Model.TotalAmount</li>
+    </ul>*@
 
-<ul id="fee-details" style="font-weight:bold;">
-    <li>Individual : @Model.Individual</li>
-    <li>Couple : @(Model.Couple + Model.Individual)</li>
-    <li>Dependent(s) : @Model.Dependent</li>
-    <li>GST (%) : @Model.GSTRate</li>
-    <li>Tax Amount : @Model.GSTAmount</li>
-    <li>Total : @Model.TotalAmount</li>
-</ul>
+<div class="row">
+    <div class="col-lg-2">
+        <em>
+            <label asp-for="@Model.Individual"></label>
+        </em>
+        <p><strong>@Model.Individual</strong></p>
+    </div>
+    <div class="col-lg-2">
+        <em>
+            <label asp-for="@Model.Couple"></label>
+        </em>
+        <p><strong>@(Model.Couple + Model.Individual)</strong></p>
+    </div>
+    <div class="col-lg-2">
+        <em>
+            <label asp-for="@Model.Dependent"></label>
+        </em>
+        <p><strong>@Model.Dependent</strong></p>
+    </div>
+    <div class="col-lg-2">
+        <em>
+            <label asp-for="@Model.GSTRate"></label>
+        </em>
+        <p><strong>@Model.GSTRate</strong></p>
+    </div>
+    <div class="col-lg-2">
+        <em>
+            <label asp-for="@Model.GSTAmount"></label>
+        </em>
+        <p><strong>@Model.GSTAmount</strong></p>
+    </div>
+    <div class="col-lg-2">
+        <em>
+            <label asp-for="@Model.TotalAmount"></label>
+        </em>
+        <p><strong>@Model.TotalAmount</strong></p>
+    </div>
+</div>

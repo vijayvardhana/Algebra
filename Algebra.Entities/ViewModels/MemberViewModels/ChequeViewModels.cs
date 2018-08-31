@@ -29,6 +29,7 @@ namespace Algebra.Entities.ViewModels
         [Display(Name = "Bank Name")]
         public string BankName { get; set; }
 
+        [Required]
         [MaxLength(100)]
         [Display(Name = "Drawn On")]
         public string DrawnOn { get; set; }

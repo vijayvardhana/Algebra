@@ -1,11 +1,4 @@
-﻿const Tabs = {
-    MEM: 'member',
-    SPO: 'spouse',
-    DEP: 'dependent',
-    FEE: 'membership-fee',
-    AST: 'assets'
-}
-
+﻿
 class Registration {
 
     constructor(m) {
@@ -15,17 +8,13 @@ class Registration {
         this.RefferBy = m.Reffered;
         this.CreatedBy = m.CreatedBy;
 
-
-        this.tabCtrl = $(".nav-tabs");
-        this.ctrl = new Array();
         this.member = {};
         this.spouse = {};
-        // this.register = {};
         this.dependent = {};
         this.payment = {};
         this.cheque = {};
         this.ctrl = [];
-
+        
         this.url = "/api/member/AddMember";
 
         this.TabsSelection(this.mType);
@@ -65,17 +54,40 @@ class Registration {
 
     FormControlExtraction() {
         let c = new Array();
+        let paymentMode;
         $(".form-control").each(function (index) {
             var o = {};
             var id = this.id;
             var value = $(this).val();
-            var required = $(this).attr('data-val-required') ? true : false;
+            var required = $(this).attr('data-val-required')
+                ? true
+                : false;
+
             var errorMessage = $(this).attr('data-val-required');
             var model = $(this).parents(':eq(3)').attr('id');
-            var isCheque = (model.indexOf("cheque") != -1) ? true : false;
-            o = { 'id': id, 'value': value, 'isRequired': required, 'errorMessage': errorMessage, 'model': model, 'isCheque': isCheque };
 
-            // console.log(o);
+            var isChequeModel = (model.indexOf("cheque") != -1)
+                ? true
+                : false;
+
+            if (model === "payment") {
+                paymentMode = $("#PaymentMode").val();
+                if (!paymentMode) {
+                    toastr.warning("Mode of payment must be selected", "Payment");
+                    return false;
+                }
+            }
+
+            if (paymentMode && isChequeModel) {
+                o = { 'id': id, 'value': value, 'isRequired': (paymentMode === Mode.CHQ || paymentMode === Mode.MXM), 'errorMessage': errorMessage, 'model': model, 'isChequeModel': isChequeModel };
+            }
+            else {
+                o = { 'id': id, 'value': value, 'isRequired': required, 'errorMessage': errorMessage, 'model': model, 'isChequeModel': isChequeModel };
+            }
+
+            
+
+             console.log(o);
             c[index] = o;
             o = {};
         });
@@ -84,7 +96,7 @@ class Registration {
 
     ChequeModelBuilder(cheques) {
 
-        var ids = $('div .clonedInput').map(function () {
+        var ids = $('div .cheque').map(function () {
             return this.id
         }).get()
 
@@ -141,7 +153,7 @@ class Registration {
         this.dependent["d1"] = d2;
 
         var cheques = this.ctrl.filter(function (item) {
-            return item.isCheque === true;
+            return item.isChequeModel === true;
         });
         this.ChequeModelBuilder(cheques);
     }
@@ -189,7 +201,7 @@ class Registration {
             models["o2"] = this.dependent;
             models["o3"] = this.payment;
             models["o4"] = this.cheque;
-            console.log(JSON.stringify(models));
+            //console.log(JSON.stringify(models));
             //  return false;
             $.ajax({
                 url: "/api/member/post",
@@ -198,9 +210,11 @@ class Registration {
                 dataType: "json",
                 data: JSON.stringify(models),
                 success: function (result) {
+                    toastr.success(result);
                     console.log(result);
                 },
                 error: function (xhr, resp, text) {
+                    toastr.error(resp);
                     console.log(xhr, resp, text);
                 }
             });

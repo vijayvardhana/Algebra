@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Algebra.Entities.Models
@@ -20,6 +21,8 @@ namespace Algebra.Entities.Models
 
         [MaxLength(50)]
         public string MobileNumber { get; set; }
+
+        public DateTime DependentDOB { get; set; }
 
         #endregion Properties
 

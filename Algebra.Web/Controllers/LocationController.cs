@@ -6,7 +6,8 @@ using Algebra.Data;
 using Algebra.Data.Repositories;
 using System.Linq;
 using Mapster;
-using Microsoft.EntityFrameworkCore;
+using Algebra.Web.Toast;
+using System;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -30,7 +31,8 @@ namespace Algebra.Web.Controllers
             {
                 location = unitOfWork.Locations.GetAll();
             }
-
+            //TempData["msg"] = "Getting location records for you !";
+            this.AddToastMessage("Info", "Getting location records for you !", ToastType.Info);
             return View(location);
         }
 
@@ -39,10 +41,19 @@ namespace Algebra.Web.Controllers
         [Route("api/location/edit")]
         public IActionResult Edit(int id)
         {
-            var model = _dbContext.Locations
-                .Where(i => i.Id == id)
-                .FirstOrDefault()
-                .Adapt<LocationViewModels>();
+            LocationViewModels model =null;
+            try
+            {
+                model = _dbContext.Locations
+               .Where(i => i.Id == id)
+               .FirstOrDefault()
+               .Adapt<LocationViewModels>();
+            }
+            catch (Exception)
+            {
+                this.AddToastMessage("Error", "Somthing went wrong, please try again ", ToastType.Error);
+            }
+            this.AddToastMessage("Info", "Getting location model for edit", ToastType.Info);
 
             return View("Edit", model);
         }
@@ -73,7 +84,11 @@ namespace Algebra.Web.Controllers
                 }
 
                 _dbContext.SaveChanges();
-
+                this.AddToastMessage("Success", "Location saved successfully", ToastType.Success);
+            }
+            else
+            {
+                this.AddToastMessage("Warning", "Somthing went wrong, please try again ", ToastType.Warning);
             }
             IEnumerable<Location> locationList = _dbContext.Locations.ToList();
             return View("Index", locationList);

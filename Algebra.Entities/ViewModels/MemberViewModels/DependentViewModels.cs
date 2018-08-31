@@ -1,6 +1,6 @@
-﻿using Algebra.Entities.CustomValidator;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
+using Algebra.Entities.CustomValidator;
 
 namespace Algebra.Entities.ViewModels
 {
@@ -15,8 +15,8 @@ namespace Algebra.Entities.ViewModels
         [Display(Name = "Date Of Birth")]
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
-        [AgeRangeValidator(ErrorMessage = "Age must be between 18 - 30", MinAge = 16, MaxAge = 20)]
-        public DateTime DateOfBirth { get; set; }
+        [ValidateAge(16,21)]
+        public DateTime DependentDOB { get; set; }
 
         [Display(Name = "Email")]
         [EmailAddress]

@@ -46,4 +46,15 @@
 </div>
 @section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            let location;
+
+            $("#LocationId").change(function () {
+                location = this.value;
+            });
+            
+        });
+    </script>
 }

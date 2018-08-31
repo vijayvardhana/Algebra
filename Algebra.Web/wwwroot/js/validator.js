@@ -7,11 +7,11 @@
 
 jQuery.validator.addMethod('twentyoneyears',
     function (value, element) {
-        var from = value.split("-"); // YYYY-MM-DD for chrome
+        var dob = value.split("-"); // YYYY-MM-DD for chrome
 
-        var year = from[0];
-        var month = from[1];
-        var day = from[2];
+        var year = dob[0];
+        var month = dob[1];
+        var day = dob[2];
         var age = 21;
         console.log("Year : " + year + ", Month : " + month + ", Day : " + day);
         var mydate = new Date();
@@ -47,3 +47,34 @@ jQuery.validator.unobtrusive.adapters.add('twentyoneyears',
  * Age between 16 and 21 years validator
  * 
  * ***/
+
+$.validator.addMethod(
+    'validateage',
+    function (value, element, params) {
+        var min = $(element).attr("data-val-min");
+        var max = $(element).attr("data-val-max")
+        var minumumdate = $(element).attr("minumumdate");
+        var maximumdate = $(element).attr("maximumdate");
+        //return Date.parse(value) >= Date.parse(params.minumumdate) && Date.parse(value) <= Date.parse(params.maximumdate);
+        return Date.parse(value) >= Date.parse(minumumdate) && Date.parse(value) <= Date.parse(maximumdate);
+    });
+
+$.validator.unobtrusive.adapters.add(
+    'validateage', ['minumumdate', 'maximumdate'], function (options) {
+        var params = {
+            minumumdate: options.params.minumumdate,
+            maximumdate: options.params.maximumdate
+        };
+        options.rules['validateage'] = params;
+        options.messages['validateage'] = options.message;
+    });
+
+
+
+//jQuery.validator.unobtrusive.adapters.add('agerange',
+//    ['year'],
+//    function (options) {
+//        var element = $(options.form).find('input#DateOfBirth')[0];
+//        options.rules['agerange'] = [element, parseInt(options.params['year'])];
+//        options.messages['agerange'] = options.message;
+//    });

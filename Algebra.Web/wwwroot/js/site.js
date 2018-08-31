@@ -1,5 +1,27 @@
 ﻿// Write your JavaScript code.
 
+const Tabs = {
+    MEM: 'member',
+    SPO: 'spouse',
+    DEP: 'dependent',
+    FEE: 'membership-fee',
+    AST: 'assets'
+}
+
+const Mode = {
+    BTR: '1', //Bank Transfer
+    CAS: '2', //Cash
+    CHQ: '3', //Cheque
+    CCD: '4', //Credit Card
+    DCD: '5', //Debit Card
+    DFT: '6', //Draft
+    NTB: '7', //Net Banking
+    MXM: '8' //Mix Mode
+}
+
+
+
+
 //String Builder class
 function StringBuilder(value) {
     this.strings = new Array();
@@ -29,3 +51,5 @@ String.format = function (format) {
             ;
     });
 };
+
+

@@ -38,13 +38,13 @@ namespace Algebra.Data
             return list;
         }
 
-        public static IEnumerable<SelectListItem> GetEnumSelectList<T>(string _selected = null)
+        public static IEnumerable<SelectListItem> GetEnumSelectList<T>(short _selected = 0)
         {
             return (Enum.GetValues(typeof(T)).Cast<T>().Select(
                 enu => new SelectListItem() {
                     Text = enu.ToString(),
                     Value = enu.ToString(),
-                    Selected = _selected == enu.ToString()
+                    Selected = _selected.ToString() == enu.ToString()
                 })).ToList();
         }
 

@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using Algebra.Entities.Models;
 using Algebra.Entities.CustomValidator;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Algebra.Entities.ViewModels
 {
@@ -26,13 +25,17 @@ namespace Algebra.Entities.ViewModels
         [Display(Name = "Referred By")]
         public short ReferredBy { get; set; }
 
+        public IEnumerable<SelectListItem> Referrers { get; set; }
+
         [Required]
         [Display(Name = "Category of Membership")]
         public short MembershipType { get; set; }
 
+        public IEnumerable<SelectListItem> Categories { get; set; }
+
         [Required]
         [Display(Name = "Title")]
-        public string Title { get; set; }
+        public short Title { get; set; }
 
         [Required]
         [Display(Name = "First Name")]
@@ -49,12 +52,12 @@ namespace Algebra.Entities.ViewModels
         public string LastName { get; set; }
 
         [Required]
-        [TwentyOneYears(21)]
+        [ValidateAge(21, 65)]
         //[ClassicMovie(1960)]
         [Display(Name = "Date Of Birth")]
         [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/mm/yyyy}")]
-        public DateTime DateOfBirth { get; set; }
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+        public DateTime MemberDOB { get; set; }
 
         [Display(Name = "Title/Profession")]
         public string ProfessionalTitle { get; set; }
@@ -108,13 +111,13 @@ namespace Algebra.Entities.ViewModels
         public string Email { get; set; }
 
         [Display(Name = "Gender")]
-        public string Gender { get; set; }
+        public short Gender { get; set; }
 
         [Display(Name = "Marital Status")]
-        public string MaritalStatus { get; set; }
+        public short MaritalStatus { get; set; }
 
         [Display(Name = "Occupation")]
-        public string Occupation { get; set; }
+        public short Occupation { get; set; }
 
         [Display(Name = "How would you like to be addressed?")]
         public string Addressed { get; set; }

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Algebra.Web.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180817075725_Initial")]
+    [Migration("20180831123707_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -104,6 +104,9 @@ namespace Algebra.Web.Data.Migrations
                     b.Property<string>("Description")
                         .HasMaxLength(400);
 
+                    b.Property<string>("IpAddress")
+                        .HasMaxLength(20);
+
                     b.Property<bool>("IsDeleted");
 
                     b.Property<byte[]>("RowVersion")
@@ -141,6 +144,9 @@ namespace Algebra.Web.Data.Migrations
                     b.Property<string>("DrawnOn")
                         .HasMaxLength(100);
 
+                    b.Property<string>("IpAddress")
+                        .HasMaxLength(20);
+
                     b.Property<bool>("IsDeleted");
 
                     b.Property<string>("Number")
@@ -171,13 +177,16 @@ namespace Algebra.Web.Data.Migrations
 
                     b.Property<DateTime>("CreatedDate");
 
-                    b.Property<DateTime>("DateOfBirth");
+                    b.Property<DateTime>("DependentDOB");
 
                     b.Property<string>("Email")
                         .HasMaxLength(50);
 
                     b.Property<string>("ImagePath")
                         .HasMaxLength(100);
+
+                    b.Property<string>("IpAddress")
+                        .HasMaxLength(20);
 
                     b.Property<bool>("IsActive");
 
@@ -234,6 +243,9 @@ namespace Algebra.Web.Data.Migrations
                     b.Property<decimal>("Individual")
                         .HasColumnType("decimal(10,4)");
 
+                    b.Property<string>("IpAddress")
+                        .HasMaxLength(20);
+
                     b.Property<bool>("IsDeleted");
 
                     b.Property<int>("LocationId");
@@ -271,6 +283,9 @@ namespace Algebra.Web.Data.Migrations
                     b.Property<string>("Digits")
                         .HasMaxLength(20);
 
+                    b.Property<string>("IpAddress")
+                        .HasMaxLength(20);
+
                     b.Property<bool>("IsDeleted");
 
                     b.Property<string>("Name")
@@ -299,19 +314,17 @@ namespace Algebra.Web.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(50);
 
+                    b.Property<string>("Addressed")
+                        .HasMaxLength(100);
+
                     b.Property<string>("CardId")
                         .IsRequired()
                         .HasMaxLength(50);
-
-                    b.Property<string>("CorrespondenceAddress")
-                        .HasMaxLength(500);
 
                     b.Property<string>("CreatedBy")
                         .HasMaxLength(50);
 
                     b.Property<DateTime>("CreatedDate");
-
-                    b.Property<DateTime>("DateOfBirth");
 
                     b.Property<string>("Designation")
                         .HasMaxLength(100);
@@ -326,8 +339,13 @@ namespace Algebra.Web.Data.Migrations
                     b.Property<string>("FormPath")
                         .HasMaxLength(255);
 
+                    b.Property<short>("Gender");
+
                     b.Property<string>("ImagePath")
                         .HasMaxLength(100);
+
+                    b.Property<string>("IpAddress")
+                        .HasMaxLength(20);
 
                     b.Property<bool>("IsActive");
 
@@ -342,6 +360,10 @@ namespace Algebra.Web.Data.Migrations
 
                     b.Property<short>("LocationId");
 
+                    b.Property<short>("MaritalStatus");
+
+                    b.Property<DateTime>("MemberDOB");
+
                     b.Property<DateTime>("MembershipEndDate");
 
                     b.Property<DateTime>("MembershipStartDate");
@@ -351,11 +373,34 @@ namespace Algebra.Web.Data.Migrations
                     b.Property<string>("MiddleName")
                         .HasMaxLength(200);
 
+                    b.Property<short>("Occupation");
+
                     b.Property<string>("Organization")
                         .HasMaxLength(200);
 
+                    b.Property<string>("PermanentAddress")
+                        .HasMaxLength(500);
+
+                    b.Property<string>("PermanentCity")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("PermanentPin")
+                        .HasMaxLength(10);
+
+                    b.Property<string>("PermanentState")
+                        .HasMaxLength(100);
+
                     b.Property<string>("PresentAddress")
                         .HasMaxLength(500);
+
+                    b.Property<string>("PresentCity")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("PresentPin")
+                        .HasMaxLength(10);
+
+                    b.Property<string>("PresentState")
+                        .HasMaxLength(100);
 
                     b.Property<string>("PrimaryMobileNumber")
                         .IsRequired()
@@ -364,9 +409,7 @@ namespace Algebra.Web.Data.Migrations
                     b.Property<string>("ProfessionalTitle")
                         .HasMaxLength(100);
 
-                    b.Property<string>("ReferredBy")
-                        .IsRequired()
-                        .HasMaxLength(100);
+                    b.Property<short>("ReferredBy");
 
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
@@ -375,12 +418,12 @@ namespace Algebra.Web.Data.Migrations
                     b.Property<string>("SecondaryMobileNumber")
                         .HasMaxLength(50);
 
+                    b.Property<int>("SponcerId");
+
                     b.Property<string>("TelephoneNumber")
                         .HasMaxLength(50);
 
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(50);
+                    b.Property<short>("Title");
 
                     b.HasKey("Id");
 
@@ -401,6 +444,9 @@ namespace Algebra.Web.Data.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(500);
+
+                    b.Property<string>("IpAddress")
+                        .HasMaxLength(20);
 
                     b.Property<bool>("IsDeleted");
 
@@ -436,6 +482,9 @@ namespace Algebra.Web.Data.Migrations
 
                     b.Property<string>("GST")
                         .HasMaxLength(50);
+
+                    b.Property<string>("IpAddress")
+                        .HasMaxLength(20);
 
                     b.Property<bool>("IsDeleted");
 
@@ -492,6 +541,9 @@ namespace Algebra.Web.Data.Migrations
                     b.Property<string>("ImagePath")
                         .HasMaxLength(200);
 
+                    b.Property<string>("IpAddress")
+                        .HasMaxLength(20);
+
                     b.Property<bool>("IsDeleted");
 
                     b.Property<string>("Name")
@@ -513,16 +565,14 @@ namespace Algebra.Web.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Addressed")
+                        .HasMaxLength(100);
+
                     b.Property<string>("CardId")
                         .IsRequired()
                         .HasMaxLength(50);
 
-                    b.Property<string>("CorrespondenceAddress")
-                        .HasMaxLength(200);
-
                     b.Property<DateTime>("CreatedDate");
-
-                    b.Property<DateTime>("DateOfBirth");
 
                     b.Property<string>("Designation")
                         .HasMaxLength(100);
@@ -534,8 +584,13 @@ namespace Algebra.Web.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(100);
 
+                    b.Property<short>("Gender");
+
                     b.Property<string>("ImagePath")
                         .HasMaxLength(100);
+
+                    b.Property<string>("IpAddress")
+                        .HasMaxLength(20);
 
                     b.Property<bool>("IsActive");
 
@@ -544,6 +599,8 @@ namespace Algebra.Web.Data.Migrations
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(100);
+
+                    b.Property<short>("MaritalStatus");
 
                     b.Property<int>("MemberId");
 
@@ -554,11 +611,34 @@ namespace Algebra.Web.Data.Migrations
                     b.Property<string>("MiddleName")
                         .HasMaxLength(100);
 
+                    b.Property<short>("Occupation");
+
                     b.Property<string>("Organization")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("PermanentAddress")
+                        .HasMaxLength(500);
+
+                    b.Property<string>("PermanentCity")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("PermanentPin")
+                        .HasMaxLength(10);
+
+                    b.Property<string>("PermanentState")
                         .HasMaxLength(100);
 
                     b.Property<string>("PresentAddress")
                         .HasMaxLength(200);
+
+                    b.Property<string>("PresentCity")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("PresentPin")
+                        .HasMaxLength(10);
+
+                    b.Property<string>("PresentState")
+                        .HasMaxLength(100);
 
                     b.Property<string>("PrimaryMobileNumber")
                         .IsRequired()
@@ -574,12 +654,14 @@ namespace Algebra.Web.Data.Migrations
                     b.Property<string>("SecondaryMobileNumber")
                         .HasMaxLength(50);
 
+                    b.Property<int>("SponcerId");
+
+                    b.Property<DateTime>("SpouseDOB");
+
                     b.Property<string>("TelephoneNumber")
                         .HasMaxLength(50);
 
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(50);
+                    b.Property<short>("Title");
 
                     b.HasKey("Id");
 

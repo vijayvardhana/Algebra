@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
@@ -11,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Algebra.Data;
 using Algebra.Services;
 using Algebra.Entities.Models;
+using NToastNotify;
 
 namespace Algebra
 {
@@ -44,7 +41,13 @@ namespace Algebra
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
 
-            services.AddMvc();
+            //Add Toast Notification service
+            services.AddMvc().AddNToastNotifyToastr(new ToastrOptions()
+            {
+                ProgressBar = true,
+                PositionClass = ToastPositions.BottomRight,
+                TimeOut = 4000
+            });
 
             // Add functionality to inject IOptions<T>
             services.AddOptions();
@@ -75,7 +78,7 @@ namespace Algebra
             app.UseStaticFiles();
 
             app.UseAuthentication();
-
+            app.UseNToastNotify();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

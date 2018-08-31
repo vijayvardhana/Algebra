@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Algebra.Entities.Models
@@ -16,8 +17,7 @@ namespace Algebra.Entities.Models
         public int MemberId { get; set; }
 
         [Required]
-        [MaxLength(50)]
-        public string Title { get; set; }
+        public short Title { get; set; }
 
         [Required]
         [MaxLength(100)]
@@ -73,19 +73,18 @@ namespace Algebra.Entities.Models
         [MaxLength(10)]
         public string PermanentPin { get; set; }
 
-        [MaxLength(50)]
-        public string Gender { get; set; }
+        public short Gender { get; set; }
 
-        [MaxLength(50)]
-        public string MaritalStatus { get; set; }
+        public short MaritalStatus { get; set; }
 
-        [MaxLength(50)]
-        public string Occupation { get; set; }
+        public short Occupation { get; set; }
 
         public int SponcerId { get; set; }
 
         [MaxLength(100)]
         public string Addressed { get; set; }
+
+        public DateTime SpouseDOB { get; set; }
 
         #endregion
         #region Lazy-Load Properties

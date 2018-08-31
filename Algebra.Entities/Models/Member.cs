@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -24,8 +25,7 @@ namespace Algebra.Entities.Models
         public short MembershipType { get; set; }
 
         [Required]
-        [MaxLength(50)]
-        public string Title { get; set; }
+        public short Title { get; set; }
 
         [Required]
         [MaxLength(200)]
@@ -93,19 +93,18 @@ namespace Algebra.Entities.Models
         [MaxLength(50)]
         public string CreatedBy { get; set; }
 
-        [MaxLength(50)]
-        public string Gender { get; set; }
+        public short Gender { get; set; }
 
-        [MaxLength(50)]
-        public string MaritalStatus { get; set; }
+        public short MaritalStatus { get; set; }
 
-        [MaxLength(50)]
-        public string Occupation { get; set; }
+        public short Occupation { get; set; }
 
         public int SponcerId { get; set; }
 
         [MaxLength(100)]
         public string Addressed { get; set; }
+
+        public DateTime MemberDOB { get; set; }
 
         #endregion
 

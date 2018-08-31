@@ -24,6 +24,14 @@ namespace Algebra.Data.Repositories
             return location.Name;
         }
 
+        public string GetCodeDigitByLocationId(int locationId)
+        {
+            var l = _dbContext
+                .Locations
+                .SingleOrDefault(i => i.Id == locationId);
+            return $"{l.Code}{l.Digits}";
+        }
+
         public IEnumerable<SelectListItem> GetDropDown(IUnitOfWork unitOfWork)
         {
             List<SelectListItem> locations = unitOfWork.Locations.GetAll()

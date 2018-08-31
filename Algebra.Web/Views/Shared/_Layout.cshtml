@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@using Algebra.Web.Toast
+@if (TempData.ContainsKey("Toastr"))
+{
+    Toastr toastr = TempData["Toastr"] as Toastr;
+}
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -8,6 +13,7 @@
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" href="~/css/toastr.css" />
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -30,7 +36,7 @@
                 </button>
                 <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand" style="padding-left:8px">MyApp</a>
                 @* <div style="background-image: url('Images/logo-zagros.png'); background-repeat: no-repeat; width: 124px; height: 70px;">
-                </div>*@
+                    </div>*@
             </div>
 
             <div class="collapse navbar-collapse" id="navbar-collapse-zagros">
@@ -51,9 +57,9 @@
                         </a>
                     </li>
                     @*<li><i class="glyphicon glyphicon-file white"></i><br />Home</li>
-        <li><i class="glyphicon glyphicon-cog white"></i><br />Contact</li>*@
+                        <li><i class="glyphicon glyphicon-cog white"></i><br />Contact</li>*@
                     @*<li><a asp-area="" asp-controller="Member" asp-action="Registration"><i class="glyphicon glyphicon-education white"></i><br />Registration</a></li>*@
-                    
+
                 </ul>
                 @await Html.PartialAsync("_Navigation")
                 @*<ul class="nav navbar-nav navbar-left">
@@ -78,14 +84,18 @@
         <hr />
         <footer>
             <p>&copy; 2018 - My App</p>
+
         </footer>
     </div>
+
+    @* for toast notifications *@
+    @await Component.InvokeAsync("NToastNotify")
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
-        
+        <script src="~/js/toastr.js" asp-append-version="true"></script>
     </environment>
     <environment exclude="Development">
         <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
@@ -104,5 +114,10 @@
     </environment>
 
     @RenderSection("Scripts", required: false)
+    @if (TempData.ContainsKey("Toastr"))
+    {
+        Toastr model = TempData["Toastr"] as Toastr;
+        @await Html.PartialAsync("_ToastrBuilder", model)
+    }
 </body>
 </html>

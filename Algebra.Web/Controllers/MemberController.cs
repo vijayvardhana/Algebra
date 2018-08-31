@@ -7,6 +7,7 @@ using Algebra.Entities.Models;
 using Newtonsoft.Json.Linq;
 using Microsoft.Extensions.Options;
 using System;
+using NToastNotify;
 
 namespace Algebra.Web.Controllers
 {
@@ -16,11 +17,13 @@ namespace Algebra.Web.Controllers
 
         private readonly ApplicationDbContext _dbContext;
         private readonly ApplicationVariables _applicationVariables;
+        private readonly IToastNotification _toastNotification;
 
-        public MemberController(ApplicationDbContext dbContext, IOptions<ApplicationVariables> options)
+        public MemberController(ApplicationDbContext dbContext, IOptions<ApplicationVariables> options, IToastNotification toastNotification)
         {
             _dbContext = dbContext;
             _applicationVariables = options.Value;
+            _toastNotification = toastNotification;
         }
 
         // GET: api/<controller>
@@ -65,29 +68,35 @@ namespace Algebra.Web.Controllers
         [Route("api/member/post")]
         public IActionResult Post([FromBody] JObject model)
         {
-            IEnumerable<Member> members = null;
             if (ModelState.IsValid)
             {
-                try {
-                    using (IUnitOfWork unitOfWork = new UnitOfWork(_dbContext))
+                using (IUnitOfWork unitOfWork = new UnitOfWork(_dbContext))
+                {
+                    Member m = unitOfWork.Members.SetMemberEntities(model);
+                    m.CreatedBy = User.Identity.Name;
+                    unitOfWork.Members.Add(m);
+                    try
                     {
-                        Member m = unitOfWork.Members.SetMemberEntities(model);
-                        m.CreatedBy = User.Identity.Name;
-                        unitOfWork.Members.Add(m);
                         int successId = unitOfWork.Commit();
                         if (successId > 0)
                         {
-                            members = unitOfWork.Members.GetMembersWithSpouseAndDependents();
+                            _toastNotification.AddSuccessToastMessage("SUCCESS : Member added successfully!");
+                            return RedirectToAction("Index");
                         }
+
+                    }
+                    catch (Exception e)
+                    {
+                        _toastNotification.AddErrorToastMessage($"Error! {e.Message}");
+                        throw;
                     }
                 }
-                catch(Exception)
-                {
-                    throw;
-                }
-                
             }
-            return View("Index", members);
+            else
+            {
+                _toastNotification.AddWarningToastMessage("WARNING : model state is not valid!");
+            }
+            return View("Index"); ;
         }
 
         // GET api/<controller>/5

@@ -1,0 +1,51 @@
+﻿@using Algebra.Web.Toast
+@model Toastr
+@{
+    dynamic toast = new System.Dynamic.ExpandoObject();
+
+    if (Model != null)
+    {
+@:<script>
+    @:$(document).ready(function () {
+        @foreach (ToastMessage message in Model.ToastMessages)
+        {
+            string toastTypeValue = message.ToastType.ToString("F").ToLower();
+            @: var optionsOverride = { /* Add message specific options here */ };
+            if (message.IsSticky)
+            {
+                @:optionsOverride.timeOut = 0;
+                @:optionsOverride.extendedTimeout = 0;
+
+            }
+            @:toastr['@toastTypeValue']('@message.Message', '@message.Title', optionsOverride);
+    @: });
+@:</script>
+    }
+}
+}
+@section scripts{
+    <script>
+            $(document).ready(function () {
+            var a = "@toast";
+            if (a) {
+                switch (a.ToastType) {
+                    case "success":
+                        toastr.success(a);
+                        break;
+                    case "info":
+                        toastr.info(a);
+                        break;
+                    case "Warning":
+                        toastr.warning(a);
+                        break;
+                    case "Error":
+                        toastr.error(a);
+                        break;
+                }
+            }
+            var nToastNotify = {
+                messages = a.messages
+            }
+        });
+        </script>
+}

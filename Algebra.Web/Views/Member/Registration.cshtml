@@ -11,10 +11,10 @@
             <div id="Tabs" role="tabpanel">
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs" role="tablist">
-                    <li class="active"><a href="#member" aria-controls="member" role="tab" data-toggle="tab">Member Details</a></li>
-                    <li><a href="#spouse" aria-controls="spouse" role="tab" data-toggle="tab">Spouse Details</a></li>
+                    <li class="active"><a href="#member" aria-controls="member" role="tab" data-toggle="tab">Member</a></li>
+                    <li><a href="#spouse" aria-controls="spouse" role="tab" data-toggle="tab">Spouse</a></li>
                     <li><a href="#dependent" aria-controls="dependent" role="tab" data-toggle="tab">Dependent(s)</a></li>
-                    <li><a href="#membership-fee" aria-controls="membership-fee" role="tab" data-toggle="tab">Membership Fee</a></li>
+                    <li><a href="#membership-fee" aria-controls="membership-fee" role="tab" data-toggle="tab">Payment</a></li>
                     <li><a href="#assets" aria-controls="assets" role="tab" data-toggle="tab">Assets</a></li>
                 </ul>
                 <!-- Tab panes -->
@@ -75,8 +75,6 @@
         CreatedBy: '@Model.CreatedBy'
         };
 
-
-
         $(document).ready(function () {
             var o = new Registration(r);
 
@@ -85,12 +83,14 @@
             });
 
             $("#PaymentMode").change(function () {
-                if (this.value == '6' || this.value == '7')
+                if (this.value === Mode.CHQ || this.value === Mode.MXM)
                 {
                     $("#cheque-section").show();
+                    console.log("hasCheque : " + o.hasCheque);
                 }
                 else {
                     $("#cheque-section").hide();
+                    console.log("hasCheque : " + o.hasCheque);
                 }
             });
         });
@@ -104,6 +104,7 @@
         var cloneIndex = $(".clonedInput").length;
 
         function clone() {
+            toastr.info("Coping cheque row,  Be Patient!", "Deleting..!");
             $(this).parents(".clonedInput").clone()
                 .appendTo("#cheque-section")
                 .attr("id", "cheque-" + cloneIndex)
@@ -131,33 +132,11 @@
         }
         function remove() {
             $(this).parents(".clonedInput").remove();
+            toastr.info("hang on, for a sec its deleting ;)", "Deleting..!");
         }
 
         $("button.clone").on("click", clone);
         $("button.remove").on("click", remove);
-
-
-
-
-    $.validator.unobtrusive.adapters.add("agerangevalidator", ["minage", "maxage"], function (options) {
-        options.rules["agerangevalidator"] = options.params;
-        options.messages["agerangevalidator"] = options.message;
-    });
-
-    $.validator.addMethod("agerangevalidator", function (value, elements, params) {
-        if (value) {
-            var valDate = new Date(value);
-            if ((new Date().getFullYear() - valDate.getFullYear()) < parseInt(params.minage) ||
-                (new Date().getFullYear() - valDate.getFullYear()) > parseInt(params.maxage)
-            ) {
-                return false;
-                //validation failed
-            }
-        }
-        return true;
-    });
-
-
 
     </script>
 }

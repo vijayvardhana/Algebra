@@ -40,7 +40,7 @@ namespace Algebra.Data
                     .GetResult();
             }
 
-            if(!dbContext.Locations.Any())
+            if (!dbContext.Locations.Any())
             {
                 AddLocations(dbContext)
                     .GetAwaiter()
@@ -56,7 +56,7 @@ namespace Algebra.Data
 
         }
 
-        
+
         #endregion
 
         #region Seed Methods
@@ -66,7 +66,7 @@ namespace Algebra.Data
             UserManager<ApplicationUser> userManager)
         {
             // local variables
-            DateTime createdDate = DateTime.Now; 
+            DateTime createdDate = DateTime.Now;
             DateTime lastModifiedDate = DateTime.Now;
 
             //Create Roles (if they doesn't exist yet)
@@ -215,6 +215,26 @@ namespace Algebra.Data
 
         private static async Task AddPaymentModes(ApplicationDbContext dbContext)
         {
+            var bt = new Mode()
+            {
+                Text = "Bank Transfer",
+                Description = "bank transfer",
+                Created = "Admin"
+            };
+
+            var cash = new Mode()
+            {
+                Text = "Cash",
+                Description = "Cash",
+                Created = "Admin"
+            };
+
+            var cheque = new Mode()
+            {
+                Text = "Cheque",
+                Description = "Cheque",
+                Created = "Admin"
+            };
 
             var cc = new Mode()
             {
@@ -222,36 +242,28 @@ namespace Algebra.Data
                 Description = "Credit Card",
                 Created = "Admin"
             };
+
             var dc = new Mode()
             {
                 Text = "Debit Card",
                 Description = "Debit Card",
                 Created = "Admin"
             };
-            var nb = new Mode()
-            {
-                Text = "Net Banking",
-                Description = "Net Banking",
-                Created = "Admin"
-            };
-            var cash = new Mode()
-            {
-                Text = "Cash",
-                Description = "Cash",
-                Created = "Admin"
-            };
+
             var draft = new Mode()
             {
                 Text = "Draft",
                 Description = "Draft",
                 Created = "Admin"
             };
-            var cheque = new Mode()
+
+            var nb = new Mode()
             {
-                Text = "Cheque",
-                Description = "Cheque",
+                Text = "Net Banking",
+                Description = "Net Banking",
                 Created = "Admin"
             };
+
             var mixMode = new Mode()
             {
                 Text = "Mix Mode",
@@ -259,28 +271,30 @@ namespace Algebra.Data
                 Created = "Admin"
             };
 
-            dbContext.Modes.AddRange(cc, dc, nb, cash, draft, cheque, mixMode);
+            dbContext.Modes.AddRange(bt, cash, cheque, cc, dc, draft, nb, mixMode);
             await dbContext.SaveChangesAsync();
 
         }
 
         private static async Task AddLocations(ApplicationDbContext dbContext)
         {
-            var blore = new Location() {
+            var blore = new Location()
+            {
                 Name = "Bangalore",
                 Code = "ALB",
-                Address= "Bangalore",
-                PhoneNumber="N.A.",
-                Digits= "2000",
+                Address = "Bangalore",
+                PhoneNumber = "N.A.",
+                Digits = "2000",
                 Created = "Admin"
             };
 
-            var dhli = new Location() {
-                Name= "Delhi",
+            var dhli = new Location()
+            {
+                Name = "Delhi",
                 Code = "ALD",
-                Address= "Delhi",
+                Address = "Delhi",
                 PhoneNumber = "N.A.",
-                Digits= "4000",
+                Digits = "4000",
                 Created = "Admin"
             };
 
@@ -300,17 +314,18 @@ namespace Algebra.Data
 
         private static async Task AddMembershipTypes(ApplicationDbContext dbContext)
         {
-            var induvidual = new Category() {
+            var induvidual = new Category()
+            {
                 Type = "Individual",
-                Description= "Individual",
+                Description = "Individual",
                 Created = "Admin"
             };
 
             var couple = new Category()
             {
                 Type = "Couple",
-                Description= "Couple",
-                Created="Admin"
+                Description = "Couple",
+                Created = "Admin"
             };
 
             var coupleWithDependent = new Category()
@@ -320,23 +335,24 @@ namespace Algebra.Data
                 Created = "Admin"
             };
 
-            var individualWithDependent = new Category() {
+            var individualWithDependent = new Category()
+            {
                 Type = "Individual With Dependent",
                 Description = "Individual With Dependent",
-                Created="Admin"
+                Created = "Admin"
             };
 
             var complimentary = new Category()
             {
                 Type = "Complimentary",
-                Description= "Complimentary",
+                Description = "Complimentary",
                 Created = "Admin"
             };
 
-            dbContext.Categories.AddRange(induvidual, 
-                couple, 
-                coupleWithDependent, 
-                individualWithDependent, 
+            dbContext.Categories.AddRange(induvidual,
+                couple,
+                coupleWithDependent,
+                individualWithDependent,
                 complimentary);
 
             await dbContext.SaveChangesAsync();

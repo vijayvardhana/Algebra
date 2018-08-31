@@ -11,6 +11,8 @@ namespace Algebra.Data.Repositories
 
         int GetMaxId();
 
+        int GetCountByLocationId(int locationId);
+
         IEnumerable<Member> GetMembersWithSpouseAndDependents();
 
         RegistrationFormViewModel CreateMember(int id);
@@ -20,6 +22,8 @@ namespace Algebra.Data.Repositories
         Member SetMemberEntities(JObject model);
 
         Member GetMemberById(int id);
+
+        Member GetMemberByAccountNumber(string accountNumber);
 
         RegistrationFormViewModel GetRegistrationViewModels(int id);
     }

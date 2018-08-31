@@ -36,6 +36,13 @@ namespace Algebra.Data.Repositories
 
         }
 
+        public int GetCountByLocationId(int locationId)
+        {
+            return _dbContext
+                .Members
+                .Count(l => l.LocationId == locationId);
+        }
+
         public IEnumerable<Member> GetMembersWithSpouseAndDependents()
         {
             return _dbContext.Members
@@ -49,6 +56,13 @@ namespace Algebra.Data.Repositories
             return _dbContext
                 .Members
                 .SingleOrDefault(i => i.Id == id);
+        }
+
+        public Member GetMemberByAccountNumber(string accountNumber)
+        {
+            return _dbContext
+                .Members
+                .SingleOrDefault(c=>c.AccountId == accountNumber);
         }
 
         public RegistrationFormViewModel CreateMember(int id)
@@ -144,12 +158,12 @@ namespace Algebra.Data.Repositories
                     .Spouses
                     .GetSpouseByMemberId(id)
                     .Adapt<SpouseViewModels>();
-                if (spouse != null)
-                {
-                    model.Spouse = spouse;
-                }
 
-                List<DependentViewModels> dependents = unitOfWork
+                model.Spouse = (spouse != null) 
+                    ? spouse 
+                    : null;
+
+                List <DependentViewModels> dependents = unitOfWork
                     .Dependents
                     .GetDependentsByMemberId(id)
                     .Adapt<List<DependentViewModels>>();
@@ -174,6 +188,10 @@ namespace Algebra.Data.Repositories
                         model.Payment.Cheques = cheques;
                     }
                 }
+
+                model.Member.Categories = unitOfWork.Categories.GetDropDown(unitOfWork);
+                model.Member.Referrers = unitOfWork.Referrers.GetDropDown(unitOfWork);
+                model.Payment.Modes = unitOfWork.Modes.GetDropDown(unitOfWork);
             }
             return model;
         }
@@ -279,23 +297,15 @@ namespace Algebra.Data.Repositories
             return m;
         }
 
-        private string GetAccountNumber(IUnitOfWork unitOfWork, int locId)
+        private string GetAccountNumber(IUnitOfWork unitOfWork, int locationId)
         {
             string accountNumber = string.Empty;
-            Location l = unitOfWork.Locations.Get(locId);
-            int m = unitOfWork.Members.GetMaxId();
-
-            if (m != 0)
-            {
-                accountNumber = string.Format("{0}{1}", l.Digits, m.ToString());
-            }
-            else
-            {
-                accountNumber = string.Format("{0}{1}", l.Digits, "1");
-            }
-
-            int exceslen = accountNumber.Length - 4;
-            return string.Format("{0}{1}", l.Code, accountNumber.Remove(1, exceslen));
+            string code = unitOfWork.Locations.GetCodeDigitByLocationId(locationId);
+            int count = unitOfWork.Members.GetCountByLocationId(locationId);
+            count++; //increasing one by so that new user will get increased account id
+            string strCount = (count).ToString();
+            accountNumber = code.Remove(code.Length - strCount.Length);
+            return $"{accountNumber}{strCount}";
         }
 
         #endregion Healper Methods
