@@ -7,6 +7,7 @@ using Mapster;
 using Algebra.Entities.ViewModels;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Algebra.Data.Repositories
 {
@@ -62,7 +63,7 @@ namespace Algebra.Data.Repositories
         {
             return _dbContext
                 .Members
-                .SingleOrDefault(c=>c.AccountId == accountNumber);
+                .SingleOrDefault(c => c.AccountId == accountNumber);
         }
 
         public RegistrationFormViewModel CreateMember(int id)
@@ -79,35 +80,38 @@ namespace Algebra.Data.Repositories
                     model.LocationId = m.LocationId;
                     model.MembershipType = m.MembershipType;
                     model.ReferredBy = m.ReferredBy;
+                    model.IsNew = (m == null);
                 }
-
-                // model.Locations = unitOfWork.Locations.GetDropDown(unitOfWork);
+                else
+                {
+                    model.IsNew = (m == null);
+                }
                 model.Locations = unitOfWork.Locations.GetLocationFeeDropDown(unitOfWork);
                 model.Categories = unitOfWork.Categories.GetDropDown(unitOfWork);
                 model.Referrers = unitOfWork.Referrers.GetDropDown(unitOfWork);
+                model.Modes = unitOfWork.Modes.GetDropDown(unitOfWork);
             };
 
             return model;
         }
 
-        public RegistrationFormViewModel CreateRegistration(RegistrationFormViewModel r)
+        public RegistrationFormViewModel CreateRegistration(RegistrationFormViewModel model)
         {
-            RegistrationFormViewModel model = new RegistrationFormViewModel();
-
             using (var unitOfWork = new UnitOfWork(_dbContext))
             {
-                model.LocationId = r.LocationId;
-                model.MembershipType = r.MembershipType;
-                model.ReferredBy = r.ReferredBy;
+                string accountNumber = GetAccountNumber(unitOfWork, model.LocationId);
+                Fee fee = unitOfWork.Fees.GetFeeByLocationId(model.LocationId);
 
-                model.Locations = unitOfWork.Locations.GetLocationFeeDropDown(unitOfWork);
-                model.Categories = unitOfWork.Categories.GetDropDown(unitOfWork);
-                model.Referrers = unitOfWork.Referrers.GetDropDown(unitOfWork);
+                model.Member = MemberBuilder(accountNumber, model);
+                model.Spouse = SpouseBuilder(accountNumber);
 
-                model.Member = MemberBuilder(unitOfWork, r);
-                model.Spouse = SpouseBuilder(unitOfWork, r);
-                model.Dependent = DependentsBuilder(unitOfWork, r);
-                model.Payment = PaymentBuilder(unitOfWork, r);
+                model.Dependent = DependentsBuilder(accountNumber);
+                model.Payment = PaymentBuilder(fee, model.MembershipType, model);
+                model.Payment.Cheques = ChequeBuilder();
+
+                model.Member.Locations = model.Locations;
+                model.Member.Categories = model.Categories;
+                model.Member.Referrers = model.Referrers;
             }
 
             return model;
@@ -124,16 +128,16 @@ namespace Algebra.Data.Repositories
 
             dependents.RemoveAll(c => c.CardId == null);
 
-            member.Spouse = (!string.IsNullOrEmpty(spouse.CardId)) 
-                ? member.Spouse = spouse 
+            member.Spouse = (!string.IsNullOrEmpty(spouse.CardId))
+                ? member.Spouse = spouse
                 : null;
 
-            member.Dependents = (dependents.Count > 0) 
-                ? dependents 
+            member.Dependents = (dependents.Count > 0)
+                ? dependents
                 : null;
 
-            payment.Cheques = (cheques.Count > 0) 
-                ? cheques 
+            payment.Cheques = (cheques.Count > 0)
+                ? cheques
                 : null;
 
             member.Payments = payment;
@@ -159,11 +163,11 @@ namespace Algebra.Data.Repositories
                     .GetSpouseByMemberId(id)
                     .Adapt<SpouseViewModels>();
 
-                model.Spouse = (spouse != null) 
-                    ? spouse 
+                model.Spouse = (spouse != null)
+                    ? spouse
                     : null;
 
-                List <DependentViewModels> dependents = unitOfWork
+                List<DependentViewModels> dependents = unitOfWork
                     .Dependents
                     .GetDependentsByMemberId(id)
                     .Adapt<List<DependentViewModels>>();
@@ -183,12 +187,18 @@ namespace Algebra.Data.Repositories
                         .Cheques
                         .GetChequesByPaymentId(payment.Id)
                         .Adapt<List<ChequeViewModels>>();
-                    if(cheques.Count > 0)
+                    if (cheques.Count > 0)
                     {
                         model.Payment.Cheques = cheques;
                     }
+
+                    FeeViewModels fee = unitOfWork
+                        .Fees
+                        .Get(payment.MembershipFeeId)
+                        .Adapt<FeeViewModels>();
                 }
 
+                model.Member.Locations = unitOfWork.Locations.GetDropDown(unitOfWork);
                 model.Member.Categories = unitOfWork.Categories.GetDropDown(unitOfWork);
                 model.Member.Referrers = unitOfWork.Referrers.GetDropDown(unitOfWork);
                 model.Payment.Modes = unitOfWork.Modes.GetDropDown(unitOfWork);
@@ -198,103 +208,79 @@ namespace Algebra.Data.Repositories
 
         #region Healper Methods
 
-        private MemberViewModels MemberBuilder(IUnitOfWork unitOfWork, RegistrationFormViewModel r)
+        private MemberViewModels MemberBuilder(string accountNumber, RegistrationFormViewModel r)
         {
             MemberViewModels model = new MemberViewModels();
-
-            var m = unitOfWork.Members.Get(r.Member.Id);
-            if (m != null)
-            {
-                model.LocationId = m.LocationId;
-                model.MembershipType = m.MembershipType;
-                model.ReferredBy = m.ReferredBy;
-                model.AccountId = m.AccountId;
-                model.CardId = m.CardId;
-            }
-            else
-            {
-                model.LocationId = r.LocationId;
-                model.MembershipType = r.MembershipType;
-                model.ReferredBy = r.ReferredBy;
-                model.AccountId = GetAccountNumber(unitOfWork, r.LocationId);
-                model.CardId = model.AccountId;
-                model.Location = unitOfWork.Locations.GetLocationById(r.LocationId);
-            }
-
+            model.LocationId = r.LocationId;
+            model.MembershipType = r.MembershipType;
+            model.ReferredBy = r.ReferredBy;
+            model.AccountId = accountNumber;
+            model.CardId = accountNumber;
+            model.IsNew = r.IsNew;
             return model;
         }
 
-        private SpouseViewModels SpouseBuilder(IUnitOfWork unitOfWork, RegistrationFormViewModel r)
+        private SpouseViewModels SpouseBuilder(string accountNumber)
         {
-            SpouseViewModels spouse = new SpouseViewModels();
-            var s = unitOfWork.Spouses.GetSpouseByMemberId(r.Member.Id);
-            if (s != null)
-            {
-                spouse.CardId = s.CardId;
-            }
-            else
-            {
-                spouse.CardId = GetAccountNumber(unitOfWork, r.LocationId);
-            }
-            return spouse;
+            SpouseViewModels model = new SpouseViewModels();
+            model.CardId = accountNumber;
+            return model;
         }
 
-        private List<DependentViewModels> DependentsBuilder(UnitOfWork unitOfWork, RegistrationFormViewModel r)
+        private List<DependentViewModels> DependentsBuilder(string accountNumber)
         {
-            List<DependentViewModels> dependents = new List<DependentViewModels>();
-            var dependentList = unitOfWork.Dependents.GetDependentsByMemberId(r.Member.Id);
-            var cardNumber = GetAccountNumber(unitOfWork, r.LocationId);
-            if (dependentList.Count > 0)
-            {
-                foreach (var d in dependentList)
-                {
-                    dependents.Add(d.Adapt<DependentViewModels>());
-                }
-            }
-            else
-            {
-                dependents.Add(new DependentViewModels() { CardId = cardNumber });
-                dependents.Add(new DependentViewModels() { CardId = cardNumber });
-            }
-            return dependents;
+            List<DependentViewModels> model = new List<DependentViewModels>();
+            var cardNumber = accountNumber;
+            model.Add(new DependentViewModels() { CardId = accountNumber });
+            model.Add(new DependentViewModels() { CardId = accountNumber });
+            return model;
         }
 
-        private PaymentViewModel PaymentBuilder(IUnitOfWork unitOfWork, RegistrationFormViewModel r)
+        private List<ChequeViewModels> ChequeBuilder()
         {
-            PaymentViewModel m = new PaymentViewModel();
-            var modes = unitOfWork.Modes.GetDropDown(unitOfWork);
-            Fee f = unitOfWork.Fees.GetFeeByLocationId(r.LocationId);
-            if (f != null)
-            {
-                int GST = Convert.ToInt32(f.GSTRate);
-                switch (r.MembershipType)
-                {
-                    case 1:
-                        m.MembershipFee = f.Individual;
-                        break;
-                    case 2:
-                        m.MembershipFee = f.Individual + f.Couple;
-                        break;
-                    case 3:
-                        m.MembershipFee = f.Individual + f.Couple + f.Dependent;
-                        break;
-                    case 4:
-                        m.MembershipFee = f.Individual + f.Dependent;
-                        break;
-                    default:
-                        //in case of Complimentary membership
-                        m.MembershipFee = 0;
-                        break;
-                }
+            List<ChequeViewModels> model = new List<ChequeViewModels>();
+            model.Add(new ChequeViewModels());
+            return model;
+        }
 
-                m.GST = f.GSTRate;
-                m.TaxAmount = (m.MembershipFee * GST / 100);
-                m.TotalAmount = m.MembershipFee + m.TaxAmount;
-                m.MembershipFeeId = f.Id;
-                m.FeeBreakUp = f.Adapt<FeeViewModels>();
+        private PaymentViewModel PaymentBuilder(Fee fee, short membershipType, RegistrationFormViewModel r)
+        {
+            PaymentViewModel model = new PaymentViewModel();
+            model.FeeBreakUp = fee.Adapt<FeeViewModels>();
+
+            int GST = Convert.ToInt32(fee.GSTRate);
+            model.MembershipFee = MembershipFee(fee, membershipType);
+            model.GST = fee.GSTRate;
+            model.TaxAmount = (model.MembershipFee * GST / 100);
+            model.TotalAmount = model.MembershipFee + model.TaxAmount;
+            model.MembershipFeeId = fee.Id;
+            model.Modes = r.Modes;
+            return model;
+        }
+
+        private decimal MembershipFee(Fee fee, short membershipType)
+        {
+            decimal membershipFee;
+            switch (membershipType)
+            {
+                case 1:
+                    membershipFee = fee.Individual;
+                    break;
+                case 2:
+                    membershipFee = fee.Individual + fee.Couple;
+                    break;
+                case 3:
+                    membershipFee = fee.Individual + fee.Couple + fee.Dependent;
+                    break;
+                case 4:
+                    membershipFee = fee.Individual + fee.Dependent;
+                    break;
+                default:
+                    //in case of Complimentary membership
+                    membershipFee = 0;
+                    break;
             }
-            m.Modes = modes;
-            return m;
+            return membershipFee;
         }
 
         private string GetAccountNumber(IUnitOfWork unitOfWork, int locationId)

@@ -21,8 +21,8 @@ namespace Algebra.Entities.ViewModels
         [Required]
         [Display(Name = "Date")]
         [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
-        public DateTime Date { get; set; }
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
+        public DateTime? Date { get; set; }
 
         [Required]
         [MaxLength(100)]

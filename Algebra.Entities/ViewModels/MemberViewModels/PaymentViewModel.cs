@@ -10,6 +10,8 @@ namespace Algebra.Entities.ViewModels
         public PaymentViewModel()
         {
             Cheques = new List<ChequeViewModels>();
+            FeeBreakUp = new FeeViewModels();
+
         }
         public IList<ChequeViewModels> Cheques { get; set; }
 
@@ -30,10 +32,11 @@ namespace Algebra.Entities.ViewModels
         [DataType(DataType.Currency)]
         public decimal TaxAmount { get; set; }
 
+        [Required]
         [Display(Name = "Payment Date")]
         [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
-        public DateTime PaymentDate { get; set; }
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
+        public DateTime? PaymentDate { get; set; }
 
         [Display(Name = "Payment Mode")]
         public string PaymentMode { get; set; }

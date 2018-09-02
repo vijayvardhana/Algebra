@@ -12,11 +12,11 @@ namespace Algebra.Entities.ViewModels
         public string Name { get; set; }
 
         [Required]
+        [ValidateAge(16, 21)]
         [Display(Name = "Date Of Birth")]
         [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
-        [ValidateAge(16,21)]
-        public DateTime DependentDOB { get; set; }
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
+        public DateTime? DependentDOB { get; set; }
 
         [Display(Name = "Email")]
         [EmailAddress]

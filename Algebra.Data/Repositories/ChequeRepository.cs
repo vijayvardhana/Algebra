@@ -8,7 +8,7 @@ namespace Algebra.Data.Repositories
     {
         public ChequeRepository(ApplicationDbContext dbContext) : base(dbContext) { }
 
-        public List<Cheque> GetChequesByPaymentId(int id)
+        public IList<Cheque> GetChequesByPaymentId(int id)
         {
             return _dbContext
                 .Cheques

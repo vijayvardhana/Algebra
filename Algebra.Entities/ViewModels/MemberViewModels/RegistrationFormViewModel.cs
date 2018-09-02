@@ -8,13 +8,15 @@ namespace Algebra.Entities.ViewModels
     {
         public RegistrationFormViewModel()
         {
-            this.Member = new MemberViewModels();
-            this.Spouse  = new SpouseViewModels();
-            this.Dependent = new List<DependentViewModels>();
-            this.Payment = new PaymentViewModel();
+            Member = new MemberViewModels();
+            Spouse  = new SpouseViewModels();
+            Dependent = new List<DependentViewModels>();
+            Payment = new PaymentViewModel();
 
         }
         public int Id { get; set; }
+
+        public bool IsNew { get; set; }
 
         public MemberViewModels Member { get; set; }
 
@@ -43,5 +45,7 @@ namespace Algebra.Entities.ViewModels
         public IEnumerable<SelectListItem> Referrers { get; set; }
 
         public string CreatedBy { get; set; }
+
+        public IEnumerable<SelectListItem> Modes { get; set; }
     }
 }

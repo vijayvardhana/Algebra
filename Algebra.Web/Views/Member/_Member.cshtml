@@ -56,7 +56,7 @@
         <div class="col-lg-4">
             <div class="form-group">
                 <label asp-for="@Model.MemberDOB"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
-                <input type="date" asp-for="@Model.MemberDOB" class="form-control input-sm" />
+                <input asp-for="@Model.MemberDOB" asp-format="{0:yyyy-MM-dd}" class="form-control input-sm" />
                 <span asp-validation-for="@Model.MemberDOB" class="text-danger"></span>
             </div>
         </div>
@@ -172,38 +172,40 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-4">
+        <div class="col-lg-1">
             <div class="form-group">
                 <input type="hidden" asp-for="@Model.AccountId" value="@Model.AccountId" class="form-control input-sm" />
             </div>
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-1">
             <div class="form-group">
                 <input type="hidden" asp-for="@Model.CardId" value="@Model.AccountId-01" class="form-control input-sm" />
             </div>
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-1">
             <div class="form-group">
                 <input type="hidden" asp-for="@Model.Location" value="@Model.Location" class="form-control input-sm" />
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-4">
+        <div class="col-lg-1">
             <div class="form-group">
                 <input type="hidden" asp-for="@Model.MembershipType" value="@Model.MembershipType" class="form-control input-sm" />
             </div>
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-1">
             <div class="form-group">
                 <input type="hidden" asp-for="@Model.ReferredBy" value="@Model.ReferredBy" class="form-control input-sm" />
             </div>
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-1">
             <div class="form-group">
                 <input type="hidden" asp-for="@Model.LocationId" value="@Model.LocationId" class="form-control input-sm" />
             </div>
         </div>
-
+        <div class="col-lg-1">
+            <div class="form-group">
+                <input type="hidden" asp-for="@Model.IsNew" value="@Model.IsNew" class="form-control input-sm" />
+            </div>
+        </div>
     </div>
 </div>

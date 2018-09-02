@@ -8,6 +8,10 @@ using Newtonsoft.Json.Linq;
 using Microsoft.Extensions.Options;
 using System;
 using NToastNotify;
+using System.Linq;
+using Mapster;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json;
 
 namespace Algebra.Web.Controllers
 {
@@ -30,10 +34,16 @@ namespace Algebra.Web.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            IEnumerable<Member> members;
+            IEnumerable<MemberViewModels> members;
             using (var unitOfWork = new UnitOfWork(_dbContext))
             {
-                members = unitOfWork.Members.GetMembersWithSpouseAndDependents();
+                ViewBag.Categories = unitOfWork.Categories.GetDropDown(unitOfWork);
+                ViewBag.Referrers = unitOfWork.Referrers.GetDropDown(unitOfWork);
+                ViewBag.Locations = unitOfWork.Locations.GetDropDown(unitOfWork);
+                members = unitOfWork
+                    .Members
+                    .GetAll()
+                    .Adapt<IEnumerable<MemberViewModels>>();
             }
             return View(members);
         }
@@ -42,6 +52,7 @@ namespace Algebra.Web.Controllers
         public IActionResult AddMember(int id)
         {
             RegistrationFormViewModel model;
+
             ViewBag.Title = (id > 0) ? "Edit" : "Add";
             using (var unitOfWork = new UnitOfWork(_dbContext))
             {
@@ -53,13 +64,22 @@ namespace Algebra.Web.Controllers
         [HttpPost]
         public IActionResult AddMember(RegistrationFormViewModel m)
         {
-            RegistrationFormViewModel model = new RegistrationFormViewModel();
+            RegistrationFormViewModel model;
             using (var unitOfWork = new UnitOfWork(_dbContext))
             {
-                model = unitOfWork.Members.CreateRegistration(m);
-                model.CreatedBy = User.Identity.Name;
+                if (m.IsNew == false)
+                {
+                    model = unitOfWork.Members.GetRegistrationViewModels(m.Id);
+                    model.IsNew = m.IsNew;
+                }
+                else
+                {
+                    model = FillDropDowns(unitOfWork, m);
+                    model = unitOfWork.Members.CreateRegistration(m);
+                    model.CreatedBy = User.Identity.Name;
+                    model.IsNew = false;
+                }
             }
-            //return View();
             return View("Registration", model);
         }
 
@@ -70,9 +90,21 @@ namespace Algebra.Web.Controllers
         {
             if (ModelState.IsValid)
             {
+                JObject obj = JObject.Parse(model.ToString());
+                string objValue = ((JProperty)obj.Last)
+                    .Value["IsNew"]
+                    .ToString()
+                    .ToLower();
+                bool isNew = Convert.ToBoolean(objValue);
+
                 using (IUnitOfWork unitOfWork = new UnitOfWork(_dbContext))
                 {
                     Member m = unitOfWork.Members.SetMemberEntities(model);
+                    var member = unitOfWork.Members.GetMemberByAccountNumber(m.AccountId);
+                    if (member != null)
+                    {
+                        return BadRequest($"The account number '{m.AccountId}' is already assign to some other user.");
+                    }
                     m.CreatedBy = User.Identity.Name;
                     unitOfWork.Members.Add(m);
                     try
@@ -80,23 +112,27 @@ namespace Algebra.Web.Controllers
                         int successId = unitOfWork.Commit();
                         if (successId > 0)
                         {
-                            _toastNotification.AddSuccessToastMessage("SUCCESS : Member added successfully!");
-                            return RedirectToAction("Index");
+                            //_toastNotification.AddSuccessToastMessage("SUCCESS : Member added successfully!");
+                            return Ok("SUCCESS : Member added successfully!");
                         }
 
                     }
                     catch (Exception e)
                     {
-                        _toastNotification.AddErrorToastMessage($"Error! {e.Message}");
+                        return BadRequest($"Error : '{e.Message}'");
                         throw;
                     }
                 }
             }
             else
             {
-                _toastNotification.AddWarningToastMessage("WARNING : model state is not valid!");
+                string messages = string.Join("; ", ModelState.Values
+                                        .SelectMany(x => x.Errors)
+                                        .Select(x => x.ErrorMessage));
+                // _toastNotification.AddWarningToastMessage("WARNING : model state is not valid!");
+                return BadRequest($"WARNING : model state is not valid! {messages}");
             }
-            return View("Index"); ;
+            return View(); ;
         }
 
         // GET api/<controller>/5
@@ -110,6 +146,16 @@ namespace Algebra.Web.Controllers
                 model = unitOfWork.Members.GetRegistrationViewModels(id);
             };
             return View("Details", model);
+        }
+
+
+        private RegistrationFormViewModel FillDropDowns(IUnitOfWork unitOfWork, RegistrationFormViewModel model)
+        {
+            model.Locations = unitOfWork.Locations.GetDropDown(unitOfWork);
+            model.Categories = unitOfWork.Categories.GetDropDown(unitOfWork);
+            model.Referrers = unitOfWork.Referrers.GetDropDown(unitOfWork);
+            model.Modes = unitOfWork.Modes.GetDropDown(unitOfWork);
+            return model;
         }
     }
 }

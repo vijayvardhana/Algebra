@@ -53,12 +53,12 @@
                         </div>
                         <div class="col-lg-3">
                             <div class="form-group">
-                                <label asp-for="@Model.Member.MembershipType"></label><p class="active">@GetText(Model.Member.Categories, Model.Member.MembershipType)</p>
+                                <label asp-for="@Model.Member.MembershipType"></label><p class="active">@Utils.GetSelectText(Model.Member.Categories, Model.Member.MembershipType)</p>
                             </div>
                         </div>
                         <div class="col-lg-3">
                             <div class="form-group">
-                                <label asp-for="@Model.Member.ReferredBy"></label><p class="active">@GetText(Model.Member.Referrers, Model.Member.ReferredBy)</p>
+                                <label asp-for="@Model.Member.ReferredBy"></label><p class="active">@Utils.GetSelectText(Model.Member.Referrers, Model.Member.ReferredBy)</p>
                             </div>
                         </div>
 
@@ -83,7 +83,7 @@
                     <div class="row">
                         <div class="col-lg-3">
                             <div class="form-group">
-                                <label asp-for="@Model.Member.Title"></label><p>@GetText(Html.GetEnumSelectList(typeof(Enums.Title)), Model.Member.Title)</p>
+                                <label asp-for="@Model.Member.Title"></label><p>@Utils.GetSelectText(Html.GetEnumSelectList(typeof(Enums.Title)), Model.Member.Title)</p>
                             </div>
                         </div>
                         <div class="col-lg-3">
@@ -132,17 +132,17 @@
                         </div>
                         <div class="col-lg-3">
                             <div class="form-group">
-                                <label asp-for="@Model.Member.Gender"></label><p>@GetText(Html.GetEnumSelectList(typeof(Enums.Gender)), Model.Member.Gender)</p>
+                                <label asp-for="@Model.Member.Gender"></label><p>@Utils.GetSelectText(Html.GetEnumSelectList(typeof(Enums.Gender)), Model.Member.Gender)</p>
                             </div>
                         </div>
                         <div class="col-lg-3">
                             <div class="form-group">
-                                <label asp-for="@Model.Member.MaritalStatus"></label><p>@GetText(Html.GetEnumSelectList(typeof(Enums.MaritalStatus)), Model.Member.MaritalStatus)</p>
+                                <label asp-for="@Model.Member.MaritalStatus"></label><p>@Utils.GetSelectText(Html.GetEnumSelectList(typeof(Enums.MaritalStatus)), Model.Member.MaritalStatus)</p>
                             </div>
                         </div>
                         <div class="col-lg-3">
                             <div class="form-group">
-                                <label asp-for="@Model.Member.Occupation"></label><p>@GetText(Html.GetEnumSelectList(typeof(Enums.Occupation)), Model.Member.Occupation)</p>
+                                <label asp-for="@Model.Member.Occupation"></label><p>@Utils.GetSelectText(Html.GetEnumSelectList(typeof(Enums.Occupation)), Model.Member.Occupation)</p>
                             </div>
                         </div>
                     </div>
@@ -247,7 +247,7 @@
                         <div class="row">
                             <div class="col-lg-3">
                                 <div class="form-group">
-                                    <label asp-for="@Model.Spouse.Title"></label><p>@GetText(Html.GetEnumSelectList(typeof(Enums.Title)), Model.Spouse.Title)</p>
+                                    <label asp-for="@Model.Spouse.Title"></label><p>@Utils.GetSelectText(Html.GetEnumSelectList(typeof(Enums.Title)), Model.Spouse.Title)</p>
                                 </div>
                             </div>
                             <div class="col-lg-3">
@@ -296,17 +296,17 @@
                             </div>
                             <div class="col-lg-3">
                                 <div class="form-group">
-                                    <label asp-for="@Model.Spouse.Gender"></label><p>@GetText(Html.GetEnumSelectList(typeof(Enums.Gender)), Model.Spouse.Gender)</p>
+                                    <label asp-for="@Model.Spouse.Gender"></label><p>@Utils.GetSelectText(Html.GetEnumSelectList(typeof(Enums.Gender)), Model.Spouse.Gender)</p>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="form-group">
-                                    <label asp-for="@Model.Spouse.MaritalStatus"></label><p>@GetText(Html.GetEnumSelectList(typeof(Enums.MaritalStatus)), Model.Spouse.MaritalStatus)</p>
+                                    <label asp-for="@Model.Spouse.MaritalStatus"></label><p>@Utils.GetSelectText(Html.GetEnumSelectList(typeof(Enums.MaritalStatus)), Model.Spouse.MaritalStatus)</p>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <div class="form-group">
-                                    <label asp-for="@Model.Spouse.Occupation"></label><p>@GetText(Html.GetEnumSelectList(typeof(Enums.Occupation)), Model.Spouse.MaritalStatus)</p>
+                                    <label asp-for="@Model.Spouse.Occupation"></label><p>@Utils.GetSelectText(Html.GetEnumSelectList(typeof(Enums.Occupation)), Model.Spouse.MaritalStatus)</p>
                                 </div>
                             </div>
                         </div>
@@ -471,7 +471,7 @@
                         </div>
                         <div class="col-lg-3">
                             <div class="form-group">
-                                <label asp-for="@Model.Payment.PaymentMode"></label><p>@GetText(Model.Payment.Modes, Convert.ToInt16(Model.Payment.PaymentMode))</p>
+                                <label asp-for="@Model.Payment.PaymentMode"></label><p>@Utils.GetSelectText(Model.Payment.Modes, Convert.ToInt16(Model.Payment.PaymentMode))</p>
                             </div>
                         </div>
                         <div class="col-lg-3">
@@ -540,16 +540,16 @@
     </div>
 </div>
 @{
-    string GetText(IEnumerable<SelectListItem> items, short id)
-    {
-        string selectedValue = string.Empty;
-        foreach (var item in items)
-        {
-            if (item.Value == id.ToString())
-            {
-                selectedValue = item.Text;
-            }
-        }
-        return selectedValue;
-    }
+//string GetText(IEnumerable<SelectListItem> items, short id)
+//{
+//    string selectedValue = string.Empty;
+//    foreach (var item in items)
+//    {
+//        if (item.Value == id.ToString())
+//        {
+//            selectedValue = item.Text;
+//        }
+//    }
+//    return selectedValue;
+//}
 }

@@ -6,6 +6,6 @@ namespace Algebra.Data.Repositories
 {
     public interface IChequeRepository : IRepository<Cheque>
     {
-        List<Cheque> GetChequesByPaymentId(int id);
+        IList<Cheque> GetChequesByPaymentId(int id);
     }
 }

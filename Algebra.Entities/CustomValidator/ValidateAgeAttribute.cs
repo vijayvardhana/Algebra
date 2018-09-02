@@ -8,15 +8,12 @@ namespace Algebra.Entities.CustomValidator
     {
         public DateTime MinimumDate { get; private set; }
         public DateTime MaximumDate { get; private set; }
-        private readonly int _min;
-        private readonly int _max;
+        
         public ValidateAgeAttribute(
         int minimumAgeProperty,
         int maximumAgeProperty)
         : base()
         {
-            _min = minimumAgeProperty;
-            _max = maximumAgeProperty;
             MaximumDate = DateTime.Now.AddYears(minimumAgeProperty * -1);
             MinimumDate = DateTime.Now.AddYears(maximumAgeProperty * -1);
         }
@@ -46,8 +43,6 @@ namespace Algebra.Entities.CustomValidator
             context.Attributes["data-val-validateage"] = FormatErrorMessage(context.ModelMetadata.DisplayName);
             context.Attributes["minumumdate"] = MinimumDate.ToShortDateString();
             context.Attributes["maximumdate"] = MaximumDate.ToShortDateString();
-            context.Attributes["data-val-min"] = _min.ToString();
-            context.Attributes["data-val-max"] = _max.ToString();
         }
 
         public override string FormatErrorMessage(string name)

@@ -56,7 +56,7 @@
         <div class="col-lg-4">
             <div class="form-group">
                 <label asp-for="@Model.SpouseDOB"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
-                <input type="date" asp-for="@Model.SpouseDOB" class="form-control input-sm" />
+                <input type="date" asp-for="@Model.SpouseDOB" asp-format="{0:yyyy-MM-dd}" class="form-control input-sm" />
                 <span asp-validation-for="@Model.SpouseDOB" class="text-danger"></span>
             </div>
         </div>

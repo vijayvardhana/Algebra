@@ -17,14 +17,14 @@
             <div class="col-lg-4">
                 <div class="form-group">
                     <label asp-for="@Model[i].Name"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
-                    <input asp-for="@Model[i].Name" class="form-control input-sm" value="" />
+                    <input asp-for="@Model[i].Name" class="form-control input-sm" />
                     <span asp-validation-for="@Model[i].Name" class="text-danger"></span>
                 </div>
             </div>
             <div class="col-lg-4">
                 <div class="form-group">
                     <label asp-for="@Model[i].DependentDOB"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
-                    <input type="date" asp-for="@Model[i].DependentDOB" class="form-control input-sm" />
+                    <input asp-for="@Model[i].DependentDOB"  asp-format="{0:yyyy-MM-dd}" class="form-control input-sm"/>
                     <span asp-validation-for="@Model[i].DependentDOB" class="text-danger"></span>
                 </div>
             </div>

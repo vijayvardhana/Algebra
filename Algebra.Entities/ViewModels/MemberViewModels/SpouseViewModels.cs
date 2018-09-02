@@ -33,11 +33,11 @@ namespace Algebra.Entities.ViewModels
         public string LastName { get; set; }
 
         [Required]
-        [ValidateAge(21,65)]
+        [ValidateAge(21, 65)]
         [Display(Name = "Date Of Birth")]
         [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
-        public DateTime SpouseDOB { get; set; }
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
+        public DateTime? SpouseDOB { get; set; }
 
         [Display(Name = "Title/Profession")]
         public string ProfessionalTitle { get; set; }

@@ -7,6 +7,7 @@ class Registration {
         this.Location = m.Location;
         this.RefferBy = m.Reffered;
         this.CreatedBy = m.CreatedBy;
+        this.IsNew = m.IsNew;
 
         this.member = {};
         this.spouse = {};
@@ -14,7 +15,7 @@ class Registration {
         this.payment = {};
         this.cheque = {};
         this.ctrl = [];
-        
+        this.paymentMode;
         this.url = "/api/member/AddMember";
 
         this.TabsSelection(this.mType);
@@ -54,7 +55,7 @@ class Registration {
 
     FormControlExtraction() {
         let c = new Array();
-        let paymentMode;
+        
         $(".form-control").each(function (index) {
             var o = {};
             var id = this.id;
@@ -70,16 +71,8 @@ class Registration {
                 ? true
                 : false;
 
-            if (model === "payment") {
-                paymentMode = $("#PaymentMode").val();
-                if (!paymentMode) {
-                    toastr.warning("Mode of payment must be selected", "Payment");
-                    return false;
-                }
-            }
-
-            if (paymentMode && isChequeModel) {
-                o = { 'id': id, 'value': value, 'isRequired': (paymentMode === Mode.CHQ || paymentMode === Mode.MXM), 'errorMessage': errorMessage, 'model': model, 'isChequeModel': isChequeModel };
+            if (isChequeModel) {
+                o = { 'id': id, 'value': value, 'isRequired': (this.paymentMode === Mode.CHQ || this.paymentMode === Mode.MXM), 'errorMessage': errorMessage, 'model': model, 'isChequeModel': isChequeModel };
             }
             else {
                 o = { 'id': id, 'value': value, 'isRequired': required, 'errorMessage': errorMessage, 'model': model, 'isChequeModel': isChequeModel };
@@ -102,11 +95,11 @@ class Registration {
 
         for (var i = 0; i < ids.length; i++) {
             this.cheque["c" + i] = {
-                'Number': this.PropertyValue(cheques, ids[i], 0),
-                'Amount': this.PropertyValue(cheques, ids[i], 1),
-                'Date': this.PropertyValue(cheques, ids[i], 2),
-                'BankName': this.PropertyValue(cheques, ids[i], 3),
-                'DrawnOn': this.PropertyValue(cheques, ids[i], 4),
+                'Number': this.PropertyValue(cheques, ids[i], 0) || "",
+                'Amount': this.PropertyValue(cheques, ids[i], 1) || "",
+                'Date': this.PropertyValue(cheques, ids[i], 2) || "",
+                'BankName': this.PropertyValue(cheques, ids[i], 3) || "",
+                'DrawnOn': this.PropertyValue(cheques, ids[i], 4) || "",
                 'Created': this.CreatedBy
             };
         }
@@ -152,10 +145,13 @@ class Registration {
         this.dependent["d0"] = d1;
         this.dependent["d1"] = d2;
 
-        var cheques = this.ctrl.filter(function (item) {
-            return item.isChequeModel === true;
-        });
-        this.ChequeModelBuilder(cheques);
+        if (this.paymentMode === Mode.CHQ || this.paymentMode === Mode.MXM) {
+            var cheques = this.ctrl.filter(function (item) {
+                return item.isChequeModel === true;
+            });
+            this.ChequeModelBuilder(cheques);
+        }
+        
     }
 
     ValidateForm() {
@@ -186,6 +182,16 @@ class Registration {
 
     SubmitForm() {
 
+        this.paymentMode = $("#PaymentMode").val();
+        if (!this.paymentMode) {
+            toastr.warning("Payment mode must be selected", "Payment");
+            return false;
+        } else {
+            toastr.info("Pleas wait while your data is getting save :)", "Saving");
+        }
+
+
+        //this.isPayByCheque = $("#IsPayByCheque").value;
         this.FormControlExtraction();
         //this.ModelBuilder();
         //return false;
@@ -201,20 +207,21 @@ class Registration {
             models["o2"] = this.dependent;
             models["o3"] = this.payment;
             models["o4"] = this.cheque;
+            models["o5"] = { IsNew: this.IsNew };
             //console.log(JSON.stringify(models));
             //  return false;
             $.ajax({
                 url: "/api/member/post",
                 type: "POST",
                 contentType: "application/json",
-                dataType: "json",
+                //dataType: "json",
                 data: JSON.stringify(models),
                 success: function (result) {
                     toastr.success(result);
                     console.log(result);
                 },
                 error: function (xhr, resp, text) {
-                    toastr.error(resp);
+                    toastr.error(xhr.responseText, resp);
                     console.log(xhr, resp, text);
                 }
             });

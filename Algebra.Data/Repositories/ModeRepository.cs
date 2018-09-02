@@ -10,7 +10,7 @@ namespace Algebra.Data.Repositories
         public ModeRepository(ApplicationDbContext dbContext)
             : base(dbContext) { }
 
-        IEnumerable<SelectListItem> IModeRepository.GetDropDown(IUnitOfWork unitOfWork)
+        public IEnumerable<SelectListItem> GetDropDown(IUnitOfWork unitOfWork)
         {
             List<SelectListItem> modes = unitOfWork.Modes.GetAll()
             .OrderBy(m => m.Id)

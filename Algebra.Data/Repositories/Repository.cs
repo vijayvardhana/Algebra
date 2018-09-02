@@ -25,7 +25,7 @@ namespace Algebra.Data.Repositories
             _dbContext.Set<TEntity>().AddRange(entities);
         }
 
-        IEnumerable<TEntity> IRepository<TEntity>.Find(System.Linq.Expressions.Expression<Func<TEntity, bool>> predicate)
+        IEnumerable<TEntity> IRepository<TEntity>.Find(Expression<Func<TEntity, bool>> predicate)
         {
             return _dbContext.Set<TEntity>().Where(predicate);
         }

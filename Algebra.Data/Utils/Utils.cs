@@ -48,5 +48,18 @@ namespace Algebra.Data
                 })).ToList();
         }
 
+        public static string GetSelectText(IEnumerable<SelectListItem> items, short id)
+        {
+            string selectedValue = string.Empty;
+            foreach (var item in items)
+            {
+                if (item.Value == id.ToString())
+                {
+                    selectedValue = item.Text;
+                }
+            }
+            return selectedValue;
+        }
+
     }
 }

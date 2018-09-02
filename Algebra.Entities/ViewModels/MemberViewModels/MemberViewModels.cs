@@ -51,13 +51,20 @@ namespace Algebra.Entities.ViewModels
         [DataType(DataType.Text)]
         public string LastName { get; set; }
 
+        //[Required]
+        //[ValidateAge(21, 65)]
+        //[Display(Name = "Date Of Birth")]
+        //[DataType(DataType.Date)]
+        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+        //public DateTime? MemberDOB { get; set; }
+
         [Required]
         [ValidateAge(21, 65)]
-        //[ClassicMovie(1960)]
         [Display(Name = "Date Of Birth")]
         [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
-        public DateTime MemberDOB { get; set; }
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
+        public DateTime? MemberDOB { get; set; }
+
 
         [Display(Name = "Title/Profession")]
         public string ProfessionalTitle { get; set; }
@@ -127,6 +134,8 @@ namespace Algebra.Entities.ViewModels
         [Display(Name = "Location")]
         public short LocationId { get; set; }
 
+        public IEnumerable<SelectListItem> Locations { get; set; }
+
         [Required]
         public DateTime CreatedDate { get; set; }
 
@@ -147,6 +156,7 @@ namespace Algebra.Entities.ViewModels
 
         public bool IsDeleted { get; set; }
 
+        public bool IsNew { get; set; }
 
         public Spouse Spouse { get; set; }
 

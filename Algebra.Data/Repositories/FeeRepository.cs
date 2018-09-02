@@ -9,7 +9,7 @@ namespace Algebra.Data.Repositories
     {
         public FeeRepository(ApplicationDbContext dbContext) : base(dbContext) { }
 
-        FeeViewModels IFeeRepository.CreateFee(int id)
+        public FeeViewModels CreateFee(int id)
         {
             var fee = new FeeViewModels();
 

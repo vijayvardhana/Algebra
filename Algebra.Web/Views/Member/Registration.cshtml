@@ -68,11 +68,12 @@
     <script src="~/js/registration.js" asp-append-version="true"></script>
     <script src="~/js/validator.js" asp-append-version="true"></script>
     <script type="text/javascript">
-    var r = {
-        Location: @Model.LocationId,
-        Type: @Model.MembershipType,
-        Reffered: @Model.ReferredBy,
-        CreatedBy: '@Model.CreatedBy'
+        var r = {
+            Location: @Model.LocationId,
+            Type: @Model.MembershipType,
+            Reffered: @Model.ReferredBy,
+            CreatedBy: '@Model.CreatedBy',
+            IsNew: '@Model.IsNew'
         };
 
         $(document).ready(function () {

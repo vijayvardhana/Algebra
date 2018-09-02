@@ -34,7 +34,7 @@
             <div class="col-lg-2">
                 <div class="form-group">
                     <label asp-for="@Model[i].Date"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
-                    <input asp-for="@Model[i].Date" class="form-control input-sm" id="Date_@index.ToString()" />
+                    <input asp-for="@Model[i].Date"  asp-format="{0:yyyy-MM-dd}" class="form-control input-sm" id="Date_@index.ToString()" />
                     <span asp-validation-for="@Model[i].Date" class="text-danger"></span>
                 </div>
             </div>
