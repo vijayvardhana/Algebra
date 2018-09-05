@@ -58,6 +58,9 @@ namespace Algebra.Data
             builder.Entity<Cheque>().ToTable("Cheque");
             builder.Entity<Cheque>().Property(i => i.Id).ValueGeneratedOnAdd();
 
+            //Need to be comment during migration
+            //builder.Entity<NewMembersFrom>().ToTable("Forms");
+            //builder.Entity<NewMembersFrom>().Property(i => i.max_id).ValueGeneratedOnAdd();
         }
 
         #region Properties
@@ -72,6 +75,7 @@ namespace Algebra.Data
         public DbSet<Fee> Fees { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Cheque> Cheques { get; set; }
+        
         #endregion Properties
     }
 }

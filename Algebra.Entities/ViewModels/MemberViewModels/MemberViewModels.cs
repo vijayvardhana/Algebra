@@ -51,13 +51,6 @@ namespace Algebra.Entities.ViewModels
         [DataType(DataType.Text)]
         public string LastName { get; set; }
 
-        //[Required]
-        //[ValidateAge(21, 65)]
-        //[Display(Name = "Date Of Birth")]
-        //[DataType(DataType.Date)]
-        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
-        //public DateTime? MemberDOB { get; set; }
-
         [Required]
         [ValidateAge(21, 65)]
         [Display(Name = "Date Of Birth")]

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Algebra.Web.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180831123707_Initial")]
-    partial class Initial
+    [Migration("20180904134056_Initial-1")]
+    partial class Initial1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -134,6 +134,8 @@ namespace Algebra.Web.Data.Migrations
                     b.Property<string>("BankName")
                         .HasMaxLength(100);
 
+                    b.Property<short>("ChequeStatus");
+
                     b.Property<string>("Created")
                         .HasMaxLength(50);
 
@@ -182,15 +184,23 @@ namespace Algebra.Web.Data.Migrations
                     b.Property<string>("Email")
                         .HasMaxLength(50);
 
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(200);
+
+                    b.Property<short>("Gender");
+
                     b.Property<string>("ImagePath")
                         .HasMaxLength(100);
 
                     b.Property<string>("IpAddress")
                         .HasMaxLength(20);
 
-                    b.Property<bool>("IsActive");
-
                     b.Property<bool>("IsDeleted");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(200);
 
                     b.Property<int>("MemberId");
 
@@ -198,16 +208,17 @@ namespace Algebra.Web.Data.Migrations
 
                     b.Property<DateTime>("MembershipStartDate");
 
+                    b.Property<string>("MiddleName")
+                        .HasMaxLength(200);
+
                     b.Property<string>("MobileNumber")
                         .HasMaxLength(50);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(200);
 
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate();
+
+                    b.Property<bool>("Status");
 
                     b.HasKey("Id");
 
@@ -317,6 +328,9 @@ namespace Algebra.Web.Data.Migrations
                     b.Property<string>("Addressed")
                         .HasMaxLength(100);
 
+                    b.Property<decimal>("AnnualIncome")
+                        .HasColumnType("decimal(10,4)");
+
                     b.Property<string>("CardId")
                         .IsRequired()
                         .HasMaxLength(50);
@@ -346,8 +360,6 @@ namespace Algebra.Web.Data.Migrations
 
                     b.Property<string>("IpAddress")
                         .HasMaxLength(20);
-
-                    b.Property<bool>("IsActive");
 
                     b.Property<bool>("IsDeleted");
 
@@ -419,6 +431,8 @@ namespace Algebra.Web.Data.Migrations
                         .HasMaxLength(50);
 
                     b.Property<int>("SponcerId");
+
+                    b.Property<bool>("Status");
 
                     b.Property<string>("TelephoneNumber")
                         .HasMaxLength(50);
@@ -568,6 +582,9 @@ namespace Algebra.Web.Data.Migrations
                     b.Property<string>("Addressed")
                         .HasMaxLength(100);
 
+                    b.Property<decimal>("AnnualIncome")
+                        .HasColumnType("decimal(10,4)");
+
                     b.Property<string>("CardId")
                         .IsRequired()
                         .HasMaxLength(50);
@@ -591,8 +608,6 @@ namespace Algebra.Web.Data.Migrations
 
                     b.Property<string>("IpAddress")
                         .HasMaxLength(20);
-
-                    b.Property<bool>("IsActive");
 
                     b.Property<bool>("IsDeleted");
 
@@ -657,6 +672,8 @@ namespace Algebra.Web.Data.Migrations
                     b.Property<int>("SponcerId");
 
                     b.Property<DateTime>("SpouseDOB");
+
+                    b.Property<bool>("Status");
 
                     b.Property<string>("TelephoneNumber")
                         .HasMaxLength(50);

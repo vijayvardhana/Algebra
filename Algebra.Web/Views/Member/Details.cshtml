@@ -115,7 +115,7 @@
                         </div>
                         <div class="col-lg-3">
                             <div class="form-group">
-                                <label asp-for="@Model.Member.MemberDOB"></label><p>@Model.Member.MemberDOB.ToShortDateString()</p>
+                                <label asp-for="@Model.Member.MemberDOB"></label><p>@Model.Member.MemberDOB</p>
                             </div>
                         </div>
                         <div class="col-lg-3">
@@ -279,7 +279,7 @@
                             </div>
                             <div class="col-lg-3">
                                 <div class="form-group">
-                                    <label asp-for="@Model.Spouse.SpouseDOB"></label><p>@Model.Spouse.SpouseDOB.ToShortDateString()</p>
+                                    <label asp-for="@Model.Spouse.SpouseDOB"></label><p>@Model.Spouse.SpouseDOB</p>
                                 </div>
                             </div>
                             <div class="col-lg-3">
@@ -414,12 +414,29 @@
                             <div class="row">
                                 <div class="col-lg-3">
                                     <div class="form-group">
-                                        <label asp-for="@Model.Dependent[i].Name"></label><p class="active">@Model.Dependent[i].Name</p>
+                                        <label asp-for="@Model.Dependent[i].FirstName"></label><p class="active">@Model.Dependent[i].FirstName</p>
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
                                     <div class="form-group">
-                                        <label asp-for="@Model.Dependent[i].DependentDOB"></label><p class="active">@Model.Dependent[i].DependentDOB.ToShortDateString()</p>
+                                        <label asp-for="@Model.Dependent[i].MiddleName"></label><p class="active">@Model.Dependent[i].MiddleName</p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label asp-for="@Model.Dependent[i].LastName"></label><p class="active">@Model.Dependent[i].LastName</p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label asp-for="@Model.Dependent[i].Gender"></label><p class="active">@Utils.GetSelectText(Html.GetEnumSelectList(typeof(Enums.Gender)), Model.Dependent[i].Gender)</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label asp-for="@Model.Dependent[i].DependentDOB"></label><p class="active">@Model.Dependent[i].DependentDOB</p>
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
@@ -466,7 +483,7 @@
                     <div class="row">
                         <div class="col-lg-3">
                             <div class="form-group">
-                                <label asp-for="@Model.Payment.PaymentDate"></label><p>@Model.Payment.PaymentDate.ToShortDateString()</p>
+                                <label asp-for="@Model.Payment.PaymentDate"></label><p>@Model.Payment.PaymentDate</p>
                             </div>
                         </div>
                         <div class="col-lg-3">
@@ -511,7 +528,7 @@
                                 </div>
                                 <div class="col-lg-2">
                                     <div class="form-group">
-                                        <label asp-for="@cheq.Date"></label><p>@cheq.Date.ToShortDateString()</p>
+                                        <label asp-for="@cheq.Date"></label><p>@cheq.Date</p>
                                     </div>
                                 </div>
                                 <div class="col-lg-3">
@@ -540,16 +557,16 @@
     </div>
 </div>
 @{
-//string GetText(IEnumerable<SelectListItem> items, short id)
-//{
-//    string selectedValue = string.Empty;
-//    foreach (var item in items)
-//    {
-//        if (item.Value == id.ToString())
-//        {
-//            selectedValue = item.Text;
-//        }
-//    }
-//    return selectedValue;
-//}
+    //string GetText(IEnumerable<SelectListItem> items, short id)
+    //{
+    //    string selectedValue = string.Empty;
+    //    foreach (var item in items)
+    //    {
+    //        if (item.Value == id.ToString())
+    //        {
+    //            selectedValue = item.Text;
+    //        }
+    //    }
+    //    return selectedValue;
+    //}
 }

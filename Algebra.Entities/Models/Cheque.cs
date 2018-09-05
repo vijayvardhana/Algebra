@@ -24,6 +24,8 @@ namespace Algebra.Entities.Models
         [MaxLength(100)]
         public string DrawnOn { get; set; }
 
+        public short ChequeStatus { get; set; }
+
         [ForeignKey("PaymentId")]
         public virtual Payment Payments { get; set; }
 

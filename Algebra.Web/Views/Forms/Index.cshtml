@@ -1,0 +1,18 @@
+﻿@using Algebra.Data
+@model List<NewMembersFrom>
+
+<table class="table table-sm small">
+    @foreach (var form in Model)
+    {
+    <tr>
+        <td>@form.AccountId</td>
+        <td>@form.FirstName</td>
+        <td>@form.LastName</td>
+        <td>@form.MembershipType</td>
+        <td>@form.ReferredBy</td>
+    </tr>
+
+
+    }
+    
+</table>

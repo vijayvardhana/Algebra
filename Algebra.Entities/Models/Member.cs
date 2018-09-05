@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Algebra.Entities.Models
 {
@@ -93,8 +94,6 @@ namespace Algebra.Entities.Models
         [MaxLength(50)]
         public string CreatedBy { get; set; }
 
-        public short Gender { get; set; }
-
         public short MaritalStatus { get; set; }
 
         public short Occupation { get; set; }
@@ -105,6 +104,10 @@ namespace Algebra.Entities.Models
         public string Addressed { get; set; }
 
         public DateTime MemberDOB { get; set; }
+
+        [DataType(DataType.Currency)]
+        [Column(TypeName = "decimal(10,4)")]
+        public decimal AnnualIncome { get; set; }
 
         #endregion
 

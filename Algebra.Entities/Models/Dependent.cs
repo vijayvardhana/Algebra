@@ -17,12 +17,19 @@ namespace Algebra.Entities.Models
 
         [Required]
         [MaxLength(200)]
-        public string Name { get; set; }
+        public string FirstName { get; set; }
+
+        [MaxLength(200)]
+        public string MiddleName { get; set; }
+
+        [Required]
+        [MaxLength(200)]
+        public string LastName { get; set; }
 
         [MaxLength(50)]
         public string MobileNumber { get; set; }
 
-        public DateTime DependentDOB { get; set; }
+        public DateTime DependentDOB { get; set; }        
 
         #endregion Properties
 

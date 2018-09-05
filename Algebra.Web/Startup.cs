@@ -34,6 +34,9 @@ namespace Algebra
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("Algebra.Web")));
 
+            services.AddDbContext<CmsDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("OldCMSConnection")));
+
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();

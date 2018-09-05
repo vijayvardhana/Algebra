@@ -80,11 +80,11 @@ namespace Algebra.Data.Repositories
                     model.LocationId = m.LocationId;
                     model.MembershipType = m.MembershipType;
                     model.ReferredBy = m.ReferredBy;
-                    model.IsNew = (m == null);
+                    model.IsNew = false;
                 }
                 else
                 {
-                    model.IsNew = (m == null);
+                    model.IsNew = true;
                 }
                 model.Locations = unitOfWork.Locations.GetLocationFeeDropDown(unitOfWork);
                 model.Categories = unitOfWork.Categories.GetDropDown(unitOfWork);

@@ -1,4 +1,6 @@
 ﻿@using Algebra.Entities.ViewModels
+@using Algebra.Data
+
 @model List<ChequeViewModels>
 
 @{
@@ -17,6 +19,29 @@
     <div id="cheque-@i.ToString()" class="cheque small clonedInput">
 
         <div class="row">
+            <div class="col-lg-1">
+                <div class="form-group">
+                    <label>Copy</label><br />
+                    <span data-placement="left" data-toggle="tooltip" title="Copy">
+                        <button type="button" id="copy-btn-cheque-@index.ToString()" value="@index" class="btn btn-primary btn-xs clone">
+                            <span class="glyphicon glyphicon-copy"></span>
+                        </button>
+                    </span>
+                </div>
+            </div>
+            <div class="col-lg-10"></div>
+            <div class="col-lg-1">
+                <div class="form-group">
+                    <label>Delete</label><br />
+                    <span data-placement="left" data-toggle="tooltip" title="Delete">
+                        <button type="button" id="remove-btn-cheque-@index.ToString()" value="@i" class="btn btn-danger btn-xs remove">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-lg-2">
                 <div class="form-group">
                     <label asp-for="@Model[i].Number"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
@@ -34,7 +59,7 @@
             <div class="col-lg-2">
                 <div class="form-group">
                     <label asp-for="@Model[i].Date"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
-                    <input asp-for="@Model[i].Date"  asp-format="{0:yyyy-MM-dd}" class="form-control input-sm" id="Date_@index.ToString()" />
+                    <input asp-for="@Model[i].Date" asp-format="{0:yyyy-MM-dd}" class="form-control input-sm" id="Date_@index.ToString()" />
                     <span asp-validation-for="@Model[i].Date" class="text-danger"></span>
                 </div>
             </div>
@@ -52,26 +77,13 @@
                     <span asp-validation-for="@Model[i].DrawnOn" class="text-danger"></span>
                 </div>
             </div>
-            <div class="col-lg-1">
+            <div class="col-lg-2">
                 <div class="form-group">
-                    <label>Copy</label><br />
-                    <span data-placement="left" data-toggle="tooltip" title="Copy">
-                        <button type="button" id="copy-btn-cheque-@index.ToString()" value="@index" class="btn btn-primary btn-xs clone">
-                            <span class="glyphicon glyphicon-copy"></span>
-                        </button>
-                    </span>
-                </div>
-            </div>
-            <div class="col-lg-1">
-                <div class="form-group">
-                    <label>Delete</label><br />
-                    <span data-placement="left" data-toggle="tooltip" title="Delete">
-                        <button type="button" id="remove-btn-cheque-@index.ToString()" value="@i" class="btn btn-danger btn-xs remove">
-                            <span class="glyphicon glyphicon-trash"></span>
-                        </button>
-                    </span>
-                    @*}*@
-
+                    <label asp-for="@Model[i].ChequeStatus"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
+                    <select asp-for="@Model[i].ChequeStatus" asp-items="Html.GetEnumSelectList(typeof(Enums.ChequeStatus))" id="ChequeStatus_@index.ToString()" class="form-control input-sm">
+                        <option selected="selected" value="">--- Status ---</option>
+                    </select>
+                    <span asp-validation-for="@Model[i].ChequeStatus" class="text-danger"></span>
                 </div>
             </div>
         </div>

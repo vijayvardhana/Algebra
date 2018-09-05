@@ -34,5 +34,9 @@ namespace Algebra.Entities.ViewModels
         [Display(Name = "Drawn On")]
         public string DrawnOn { get; set; }
 
+        [Required]
+        [Display(Name = "Cheque Status")]
+        public short ChequeStatus { get; set; }
+
     }
 }

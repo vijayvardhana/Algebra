@@ -1,4 +1,6 @@
 ﻿@using Algebra.Entities.ViewModels
+@using Algebra.Data
+
 @model List<DependentViewModels>
 @{
     if (Model.Count == 0)
@@ -14,21 +16,60 @@
         <h4>Dependent <small>@index</small></h4>
         <hr class="colorgraph">
         <div class="row">
-            <div class="col-lg-4">
+            <div class="col-lg-3">
                 <div class="form-group">
-                    <label asp-for="@Model[i].Name"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
-                    <input asp-for="@Model[i].Name" class="form-control input-sm" />
-                    <span asp-validation-for="@Model[i].Name" class="text-danger"></span>
+                    <label asp-for="@Model[i].FirstName"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
+                    <input asp-for="@Model[i].FirstName" class="form-control input-sm" />
+                    <span asp-validation-for="@Model[i].FirstName" class="text-danger"></span>
                 </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-3">
+                <div class="form-group">
+                    <label asp-for="@Model[i].MiddleName"></label>
+                    <input asp-for="@Model[i].MiddleName" class="form-control input-sm" />
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group">
+                    <label asp-for="@Model[i].LastName"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
+                    <input asp-for="@Model[i].LastName" class="form-control input-sm" />
+                    <span asp-validation-for="@Model[i].LastName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group">
+                    <label asp-for="@Model[i].Gender"></label>
+                    <select asp-for="@Model[i].Gender" asp-items="Html.GetEnumSelectList(typeof(Enums.Gender))" class="form-control input-sm">
+                        <option selected="selected" value="">--- Gender ---</option>
+                    </select>
+                </div>
+            </div>
+            
+        </div>
+        <div class="row">
+            <div class="col-lg-3">
                 <div class="form-group">
                     <label asp-for="@Model[i].DependentDOB"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
-                    <input asp-for="@Model[i].DependentDOB"  asp-format="{0:yyyy-MM-dd}" class="form-control input-sm"/>
+                    <input asp-for="@Model[i].DependentDOB" asp-format="{0:yyyy-MM-dd}" class="form-control input-sm" />
                     <span asp-validation-for="@Model[i].DependentDOB" class="text-danger"></span>
                 </div>
             </div>
-            <div class="col-lg-2">
+            <div class="col-lg-3">
+                <div class="form-group">
+                    <label asp-for="@Model[i].MobileNumber"></label> (if any)
+                    <input asp-for="@Model[i].MobileNumber" class="form-control input-sm" />
+                    <span asp-validation-for="@Model[i].MobileNumber" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group">
+                    <label asp-for="@Model[i].Email"></label>(if any)
+                    <input asp-for="@Model[i].Email" class="form-control input-sm" />
+                    <span asp-validation-for="@Model[i].Email" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <span>[Delete]</span>
                 <p data-placement="top" data-toggle="tooltip" title="Delete">
                     <button type="button" id="btn-location-delete-@i" onclick='' class="btn btn-danger btn-xs remove" data-title="Delete">
                         <span class="glyphicon glyphicon-trash"></span>
@@ -37,21 +78,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-4">
-                <div class="form-group">
-                    <label asp-for="@Model[i].MobileNumber"></label> (if any)
-                    <input asp-for="@Model[i].MobileNumber" class="form-control input-sm" />
-                    <span asp-validation-for="@Model[i].MobileNumber" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="form-group">
-                    <label asp-for="@Model[i].Email"></label>(if any)
-                    <input asp-for="@Model[i].Email" class="form-control input-sm" />
-                    <span asp-validation-for="@Model[i].Email" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="col-lg-4">
+            <div class="col-lg-3">
                 <div class="form-group">
                     <input type="hidden" asp-for="@Model[i].CardId" value="@Model[i].CardId-0@(i+3)" class="form-control input-sm" />
                 </div>

@@ -23,7 +23,7 @@
                         @await Html.PartialAsync("_Member", Model.Member)
                     </div>
                     <div role="tabpanel" class="tab-pane" id="spouse">
-                        @await Html.PartialAsync("_Spouse", Model.Spouse)
+                        @await Html.PartialAsync("_Spouse", Model.Spouse ?? new SpouseViewModels { CardId = Model.Member.AccountId})
                     </div>
                     <div role="tabpanel" class="tab-pane" id="dependent">
                         @await Html.PartialAsync("_Dependent", Model.Dependent)

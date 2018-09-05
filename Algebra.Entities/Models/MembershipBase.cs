@@ -21,6 +21,8 @@ namespace Algebra.Entities.Models
         [Required]
         public DateTime CreatedDate { get; set; } = DateTime.Now;
 
+        public DateTime? UpdatedDate { get; set; } = null;
+
         [Required]
         public DateTime MembershipStartDate { get; set; } = DateTime.Now;
 
@@ -30,8 +32,10 @@ namespace Algebra.Entities.Models
         [MaxLength(100)]
         public string ImagePath { get; set; }
 
-        [DefaultValue(false)]
-        public bool IsActive { get; set; }
+        public short Gender { get; set; }
+
+        [DefaultValue(true)]
+        public bool Status { get; set; }
 
         [DefaultValue(false)]
         public bool IsDeleted { get; set; }

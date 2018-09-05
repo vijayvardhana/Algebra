@@ -82,7 +82,7 @@
         </div>
     </div>
     <div id="cheque-section" style='display:none;'>
-        @await Html.PartialAsync("_Cheque", Model.Cheques)
+        @await Html.PartialAsync("_Cheque", Model.Cheques ?? new List<ChequeViewModels>())
     </div>
 </div>
 

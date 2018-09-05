@@ -16,6 +16,8 @@ namespace Algebra.Entities.Models
         [Required]
         public DateTime CreatedDate { get; set; } = DateTime.Now;
 
+        public DateTime? UpdatedDate { get; set; } = null;
+
         [DefaultValue(false)]
         public bool IsDeleted { get; set; }
 

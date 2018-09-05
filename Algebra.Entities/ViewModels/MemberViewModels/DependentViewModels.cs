@@ -7,9 +7,18 @@ namespace Algebra.Entities.ViewModels
     public class DependentViewModels
     {
         [Required]
-        [Display(Name = "Full Name")]
+        [Display(Name = "First Name")]
         [DataType(DataType.Text)]
-        public string Name { get; set; }
+        public string FirstName { get; set; }
+
+        [Display(Name = "Middle Name")]
+        [DataType(DataType.Text)]
+        public string MiddleName { get; set; }
+
+        [Required]
+        [Display(Name = "Last Name")]
+        [DataType(DataType.Text)]
+        public string LastName { get; set; }
 
         [Required]
         [ValidateAge(16, 21)]
@@ -27,6 +36,12 @@ namespace Algebra.Entities.ViewModels
         [RegularExpression(@"^([0-9]{10})$", ErrorMessage = "Invalid Mobile Number.")]
         [DataType(DataType.Text)]
         public string MobileNumber { get; set; }
+
+        [Display(Name = "Gender")]
+        public short Gender { get; set; }
+
+        [Display(Name = "Status")]
+        public bool Status { get; set; }
 
         [Required]
         [Display(Name = "Card Number")]

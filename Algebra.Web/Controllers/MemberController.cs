@@ -12,6 +12,7 @@ using System.Linq;
 using Mapster;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Algebra.Web.Controllers
 {
@@ -70,14 +71,15 @@ namespace Algebra.Web.Controllers
                 if (m.IsNew == false)
                 {
                     model = unitOfWork.Members.GetRegistrationViewModels(m.Id);
-                    model.IsNew = m.IsNew;
+                    model.LocationId = m.LocationId;
+                    model.MembershipType = m.MembershipType;
+                    model.ReferredBy = m.ReferredBy;
                 }
                 else
                 {
                     model = FillDropDowns(unitOfWork, m);
                     model = unitOfWork.Members.CreateRegistration(m);
                     model.CreatedBy = User.Identity.Name;
-                    model.IsNew = false;
                 }
             }
             return View("Registration", model);
@@ -88,50 +90,43 @@ namespace Algebra.Web.Controllers
         [Route("api/member/post")]
         public IActionResult Post([FromBody] JObject model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                JObject obj = JObject.Parse(model.ToString());
-                string objValue = ((JProperty)obj.Last)
-                    .Value["IsNew"]
-                    .ToString()
-                    .ToLower();
-                bool isNew = Convert.ToBoolean(objValue);
+                return BadRequest(BadRequestMessage(ModelState.Values));
+            }
 
-                using (IUnitOfWork unitOfWork = new UnitOfWork(_dbContext))
+            using (IUnitOfWork unitOfWork = new UnitOfWork(_dbContext))
+            {
+                Member m = unitOfWork.Members.SetMemberEntities(model);
+                var member = unitOfWork.Members.GetMemberByAccountNumber(m.AccountId);
+                string opr = string.Empty;
+                m.CreatedBy = User.Identity.Name;
+
+                try
                 {
-                    Member m = unitOfWork.Members.SetMemberEntities(model);
-                    var member = unitOfWork.Members.GetMemberByAccountNumber(m.AccountId);
                     if (member != null)
                     {
-                        return BadRequest($"The account number '{m.AccountId}' is already assign to some other user.");
+                        opr = "updated";
+                        unitOfWork.Members.Update(m);
+                        unitOfWork.Commit();
+                        return Ok(OkMessage(opr, m.AccountId));
                     }
-                    m.CreatedBy = User.Identity.Name;
-                    unitOfWork.Members.Add(m);
-                    try
+                    else
                     {
+                        opr = "added";
+                        unitOfWork.Members.Add(m);
                         int successId = unitOfWork.Commit();
                         if (successId > 0)
-                        {
-                            //_toastNotification.AddSuccessToastMessage("SUCCESS : Member added successfully!");
-                            return Ok("SUCCESS : Member added successfully!");
-                        }
-
-                    }
-                    catch (Exception e)
-                    {
-                        return BadRequest($"Error : '{e.Message}'");
-                        throw;
+                            return Ok(OkMessage(opr, m.AccountId));
                     }
                 }
+                catch (Exception e)
+                {
+                    return BadRequest($"Error occured while {opr} : '{e.Message}'");
+                    throw;
+                }
             }
-            else
-            {
-                string messages = string.Join("; ", ModelState.Values
-                                        .SelectMany(x => x.Errors)
-                                        .Select(x => x.ErrorMessage));
-                // _toastNotification.AddWarningToastMessage("WARNING : model state is not valid!");
-                return BadRequest($"WARNING : model state is not valid! {messages}");
-            }
+
             return View(); ;
         }
 
@@ -157,6 +152,19 @@ namespace Algebra.Web.Controllers
             model.Modes = unitOfWork.Modes.GetDropDown(unitOfWork);
             return model;
         }
+
+        private string OkMessage(string opr, string accountNumber)
+        {
+            return $"SUCCESS : The member with account number '{accountNumber}' has been {opr}.";
+        }
+
+        private object BadRequestMessage(ModelStateDictionary.ValueEnumerable values)
+        {
+            string messages = string.Join("; ", ModelState.Values
+                                        .SelectMany(x => x.Errors)
+                                        .Select(x => x.ErrorMessage));
+            return $"WARNING : model state is not valid! {messages}";
+        }
     }
 }
 
@@ -173,3 +181,10 @@ namespace Algebra.Web.Controllers
 //unitOfWork.Courses.RemoveRange(author.Courses);
 //unitOfWork.Authors.Remove(author);
 //unitOfWork.Complete();
+
+//JObject obj = JObject.Parse(model.ToString());
+//string objValue = ((JProperty)obj.Last)
+//    .Value["IsNew"]
+//    .ToString()
+//    .ToLower();
+//bool isNew = Convert.ToBoolean(objValue);

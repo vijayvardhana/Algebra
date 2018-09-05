@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Algebra.Data
 {
@@ -89,5 +85,18 @@ namespace Algebra.Data
             Separated=5
         }
 
+        public enum ChequeStatus
+        {
+            [Display(Name = "Bounced")]
+            Bounced=1,
+            [Display(Name = "Cancelled")]
+            Cancelled=2,
+            [Display(Name = "Cleared")]
+            Cleared=3,
+            [Display(Name = "Processing")]
+            ClearingProcess=4,
+            [Display(Name = "Others")]
+            Others=5
+        }
     }
 }

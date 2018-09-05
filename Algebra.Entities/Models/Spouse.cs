@@ -71,9 +71,7 @@ namespace Algebra.Entities.Models
         public string PermanentState { get; set; }
 
         [MaxLength(10)]
-        public string PermanentPin { get; set; }
-
-        public short Gender { get; set; }
+        public string PermanentPin { get; set; }        
 
         public short MaritalStatus { get; set; }
 
@@ -85,6 +83,10 @@ namespace Algebra.Entities.Models
         public string Addressed { get; set; }
 
         public DateTime SpouseDOB { get; set; }
+
+        [DataType(DataType.Currency)]
+        [Column(TypeName = "decimal(10,4)")]
+        public decimal AnnualIncome { get; set; }
 
         #endregion
         #region Lazy-Load Properties

@@ -100,6 +100,7 @@ class Registration {
                 'Date': this.PropertyValue(cheques, ids[i], 2) || "",
                 'BankName': this.PropertyValue(cheques, ids[i], 3) || "",
                 'DrawnOn': this.PropertyValue(cheques, ids[i], 4) || "",
+                'ChequeStatus': this.PropertyValue(cheques, ids[i], 5) || "",
                 'Created': this.CreatedBy
             };
         }

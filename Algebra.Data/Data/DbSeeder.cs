@@ -288,6 +288,16 @@ namespace Algebra.Data
                 Created = "Admin"
             };
 
+            var chni = new Location()
+            {
+                Name = "Chennai",
+                Code = "ALC",
+                Address = "Chennai",
+                PhoneNumber = "N.A.",
+                Digits = "6000",
+                Created = "Admin"
+            };
+
             var dhli = new Location()
             {
                 Name = "Delhi",
@@ -308,7 +318,7 @@ namespace Algebra.Data
                 Created = "Admin"
             };
 
-            dbContext.Locations.AddRange(blore, dhli, ggon);
+            dbContext.Locations.AddRange(blore, chni, dhli, ggon);
             await dbContext.SaveChangesAsync();
         }
 

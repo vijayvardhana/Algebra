@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Algebra.Web.Data.Migrations
 {
-    public partial class Initial : Migration
+    public partial class Initial1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -92,12 +92,13 @@ namespace Algebra.Web.Data.Migrations
                 columns: table => new
                 {
                     CreatedDate = table.Column<DateTime>(nullable: false),
+                    Gender = table.Column<short>(nullable: false),
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    IsActive = table.Column<bool>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     MembershipEndDate = table.Column<DateTime>(nullable: false),
                     MembershipStartDate = table.Column<DateTime>(nullable: false),
+                    Status = table.Column<bool>(nullable: false),
                     CardId = table.Column<string>(maxLength: 50, nullable: false),
                     Email = table.Column<string>(maxLength: 50, nullable: true),
                     ImagePath = table.Column<string>(maxLength: 100, nullable: true),
@@ -128,12 +129,12 @@ namespace Algebra.Web.Data.Migrations
                     LocationId = table.Column<short>(nullable: false),
                     FormPath = table.Column<string>(maxLength: 255, nullable: true),
                     CreatedBy = table.Column<string>(maxLength: 50, nullable: true),
-                    Gender = table.Column<short>(nullable: false),
                     MaritalStatus = table.Column<short>(nullable: false),
                     Occupation = table.Column<short>(nullable: false),
                     SponcerId = table.Column<int>(nullable: false),
                     Addressed = table.Column<string>(maxLength: 100, nullable: true),
-                    MemberDOB = table.Column<DateTime>(nullable: false)
+                    MemberDOB = table.Column<DateTime>(nullable: false),
+                    AnnualIncome = table.Column<decimal>(type: "decimal(10,4)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -237,19 +238,22 @@ namespace Algebra.Web.Data.Migrations
                 columns: table => new
                 {
                     CreatedDate = table.Column<DateTime>(nullable: false),
+                    Gender = table.Column<short>(nullable: false),
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    IsActive = table.Column<bool>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     MembershipEndDate = table.Column<DateTime>(nullable: false),
                     MembershipStartDate = table.Column<DateTime>(nullable: false),
+                    Status = table.Column<bool>(nullable: false),
                     CardId = table.Column<string>(maxLength: 50, nullable: false),
                     Email = table.Column<string>(maxLength: 50, nullable: true),
                     ImagePath = table.Column<string>(maxLength: 100, nullable: true),
                     IpAddress = table.Column<string>(maxLength: 20, nullable: true),
                     RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true),
                     MemberId = table.Column<int>(nullable: false),
-                    Name = table.Column<string>(maxLength: 200, nullable: false),
+                    FirstName = table.Column<string>(maxLength: 200, nullable: false),
+                    MiddleName = table.Column<string>(maxLength: 200, nullable: true),
+                    LastName = table.Column<string>(maxLength: 200, nullable: false),
                     MobileNumber = table.Column<string>(maxLength: 50, nullable: true),
                     DependentDOB = table.Column<DateTime>(nullable: false)
                 },
@@ -304,12 +308,13 @@ namespace Algebra.Web.Data.Migrations
                 columns: table => new
                 {
                     CreatedDate = table.Column<DateTime>(nullable: false),
+                    Gender = table.Column<short>(nullable: false),
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    IsActive = table.Column<bool>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     MembershipEndDate = table.Column<DateTime>(nullable: false),
                     MembershipStartDate = table.Column<DateTime>(nullable: false),
+                    Status = table.Column<bool>(nullable: false),
                     CardId = table.Column<string>(maxLength: 50, nullable: false),
                     Email = table.Column<string>(maxLength: 50, nullable: true),
                     ImagePath = table.Column<string>(maxLength: 100, nullable: true),
@@ -334,12 +339,12 @@ namespace Algebra.Web.Data.Migrations
                     PermanentCity = table.Column<string>(maxLength: 100, nullable: true),
                     PermanentState = table.Column<string>(maxLength: 100, nullable: true),
                     PermanentPin = table.Column<string>(maxLength: 10, nullable: true),
-                    Gender = table.Column<short>(nullable: false),
                     MaritalStatus = table.Column<short>(nullable: false),
                     Occupation = table.Column<short>(nullable: false),
                     SponcerId = table.Column<int>(nullable: false),
                     Addressed = table.Column<string>(maxLength: 100, nullable: true),
-                    SpouseDOB = table.Column<DateTime>(nullable: false)
+                    SpouseDOB = table.Column<DateTime>(nullable: false),
+                    AnnualIncome = table.Column<decimal>(type: "decimal(10,4)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -477,7 +482,8 @@ namespace Algebra.Web.Data.Migrations
                     Amount = table.Column<decimal>(type: "decimal(10,4)", nullable: false),
                     Date = table.Column<DateTime>(nullable: false),
                     BankName = table.Column<string>(maxLength: 100, nullable: true),
-                    DrawnOn = table.Column<string>(maxLength: 100, nullable: true)
+                    DrawnOn = table.Column<string>(maxLength: 100, nullable: true),
+                    ChequeStatus = table.Column<short>(nullable: false)
                 },
                 constraints: table =>
                 {
