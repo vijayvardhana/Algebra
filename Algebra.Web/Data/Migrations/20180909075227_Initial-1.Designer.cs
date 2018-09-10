@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Algebra.Web.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180904134056_Initial-1")]
+    [Migration("20180909075227_Initial-1")]
     partial class Initial1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -117,6 +117,8 @@ namespace Algebra.Web.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(200);
 
+                    b.Property<DateTime?>("UpdatedDate");
+
                     b.HasKey("Id");
 
                     b.ToTable("Category");
@@ -159,6 +161,8 @@ namespace Algebra.Web.Data.Migrations
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate();
+
+                    b.Property<DateTime?>("UpdatedDate");
 
                     b.HasKey("Id");
 
@@ -220,6 +224,8 @@ namespace Algebra.Web.Data.Migrations
 
                     b.Property<bool>("Status");
 
+                    b.Property<DateTime?>("UpdatedDate");
+
                     b.HasKey("Id");
 
                     b.HasIndex("MemberId");
@@ -268,6 +274,8 @@ namespace Algebra.Web.Data.Migrations
                     b.Property<decimal>("TotalAmount")
                         .HasColumnType("decimal(10,4)");
 
+                    b.Property<DateTime?>("UpdatedDate");
+
                     b.HasKey("Id");
 
                     b.ToTable("Fee");
@@ -309,6 +317,8 @@ namespace Algebra.Web.Data.Migrations
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate();
+
+                    b.Property<DateTime?>("UpdatedDate");
 
                     b.HasKey("Id");
 
@@ -439,6 +449,8 @@ namespace Algebra.Web.Data.Migrations
 
                     b.Property<short>("Title");
 
+                    b.Property<DateTime?>("UpdatedDate");
+
                     b.HasKey("Id");
 
                     b.ToTable("Member");
@@ -472,6 +484,8 @@ namespace Algebra.Web.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(50);
 
+                    b.Property<DateTime?>("UpdatedDate");
+
                     b.HasKey("Id");
 
                     b.ToTable("Mode");
@@ -483,8 +497,8 @@ namespace Algebra.Web.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ChequeNumber")
-                        .HasMaxLength(500);
+                    b.Property<string>("BankName")
+                        .HasMaxLength(100);
 
                     b.Property<string>("Created")
                         .HasMaxLength(50);
@@ -511,10 +525,17 @@ namespace Algebra.Web.Data.Migrations
 
                     b.Property<short>("MembershipFeeId");
 
+                    b.Property<string>("PayeeName")
+                        .HasMaxLength(500);
+
                     b.Property<DateTime>("PaymentDate");
 
-                    b.Property<string>("PaymentMode")
-                        .HasMaxLength(50);
+                    b.Property<short>("PaymentMode");
+
+                    b.Property<string>("PaymentRecievedBy")
+                        .HasMaxLength(100);
+
+                    b.Property<short>("PaymentStatus");
 
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
@@ -528,6 +549,8 @@ namespace Algebra.Web.Data.Migrations
 
                     b.Property<string>("TransactionId")
                         .HasMaxLength(50);
+
+                    b.Property<DateTime?>("UpdatedDate");
 
                     b.HasKey("Id");
 
@@ -567,6 +590,8 @@ namespace Algebra.Web.Data.Migrations
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate();
+
+                    b.Property<DateTime?>("UpdatedDate");
 
                     b.HasKey("Id");
 
@@ -679,6 +704,8 @@ namespace Algebra.Web.Data.Migrations
                         .HasMaxLength(50);
 
                     b.Property<short>("Title");
+
+                    b.Property<DateTime?>("UpdatedDate");
 
                     b.HasKey("Id");
 

@@ -34,12 +34,11 @@ namespace Algebra.Data
             [Display(Name = "Individual")]
             Individual = 1,
             [Display(Name = "Individual With Spouse")]
-            IndividualCouple = 2,
-            [Display(Name = "Individual With Dependent(s)")]
-            IndividualDependent = 3,
+            Couple = 2,
             [Display(Name = "Individual, Spouse With Dependent(s)")]
-            IndividualCoupleDependent = 4
-
+            IndividualCoupleDependent = 3,
+            [Display(Name = "Individual With Dependent(s)")]
+            IndividualDependent = 4
         };
 
         public enum Title
@@ -62,41 +61,51 @@ namespace Algebra.Data
 
         public enum Gender
         {
-            Male=1,
-            Female=2
+            Male = 1,
+            Female = 2
         }
 
         public enum Occupation
         {
             [Display(Name = "Self Employed")]
-            SelfEmployed=1,
+            SelfEmployed = 1,
             [Display(Name = "Salaried")]
-            Salaried=2,
+            Salaried = 2,
             [Display(Name = "Business")]
-            Business=3
+            Business = 3
         }
 
         public enum MaritalStatus
         {
-            Single=1,
-            Married=2,
-            Divorced=3,
-            Widowed=4,
-            Separated=5
+            Single = 1,
+            Married = 2,
+            Divorced = 3,
+            Widowed = 4,
+            Separated = 5
         }
 
         public enum ChequeStatus
         {
             [Display(Name = "Bounced")]
-            Bounced=1,
+            Bounced = 1,
             [Display(Name = "Cancelled")]
-            Cancelled=2,
+            Cancelled = 2,
             [Display(Name = "Cleared")]
-            Cleared=3,
+            Cleared = 3,
             [Display(Name = "Processing")]
-            ClearingProcess=4,
+            ClearingProcess = 4,
             [Display(Name = "Others")]
-            Others=5
+            Others = 5
+        }
+
+        public enum PaymentStatus
+        {
+            [Display(Name = "Cleared")]
+            Cleared =1,
+            [Display(Name = "Clearing Process")]
+            ClearingProcess=2,
+            [Display(Name = "Others")]
+            Others =3
         }
     }
 }

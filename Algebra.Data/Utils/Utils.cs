@@ -25,6 +25,21 @@ namespace Algebra.Data
             return str;
         }
 
+        public static int[] UnWrapObjects(JObject obj)
+        {
+            JObject o = JObject.Parse(obj.ToString());
+
+            string[] str = new string[o.Count];
+            int[] arrInt = new int[o.Count];
+
+            for (int i = 0; i < o.Count; i++)
+            {
+                string var = i.ToString();
+                arrInt[i] = Convert.ToInt32(o[var]);
+            }
+            return arrInt;
+        }
+
         public static List<T> GetObjectList<T>(string _str, char c)
         {
             List<T> list = new List<T>();
@@ -50,15 +65,28 @@ namespace Algebra.Data
 
         public static string GetSelectText(IEnumerable<SelectListItem> items, short id)
         {
-            string selectedValue = string.Empty;
+            string text = string.Empty;
             foreach (var item in items)
             {
                 if (item.Value == id.ToString())
                 {
-                    selectedValue = item.Text;
+                    text = item.Text;
                 }
             }
-            return selectedValue;
+            return text;
+        }
+
+        public static short GetValueByText(IEnumerable<SelectListItem> items, string text)
+        {
+            short value = 0;
+            foreach (var item in items)
+            {
+                if (item.Text == text.Trim())
+                {
+                    value = Convert.ToInt16(item.Value);
+                }
+            }
+            return value;
         }
 
     }

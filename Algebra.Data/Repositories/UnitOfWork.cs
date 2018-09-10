@@ -35,7 +35,7 @@ namespace Algebra.Data.Repositories
         public IChequeRepository Cheques { get; set; }
 
 
-        int IUnitOfWork.Commit()
+        public int Commit()
         {
             return _dbContext.SaveChanges();
         }

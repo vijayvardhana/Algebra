@@ -74,20 +74,30 @@ public void Configure(IApplicationBuilder app, IHostingEnvironment env)
 ==================================
 dotnet ef migrations add "Initial" -o "Data\Migrations"
 
+dotnet ef migrations add "Initial-1" -o "Data\Migrations" --context Algebra.Data.ApplicationDbContext
+
+
 [7.] Removing the Initial Migration
 ==================================
 dotnet ef migrations remove
 
 [8.] Once migration done, run below commend, it will create the database
 ======================================================================
+(For single DbContext)
 dotnet ef database update
 
+(For Multiple DbContext) 
+dotnet ef database update --context Algebra.Data.ApplicationDbContext
 ======================================================================
 
 [9.] To completely remove all migrations and start all over again, do the following:
 
 dotnet ef database update 0
 dotnet ef migrations remove
+
+dotnet ef database update --context Algebra.Data.ApplicationDbContext
+
+dotnet ef migrations remove --context Algebra.Data.ApplicationDbContext
 
 
 [10.] More on Migration

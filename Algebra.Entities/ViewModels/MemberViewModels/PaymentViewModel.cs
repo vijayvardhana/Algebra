@@ -39,7 +39,7 @@ namespace Algebra.Entities.ViewModels
         public DateTime? PaymentDate { get; set; }
 
         [Display(Name = "Payment Mode")]
-        public string PaymentMode { get; set; }
+        public short PaymentMode { get; set; }
 
         public IEnumerable<SelectListItem> Modes { get; set; }
 
@@ -50,10 +50,10 @@ namespace Algebra.Entities.ViewModels
         [Display(Name = "Discount")]
         public bool IsDiscountApplicable { get; set; }
 
-        [Display(Name = "Cheque Number")]
-        public string ChequeNumber { get; set; }
+        [Display(Name = "Payee Name")]
+        public string PayeeName { get; set; }
 
-        [Display(Name = "Transaction Id")]
+        [Display(Name = "Transaction Id (Payment Reference Number)")]
         public string TransactionId { get; set; }
 
         [Display(Name = "Description")]
@@ -61,7 +61,15 @@ namespace Algebra.Entities.ViewModels
 
         public string Created { get; set; }
 
-        public int MembershipFeeId { get; set; } 
+        public int MembershipFeeId { get; set; }
+
+        [Display(Name = "Bank Name")]
+        public string BankName { get; set; }
+
+        [Display(Name = "Payment Received By")]
+        public string PaymentRecievedBy { get; set; }
+
+        public short PaymentStatus { get; set; }
 
         public FeeViewModels FeeBreakUp { get; set; }
 

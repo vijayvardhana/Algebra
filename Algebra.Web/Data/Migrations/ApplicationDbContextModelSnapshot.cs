@@ -495,8 +495,8 @@ namespace Algebra.Web.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ChequeNumber")
-                        .HasMaxLength(500);
+                    b.Property<string>("BankName")
+                        .HasMaxLength(100);
 
                     b.Property<string>("Created")
                         .HasMaxLength(50);
@@ -523,10 +523,17 @@ namespace Algebra.Web.Data.Migrations
 
                     b.Property<short>("MembershipFeeId");
 
+                    b.Property<string>("PayeeName")
+                        .HasMaxLength(500);
+
                     b.Property<DateTime>("PaymentDate");
 
-                    b.Property<string>("PaymentMode")
-                        .HasMaxLength(50);
+                    b.Property<short>("PaymentMode");
+
+                    b.Property<string>("PaymentRecievedBy")
+                        .HasMaxLength(100);
+
+                    b.Property<short>("PaymentStatus");
 
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()

@@ -55,5 +55,8 @@ namespace Algebra.Entities.ViewModels
         [Required]
         [Display(Name = "Membership End Date")]
         public DateTime MembershipEndDate { get; set; }
+
+        [Display(Name = "Image Path")]
+        public string ImagePath { get; set; }
     }
 }

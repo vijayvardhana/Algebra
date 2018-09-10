@@ -1,18 +1,72 @@
 ﻿@using Algebra.Data
+@using Algebra.Entities.Models
 @model List<NewMembersFrom>
 
-<table class="table table-sm small">
-    @foreach (var form in Model)
-    {
-    <tr>
-        <td>@form.AccountId</td>
-        <td>@form.FirstName</td>
-        <td>@form.LastName</td>
-        <td>@form.MembershipType</td>
-        <td>@form.ReferredBy</td>
-    </tr>
+<div class="container small">
+    <form method="post" id="export-member-data">
+        @Html.AntiForgeryToken()
+        <div class="row">
+            <div class="col-md-12">
+                <div><h3>Old Member(s) <small>Here you can export old members into new system.</small></h3></div>
+                <div><button type="button" id="btn-export" class="btn btn-primary glyphicon-plus">Export Member(s)</button></div>
+                <hr class="colorgraph">
+                <div class="table-responsive">
+                    <table id="cms-form-data" class="table table-bordred table-striped">
+                        @foreach (var form in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <div class="form-group">
+                                        <input type="checkbox" id="@form.Member_AccountId-@form.Member_Id" value="@form.Member_Id" class="form-control form-check-input" style="width:20px; height:20px; " />
+                                    </div>
+                                </td>
+                                <td>@form.Member_AccountId</td>
+                                <td>@form.Member_FirstName</td>
+                                <td>@form.Member_LastName</td>
+                                <td>@form.Member_MembershipType</td>
+                                <td>@form.Member_ReferredBy</td>
+                                <td>@form.Member_LocationId</td>
+                            </tr>
+                        }
 
+                    </table>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
 
-    }
-    
-</table>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var url = "/api/forms/export";
+            $("#btn-export").click(function () {
+                var values = $('.form-check-input:checkbox:checked')
+                    .map(function () {
+                    return this.value;
+                }).get().join(",");
+
+                if (values.length === 0) {
+                    toastr.warning("You select NOTHING :( for transfer", "look at me");
+                    return false
+                }
+
+                $.post({
+                    url: url,
+                    data: JSON.stringify(values),
+                    contentType: 'application/json',
+                    success: function (result) {
+                        console.log(result);
+                    }, // get your response here
+                    error: function (xhr, resp, text) { 
+                        console.log(xhr);
+                        console.log(resp);
+                        console.log(text);
+                    }
+                });
+            });
+
+        });
+    </script>
+}

@@ -37,11 +37,10 @@ namespace Algebra.Entities.Models
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime PaymentDate { get; set; }
 
-        [MaxLength(50)]
-        public string PaymentMode { get; set; }
+        public short PaymentMode { get; set; }
 
         [MaxLength(500)]
-        public string ChequeNumber { get; set; }
+        public string PayeeName { get; set; }
 
         [MaxLength(50)]
         public string TransactionId { get; set; }
@@ -54,6 +53,14 @@ namespace Algebra.Entities.Models
         
         [Required]
         public short MembershipFeeId { get; set; }
+
+        [MaxLength(100)]
+        public string BankName { get; set; }
+
+        [MaxLength(100)]
+        public string PaymentRecievedBy { get; set; }
+
+        public short PaymentStatus { get; set; }
 
         #endregion Properties
 
