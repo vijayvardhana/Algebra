@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Threading.Tasks;
 using Algebra.Data;
 using Algebra.Data.Repositories;
 using Algebra.Entities.Models;
@@ -18,33 +19,45 @@ namespace Algebra.Web.Controllers
         private IEnumerable<SelectListItem> _locations = null;
         private IEnumerable<SelectListItem> _refItems = null;
         private IEnumerable<SelectListItem> _modes = null;
+        private IList<NewMembersFrom> _oForms = null;
+
         public FormsController(ApplicationDbContext dbContext, CmsDbContext cmsDbContext)
         {
             _dbContext = dbContext;
             _cmsContext = cmsDbContext;
+            _oForms = GetForms();
             LoadDropDowns();
         }
 
         private void LoadDropDowns()
         {
-            using (UnitOfWork uow = new UnitOfWork(_dbContext))
-            {
-                _locations = uow.Locations.GetDropDown(uow);
-                _refItems = uow.Referrers.GetDropDown(uow);
-                _modes = uow.Modes.GetDropDown(uow);
-            }
+            IUnitOfWork uow = new UnitOfWork(_dbContext);
+            _locations = uow.Locations.GetDropDown(uow);
+            _refItems = uow.Referrers.GetDropDown(uow);
+            _modes = uow.Modes.GetDropDown(uow);
+        }
+
+        private IList<NewMembersFrom> GetForms()
+        {
+            IUnitOfWork uow = new UnitOfWork(_dbContext);
+            List<NewMembersFrom> membersForm = _cmsContext.GetForms().ToList();
+            List<Member> members = uow.Members.GetAll().ToList();
+            return membersForm
+                   .Where(x => !members
+                   .Any(y => 
+                        y.AccountId == x.Member_AccountId))
+                   .ToList();
         }
 
         // GET api/<controller>/5
         [HttpGet]
         public IActionResult Index()
         {
-            IList<NewMembersFrom> Forms = _cmsContext.GetForms();
-            return View(Forms);
+            return View(_oForms);
         }
 
         [HttpPost("Export")]
-        public IActionResult Export([FromBody]string values)
+        public async Task<IActionResult> ExportAsync([FromBody]string values)
         {
             if (string.IsNullOrEmpty(values)
                 && values.Split(',').Count() == 0)
@@ -53,37 +66,33 @@ namespace Algebra.Web.Controllers
             }
             List<string> result = new List<string>();
             string[] items = values.Split(',');
-            IList<NewMembersFrom> Forms = _cmsContext.GetForms();
 
             for (int i = 0; i < items.Length; i++)
             {
                 int id = Convert.ToInt32(items[i]);
-                NewMembersFrom form = Forms.SingleOrDefault(m => m.Member_Id == id);
+                NewMembersFrom form = _oForms.SingleOrDefault(m => m.Member_Id == id);
                 Member member = ObjectMapper(form);
 
-                using(IUnitOfWork uow = new UnitOfWork(_dbContext))
+                try
                 {
-                    try
-                    {
-                        uow.Members.Add(member);
-                        int newId = uow.Commit();
-                        if (newId > 0)
-                            result.Add($"Success: {member.AccountId}");
-                        else
-                            result.Add($"Success but not added: {member.AccountId}");
-                    }
-                    catch (Exception e)
-                    {
-                        result.Add($"Failed: {member.AccountId}, due to {e.Message}");
-                    }
-                    
+
+                    await _dbContext.Members.AddAsync(member);
+                    int x = await _dbContext.SaveChangesAsync();
+                    if (x > 0)
+                        result.Add($"Success: {member.AccountId}");
+                    else
+                        result.Add($"Success but not added: {member.AccountId}");
                 }
-                
+                catch (Exception e)
+                {
+                    result.Add($"Failed: {member.AccountId}, due to {e.Message}");
+                }
             }
 
 
-            return Ok($"Data exported result : {result.ToString()}");
+            return Ok($"'Success' : {string.Join(",", result)}");
         }
+
 
         #region helper method
         private Member ObjectMapper(NewMembersFrom form)
@@ -104,7 +113,7 @@ namespace Algebra.Web.Controllers
 
             return new Member
             {
-                Id = f.Member_Id,
+                //Id = f.Member_Id,
                 CreatedDate = f.CreatedDate,
                 Gender = ParseGender(f.Member_Gender.Trim()),
                 IsDeleted = false,
@@ -146,8 +155,8 @@ namespace Algebra.Web.Controllers
                 Occupation = ParseOccupation(f.Member_Occupation.Trim()),
                 SponcerId = 0,
                 Addressed = f.Member_Addressed,
-                MemberDOB = ParseDate(f.Member_DOB.Trim()),
-                AnnualIncome = ParseDecimal(f.Member_AnnualIncome.Trim())
+                MemberDOB = ParseDate(f.Member_DOB),
+                AnnualIncome = ParseDecimal(f.Member_AnnualIncome)
 
             };
         }
@@ -197,7 +206,7 @@ namespace Algebra.Web.Controllers
                 Occupation = ParseOccupation(f.Spouse_Occupation.Trim()),
                 SponcerId = 0,
                 Addressed = f.Spouse_Addressed,
-                SpouseDOB = ParseDate(f.Spouse_DOB.Trim()),
+                SpouseDOB = ParseDate(f.Spouse_DOB),
                 AnnualIncome = ParseDecimal(f.Spouse_AnnualIncome)
             };
         }
@@ -229,7 +238,7 @@ namespace Algebra.Web.Controllers
                         MiddleName = f.FirstDependent_MiddleName,
                         LastName = f.FirstDependent_LastName,
                         MobileNumber = f.FirstDependent_MobileNumber,
-                        DependentDOB = ParseDate(f.FirstDependent_DOB.Trim())
+                        DependentDOB = ParseDate(f.FirstDependent_DOB)
                     }
                     );
 
@@ -257,7 +266,7 @@ namespace Algebra.Web.Controllers
                         MiddleName = f.SecondDependent_MiddleName,
                         LastName = f.SecondDependent_LastName,
                         MobileNumber = f.SecondDependent_MobileNumber,
-                        DependentDOB = ParseDate(f.SecondDependent_DOB.Trim())
+                        DependentDOB = ParseDate(f.SecondDependent_DOB)
                     }
                     );
             }
@@ -281,26 +290,26 @@ namespace Algebra.Web.Controllers
                 //For BankTransfer
                 case 1:
                     p.GST = f.BankTransferGST;
-                    p.TaxAmount = ParseDecimal(f.BankTransferTaxAmount.Trim());
-                    p.MembershipFee = ParseDecimal(f.BankMembershipFee.Trim());
-                    p.TotalAmount = ParseDecimal(f.BankTransferTotalAmount.Trim());
+                    p.TaxAmount = ParseDecimal(f.BankTransferTaxAmount);
+                    p.MembershipFee = ParseDecimal(f.BankMembershipFee);
+                    p.TotalAmount = ParseDecimal(f.BankTransferTotalAmount);
                     p.TransactionId = f.BankRRN;
                     p.PaymentStatus = ParsePaymentStatus(f.PaymentStatus.Trim());
                     break;
                 //For Cash
                 case 2:
                     p.GST = f.CashGST;
-                    p.TaxAmount = ParseDecimal(f.CashTaxAmount.Trim());
-                    p.MembershipFee = ParseDecimal(f.CreditCardMembershipFee.Trim());
-                    p.TotalAmount = ParseDecimal(f.CreditCardTotalAmount.Trim());
+                    p.TaxAmount = ParseDecimal(f.CashTaxAmount);
+                    p.MembershipFee = ParseDecimal(f.CreditCardMembershipFee);
+                    p.TotalAmount = ParseDecimal(f.CreditCardTotalAmount);
                     p.TransactionId = "";
                     p.PaymentStatus = ParsePaymentStatus(f.PaymentStatus.Trim());
                     break;
                 //For Cheque
                 case 3:
                     p.GST = f.ChequeGST;
-                    p.TaxAmount = ParseDecimal(f.ChequeTaxAmount.Trim());
-                    p.TotalAmount = ParseDecimal(f.ChequeTotalAmount.Trim());
+                    p.TaxAmount = ParseDecimal(f.ChequeTaxAmount);
+                    p.TotalAmount = ParseDecimal(f.ChequeTotalAmount);
                     p.MembershipFee = (p.TotalAmount - p.TaxAmount);
                     p.Cheques = ChequeMapper(f);
                     break;
@@ -308,9 +317,9 @@ namespace Algebra.Web.Controllers
                 case 4:
                     p.PayeeName = f.NameOnCreditCard;
                     p.GST = f.CreditCardGST;
-                    p.TaxAmount = ParseDecimal(f.CreditCardTaxAmount.Trim());
-                    p.MembershipFee = ParseDecimal(f.CreditCardMembershipFee.Trim());
-                    p.TotalAmount = ParseDecimal(f.CashTotalAmount.Trim());
+                    p.TaxAmount = ParseDecimal(f.CreditCardTaxAmount);
+                    p.MembershipFee = ParseDecimal(f.CreditCardMembershipFee);
+                    p.TotalAmount = ParseDecimal(f.CashTotalAmount);
                     p.TransactionId = f.BankRRN;
                     p.PaymentStatus = ParsePaymentStatus(f.PaymentStatus.Trim());
                     break;
@@ -318,7 +327,7 @@ namespace Algebra.Web.Controllers
                     break;
             }
 
-            p.PaymentDate = ParseDate(f.PaymentDate.Trim());
+            p.PaymentDate = ParseDate(f.PaymentDate);
             p.IsDiscountApplicable = (f.Payment_MembershipType == "complementry") ? true : false;
             p.Description = f.Description;
             p.BankName = "";
@@ -333,9 +342,9 @@ namespace Algebra.Web.Controllers
                 new Cheque
                 {
                     DrawnOn = f.FirstCheque_DrawnOn,
-                    Date = ParseDate(f.FirstCheque_Date.Trim()),
+                    Date = ParseDate(f.FirstCheque_Date),
                     Number = f.FirstCheque_Number,
-                    Amount = ParseDecimal(f.ChequeTotalAmount.Trim()),
+                    Amount = ParseDecimal(f.ChequeTotalAmount),
                     ChequeStatus = ParsePaymentStatus(f.PaymentStatus.Trim())
                 }
                 );
@@ -347,7 +356,7 @@ namespace Algebra.Web.Controllers
             string amount = (!string.IsNullOrEmpty(value))
                 ? value
                 : "0.00";
-            return Convert.ToDecimal(amount, CultureInfo.InvariantCulture);
+            return Convert.ToDecimal(amount.Trim(), CultureInfo.InvariantCulture);
         }
 
         private DateTime ParseDate(string dob)
@@ -358,11 +367,14 @@ namespace Algebra.Web.Controllers
             }
 
             CultureInfo provider = CultureInfo.InvariantCulture;
-            return DateTime.ParseExact(dob,
+            return DateTime.ParseExact(dob.Trim(),
                 new string[] {
                     "MM.dd.yyyy",
                     "MM-dd-yyyy",
-                    "MM/dd/yyyy"
+                    "MM/dd/yyyy",
+                    "dd.MM.yyyy",
+                    "dd-MM-yyyy",
+                    "dd/MM/yyyy"
                 },
                 provider,
                 DateTimeStyles.None);

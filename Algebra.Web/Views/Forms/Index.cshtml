@@ -12,21 +12,36 @@
                 <hr class="colorgraph">
                 <div class="table-responsive">
                     <table id="cms-form-data" class="table table-bordred table-striped">
+                        <tr style="font-weight:bold">
+                            <td>
+                                <input type="checkbox" id="cbx-all" value="0" style="width:25px; height:25px; " />
+                            </td>
+                            <td>Account Number</td>
+                            <td>First Name</td>
+                            <td>Last Name</td>
+                            <td>Membership Type</td>
+                            <td>Referred By</td>
+                            <td>Location</td>
+                            <td>Start Date</td>
+                            <td>End Date</td>
+                        </tr>
                         @foreach (var form in Model)
                         {
-                            <tr>
-                                <td>
-                                    <div class="form-group">
-                                        <input type="checkbox" id="@form.Member_AccountId-@form.Member_Id" value="@form.Member_Id" class="form-control form-check-input" style="width:20px; height:20px; " />
-                                    </div>
-                                </td>
-                                <td>@form.Member_AccountId</td>
-                                <td>@form.Member_FirstName</td>
-                                <td>@form.Member_LastName</td>
-                                <td>@form.Member_MembershipType</td>
-                                <td>@form.Member_ReferredBy</td>
-                                <td>@form.Member_LocationId</td>
-                            </tr>
+                        <tr>
+                            <td>
+                                <div class="form-group">
+                                    <input type="checkbox" id="@form.Member_AccountId-@form.Member_Id" value="@form.Member_Id" class="form-control form-check-input" style="width:20px; height:20px; " />
+                                </div>
+                            </td>
+                            <td>@form.Member_AccountId</td>
+                            <td>@form.Member_FirstName</td>
+                            <td>@form.Member_LastName</td>
+                            <td>@form.Member_MembershipType</td>
+                            <td>@form.Member_ReferredBy</td>
+                            <td>@form.Member_LocationId</td>
+                            <td>@form.Member_MembershipStartDate.ToShortDateString()</td>
+                            <td>@form.Member_MembershipEndDate.ToShortDateString()</td>
+                        </tr>
                         }
 
                     </table>
@@ -58,8 +73,11 @@
                     contentType: 'application/json',
                     success: function (result) {
                         console.log(result);
+                        toastr.success(result);
+                        window.location.reload(true);
                     }, // get your response here
-                    error: function (xhr, resp, text) { 
+                    error: function (xhr, resp, text) {
+                        toastr.error(text);
                         console.log(xhr);
                         console.log(resp);
                         console.log(text);
@@ -67,6 +85,11 @@
                 });
             });
 
+            $("#cbx-all").click(function () {
+                $('input:checkbox')
+                    .not(this)
+                    .prop('checked', this.checked);
+            });
         });
     </script>
 }
