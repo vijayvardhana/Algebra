@@ -2,15 +2,18 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Algebra.Data
+namespace Algebra.Core
 {
-    public class ApplicationVariables
+    public class AppSettings
     {
-        public ApplicationVariables() { }
+        public AppSettings()
+        {
+        }
+
         public string Website { get; set; }
         public string Name { get; set; }
         public string Version { get; set; }
-        public int InitialAccountNumber { get; set; }
-        public string AccountPrefix { get; set; }
+        public string TempFolder { get; set; }
+        public string AssetFolder { get; set; }
     }
 }

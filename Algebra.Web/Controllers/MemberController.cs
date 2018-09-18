@@ -21,13 +21,11 @@ namespace Algebra.Web.Controllers
     {
 
         private readonly ApplicationDbContext _dbContext;
-        private readonly ApplicationVariables _applicationVariables;
         private readonly IToastNotification _toastNotification;
 
-        public MemberController(ApplicationDbContext dbContext, IOptions<ApplicationVariables> options, IToastNotification toastNotification)
+        public MemberController(ApplicationDbContext dbContext, IToastNotification toastNotification)
         {
             _dbContext = dbContext;
-            _applicationVariables = options.Value;
             _toastNotification = toastNotification;
         }
 

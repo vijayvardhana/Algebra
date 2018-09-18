@@ -15,7 +15,8 @@
       "wwwroot/js/site.js",
       "wwwroot/js/registration.js",
       "wwwroot/js/validator.js",
-      "wwwroot/css/toastr.js"
+      "wwwroot/js/toastr.js",
+      "wwwroot/js/asset.upload.js"
     ],
     // Optionally specify minification options
     "minify": {

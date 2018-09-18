@@ -24,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Algebra.Core\Algebra.Core.csproj" />
     <ProjectReference Include="..\Algebra.Data\Algebra.Data.csproj" />
     <ProjectReference Include="..\Algebra.Entities\Algebra.Entities.csproj" />
   </ItemGroup>

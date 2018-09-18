@@ -8,6 +8,8 @@ using Algebra.Data;
 using Algebra.Services;
 using Algebra.Entities.Models;
 using NToastNotify;
+using Algebra.Core;
+using Microsoft.AspNetCore.Http;
 
 namespace Algebra
 {
@@ -51,12 +53,13 @@ namespace Algebra
                 PositionClass = ToastPositions.BottomRight,
                 TimeOut = 4000
             });
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             // Add functionality to inject IOptions<T>
             services.AddOptions();
 
             // Add our Config object so it can be injected
-            services.Configure<ApplicationVariables>(Configuration.GetSection("Variables"));
+            services.Configure<AppSettings>(Configuration.GetSection("Variables"));
 
             // *If* you need access to generic IConfiguration this is **required**
             services.AddSingleton<IConfiguration>(Configuration);

@@ -23,7 +23,7 @@
                         @await Html.PartialAsync("_Member", Model.Member)
                     </div>
                     <div role="tabpanel" class="tab-pane" id="spouse">
-                        @await Html.PartialAsync("_Spouse", Model.Spouse ?? new SpouseViewModels { CardId = Model.Member.AccountId})
+                        @await Html.PartialAsync("_Spouse", Model.Spouse ?? new SpouseViewModels { CardId = Model.Member.AccountId })
                     </div>
                     <div role="tabpanel" class="tab-pane" id="dependent">
                         @await Html.PartialAsync("_Dependent", Model.Dependent)
@@ -32,7 +32,7 @@
                         @await Html.PartialAsync("_Payment", Model.Payment)
                     </div>
                     <div role="tabpanel" class="tab-pane" id="assets">
-                        Assets
+                        @await Html.PartialAsync("_Assets", new { id = 1, name = "somename" })
                     </div>
                 </div>
             </div>
@@ -67,6 +67,8 @@
     @await Html.PartialAsync("_ValidationScriptsPartial")
     <script src="~/js/registration.js" asp-append-version="true"></script>
     <script src="~/js/validator.js" asp-append-version="true"></script>
+    <script src="~/js/asset.upload.js" asp-append-version="true"></script>
+
     <script type="text/javascript">
         var r = {
             Location: @Model.LocationId,
