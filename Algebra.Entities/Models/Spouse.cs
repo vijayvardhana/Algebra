@@ -49,7 +49,7 @@ namespace Algebra.Entities.Models
         [MaxLength(100)]
         public string Organization { get; set; }
 
-        [MaxLength(200)]
+        [MaxLength(800)]
         public string PresentAddress { get; set; }
 
         [MaxLength(100)]
@@ -58,10 +58,10 @@ namespace Algebra.Entities.Models
         [MaxLength(100)]
         public string PresentState { get; set; }
 
-        [MaxLength(10)]
+        [MaxLength(20)]
         public string PresentPin { get; set; }
 
-        [MaxLength(500)]
+        [MaxLength(800)]
         public string PermanentAddress { get; set; }
 
         [MaxLength(100)]
@@ -70,7 +70,7 @@ namespace Algebra.Entities.Models
         [MaxLength(100)]
         public string PermanentState { get; set; }
 
-        [MaxLength(10)]
+        [MaxLength(20)]
         public string PermanentPin { get; set; }        
 
         public short MaritalStatus { get; set; }

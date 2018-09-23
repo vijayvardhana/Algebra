@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Algebra.Web.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20180909075227_Initial-1")]
+    [Migration("20180923101656_Initial-1")]
     partial class Initial1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -401,25 +401,25 @@ namespace Algebra.Web.Data.Migrations
                         .HasMaxLength(200);
 
                     b.Property<string>("PermanentAddress")
-                        .HasMaxLength(500);
+                        .HasMaxLength(800);
 
                     b.Property<string>("PermanentCity")
                         .HasMaxLength(100);
 
                     b.Property<string>("PermanentPin")
-                        .HasMaxLength(10);
+                        .HasMaxLength(20);
 
                     b.Property<string>("PermanentState")
                         .HasMaxLength(100);
 
                     b.Property<string>("PresentAddress")
-                        .HasMaxLength(500);
+                        .HasMaxLength(800);
 
                     b.Property<string>("PresentCity")
                         .HasMaxLength(100);
 
                     b.Property<string>("PresentPin")
-                        .HasMaxLength(10);
+                        .HasMaxLength(20);
 
                     b.Property<string>("PresentState")
                         .HasMaxLength(100);
@@ -657,25 +657,25 @@ namespace Algebra.Web.Data.Migrations
                         .HasMaxLength(100);
 
                     b.Property<string>("PermanentAddress")
-                        .HasMaxLength(500);
+                        .HasMaxLength(800);
 
                     b.Property<string>("PermanentCity")
                         .HasMaxLength(100);
 
                     b.Property<string>("PermanentPin")
-                        .HasMaxLength(10);
+                        .HasMaxLength(20);
 
                     b.Property<string>("PermanentState")
                         .HasMaxLength(100);
 
                     b.Property<string>("PresentAddress")
-                        .HasMaxLength(200);
+                        .HasMaxLength(800);
 
                     b.Property<string>("PresentCity")
                         .HasMaxLength(100);
 
                     b.Property<string>("PresentPin")
-                        .HasMaxLength(10);
+                        .HasMaxLength(20);
 
                     b.Property<string>("PresentState")
                         .HasMaxLength(100);

@@ -38,7 +38,7 @@
             </div>
             <div class="col-lg-3">
                 <div class="form-group">
-                    <label asp-for="@Model[i].Gender"></label>
+                    <label asp-for="@Model[i].Gender"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
                     <select asp-for="@Model[i].Gender" asp-items="Html.GetEnumSelectList(typeof(Enums.Gender))" class="form-control input-sm">
                         <option selected="selected" value="">--- Gender ---</option>
                     </select>

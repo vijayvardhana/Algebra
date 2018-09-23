@@ -1,44 +1,30 @@
 ﻿<div class="row">
     <div class="col-lg-12">
-        <h2 class="lead">Upload Asset </h2>
+        <h4>Upload Asset <small>(Files Upload widget helps to upload member, spouse, dependent and form images)</small></h4>
         <blockquote>
             <p>
-                Files Upload widget helps to upload member, spouse, dependent and form images, that supports standard HTML form file uploads.
+                <span class="glyphicon glyphicon-camera btn btn-success btn btn-success btn-file">
+                    <span>Click 'n' Select</span>
+                    <input id="fileupload" type="file" name="files[]" multiple max="5" defaultValue="">
+                </span>
+                <button type="button" id="btnUpload" class="btn btn-primary start">
+                    <i class="glyphicon glyphicon-upload"></i>
+                    <span>Start upload</span>
+                </button>
             </p>
         </blockquote>
-        <br>
-        <!-- The fileinput-button span is used to style the file input field as button -->
-        <i class="glyphicon glyphicon-plus"></i>
-        <span>Add files...</span>
-        <span class="btn btn-success fileinput-button">
-            <input id="fileupload" type="file" name="files[]" multiple max="5" defaultValue="">
-        </span>
-        <button type="button" id="btnUpload" class="btn btn-primary start">
-            <i class="glyphicon glyphicon-upload"></i>
-            <span>Start upload</span>
-        </button>
-        @*<button type="reset" class="btn btn-warning cancel">
-                <i class="glyphicon glyphicon-ban-circle"></i>
-                <span>Cancel upload</span>
-            </button>
-            <button type="button" class="btn btn-danger delete">
-                <i class="glyphicon glyphicon-trash"></i>
-                <span>Delete</span>
-            </button>*@
-        @*<input type="checkbox" class="toggle">*@
-        <!-- The global file processing state -->
         <span class="fileupload-process"></span>
         <br>
-        <br>
-        <!-- The global progress bar -->
-        <div id="progress" class="progress">
+        @*<div id="progress" class="progress">
             <div class="progress-bar progress-bar-success"></div>
+        </div>*@
+        <div class="progress hidden">
+            <div style="width: 0%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" role="progressbar" class="progress-bar progress-bar-success progress-bar-striped active">
+                <span class="sr-only">0% Complete</span>
+            </div>
         </div>
-        <!-- The container for the uploaded files -->
-        <div id="Filelist" class="files"></div>
         <br>
         <div class="row" id="img-preview">
-            
         </div>
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -46,8 +32,9 @@
             </div>
             <div class="panel-body">
                 <ul>
-                    <li>The maximum file size for uploads in this demo is <strong>999 KB</strong> (default file size is unlimited).</li>
-                    <li>Only image files (<strong>JPG, GIF, PNG</strong>) are allowed in this demo (by default there is no file type restriction).</li>
+                    <li>The maximum file size for image is <strong>999 KB</strong></li>
+                    <li>Better storage utilization, please <strong>optimize images</strong> before upload.</li>
+                    <li>Only image files (<strong>JPG, GIF, PNG</strong>) are allowed for upload.</li>
                 </ul>
             </div>
         </div>

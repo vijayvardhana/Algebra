@@ -51,7 +51,7 @@ namespace Algebra.Entities.Models
         [MaxLength(50)]
         public string TelephoneNumber { get; set; }
 
-        [MaxLength(500)]
+        [MaxLength(800)]
         public string PresentAddress { get; set; }
 
         [MaxLength(100)]
@@ -60,10 +60,10 @@ namespace Algebra.Entities.Models
         [MaxLength(100)]
         public string PresentState { get; set; }
 
-        [MaxLength(10)]
+        [MaxLength(20)]
         public string PresentPin { get; set; }
 
-        [MaxLength(500)]
+        [MaxLength(800)]
         public string PermanentAddress { get; set; }
 
         [MaxLength(100)]
@@ -72,7 +72,7 @@ namespace Algebra.Entities.Models
         [MaxLength(100)]
         public string PermanentState { get; set; }
 
-        [MaxLength(10)]
+        [MaxLength(20)]
         public string PermanentPin { get; set; }
 
         [Required]

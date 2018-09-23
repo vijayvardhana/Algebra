@@ -1,10 +1,7 @@
 ﻿using Algebra.Entities.Models;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Linq;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 
 namespace Algebra.Data
@@ -183,33 +180,50 @@ namespace Algebra.Data
 
         private static async Task CreateReferrer(ApplicationDbContext dbContext)
         {
-            var refShoma = new Referrer()
-            {
-                Name = "Shoma Chaudhury",
-                Code = "SC",
-                Created = "Admin"
-            };
 
-            var refSheuli = new Referrer()
-            {
-                Name = "Sheuli Sethi",
-                Code = "SS",
-                Created = "Admin"
-            };
-            var refPayal = new Referrer()
-            {
-                Name = "Payal Puri",
-                Code = "PP",
-                Created = "Admin"
-            };
-            var refAngali = new Referrer()
+            var ag = new Referrer()
             {
                 Name = "Angali Gulati",
                 Code = "AG",
                 Created = "Admin"
             };
 
-            dbContext.Referrers.AddRange(refShoma, refSheuli, refAngali, refPayal);
+            var nt = new Referrer()
+            {
+                Name = "Neena Tejpal",
+                Code = "NT",
+                Created = "Admin"
+            };
+
+            var pp = new Referrer()
+            {
+                Name = "Payal Puri",
+                Code = "PP",
+                Created = "Admin"
+            };
+
+            var ss = new Referrer()
+            {
+                Name = "Sheuli Sethi",
+                Code = "SS",
+                Created = "Admin"
+            };
+
+            var sc = new Referrer()
+            {
+                Name = "Shoma Chaudhury",
+                Code = "SC",
+                Created = "Admin"
+            };
+
+            var tt = new Referrer()
+            {
+                Name = "Tarun Tejpal",
+                Code = "TT",
+                Created = "Admin"
+            };
+
+            dbContext.Referrers.AddRange(ag,nt,pp,ss,sc,tt);
             await dbContext.SaveChangesAsync();
         }
 

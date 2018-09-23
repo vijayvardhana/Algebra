@@ -19,6 +19,11 @@ const Mode = {
     MXM: '8' //Mix Mode
 }
 
+const Chart = {
+    PIE: 'referrer',
+    BAR: 'referrer',
+    LINE:'referrer'
+}
 
 
 
@@ -53,3 +58,13 @@ String.format = function (format) {
 };
 
 
+function GetJSONData(str) {
+    var uri = '/api/dashboard/' + str + '/';
+    var jsonData = $.ajax({
+        url: uri,
+        dataType: "json",
+        async: false
+    }).responseText;
+
+    return JSON.parse(jsonData);
+};

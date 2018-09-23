@@ -76,7 +76,7 @@
     <div class="row">
         <div class="col-lg-4">
             <div class="form-group">
-                <label asp-for="@Model.Gender"></label>
+                <label asp-for="@Model.Gender"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
                 <select asp-for="@Model.Gender" asp-items="Html.GetEnumSelectList(typeof(Enums.Gender))" class="form-control input-sm">
                     <option selected="selected" value="">--- Gender ---</option>
                 </select>
@@ -84,7 +84,7 @@
         </div>
         <div class="col-lg-4">
             <div class="form-group">
-                <label asp-for="@Model.MaritalStatus"></label>
+                <label asp-for="@Model.MaritalStatus"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
                 <select asp-for="@Model.MaritalStatus" asp-items="Html.GetEnumSelectList(typeof(Enums.MaritalStatus))" class="form-control input-sm">
                     <option selected="selected" value="">--- Marital status ---</option>
                 </select>
@@ -92,7 +92,7 @@
         </div>
         <div class="col-lg-4">
             <div class="form-group">
-                <label asp-for="@Model.Occupation"></label>
+                <label asp-for="@Model.Occupation"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
                 <select asp-for="@Model.Occupation" asp-items="Html.GetEnumSelectList(typeof(Enums.Occupation))" class="form-control input-sm">
                     <option selected="selected" value="">--- Occupation ---</option>
                 </select>

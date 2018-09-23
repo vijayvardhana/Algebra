@@ -399,25 +399,25 @@ namespace Algebra.Web.Data.Migrations
                         .HasMaxLength(200);
 
                     b.Property<string>("PermanentAddress")
-                        .HasMaxLength(500);
+                        .HasMaxLength(800);
 
                     b.Property<string>("PermanentCity")
                         .HasMaxLength(100);
 
                     b.Property<string>("PermanentPin")
-                        .HasMaxLength(10);
+                        .HasMaxLength(20);
 
                     b.Property<string>("PermanentState")
                         .HasMaxLength(100);
 
                     b.Property<string>("PresentAddress")
-                        .HasMaxLength(500);
+                        .HasMaxLength(800);
 
                     b.Property<string>("PresentCity")
                         .HasMaxLength(100);
 
                     b.Property<string>("PresentPin")
-                        .HasMaxLength(10);
+                        .HasMaxLength(20);
 
                     b.Property<string>("PresentState")
                         .HasMaxLength(100);
@@ -655,25 +655,25 @@ namespace Algebra.Web.Data.Migrations
                         .HasMaxLength(100);
 
                     b.Property<string>("PermanentAddress")
-                        .HasMaxLength(500);
+                        .HasMaxLength(800);
 
                     b.Property<string>("PermanentCity")
                         .HasMaxLength(100);
 
                     b.Property<string>("PermanentPin")
-                        .HasMaxLength(10);
+                        .HasMaxLength(20);
 
                     b.Property<string>("PermanentState")
                         .HasMaxLength(100);
 
                     b.Property<string>("PresentAddress")
-                        .HasMaxLength(200);
+                        .HasMaxLength(800);
 
                     b.Property<string>("PresentCity")
                         .HasMaxLength(100);
 
                     b.Property<string>("PresentPin")
-                        .HasMaxLength(10);
+                        .HasMaxLength(20);
 
                     b.Property<string>("PresentState")
                         .HasMaxLength(100);

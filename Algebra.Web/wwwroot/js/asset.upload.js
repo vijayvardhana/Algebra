@@ -4,7 +4,12 @@
         var files = $('#fileupload').prop("files");
         var fdata = new FormData();
         var nameCollection = GetNameCollection();
-        
+
+        if (!nameCollection) {
+            toastr.warning("Image for dropdown, image must assign to member,form etc", "Image for missing");
+            return false;
+        }
+
         for (var i = 0; i < files.length; i++) {
             var found = Object.keys(AttachmentArray).filter(function (key) {
                 var exist = AttachmentArray[key].FileName === files[i].name;
@@ -20,6 +25,7 @@
         }
         //return;
         if (files.length > 0) {
+            ToggleProgress(true);
             $.ajax({
                 type: "POST",
                 url: url,
@@ -36,35 +42,43 @@
                 processData: false,
                 success: function (response) {
                     toastr.success('Images Uploaded Successfully.', 'Hurry!!!');
+                    ToggleProgress(false);
+                },
+                progress: function (e) {
+                    Progressing(e);
+                },
+                error: function (request) {
+                    toastr.error('Somthing went wrong during upload :(', 'Error!!!');
+                    ToggleProgress(false);
                 }
             });
         }
         else {
-            alert('Please select a file.')
+            toastr.warning('Please select a image first.', 'Image ???')
         }
     })
 });
 
 function GetNameCollection() {
-    var names = {}
+    var names = {};
+    var isvalid = true;
     $('select.image-select').each(function (index) {
         var o = {};
         var id = this.id;
         var fileName = $(this).attr('name');
         var newName = $('#' + id).val();
-
         if (!newName) {
-            toastr.warning("Image must be assign to member,form etc", "Image name missing");
-            return;
+            isvalid = false;
         }
-
         o = {
             'Old': fileName,
             'New': newName
         };
         names["o" + index] = o;
     });
-    return names;
+    return (isvalid)
+        ? names
+        : isvalid;
 }
 
 document.addEventListener("DOMContentLoaded", init, false);
@@ -96,7 +110,7 @@ function handleFileSelect(e) {
 }
 
 function RenderThumbnail(e, readerEvt) {
-    var accountId = $('#AccountId').val();
+    
     var sb = new StringBuilder();
     var div = document.getElementById('img-preview');
     var column_div = document.createElement('div');
@@ -104,17 +118,54 @@ function RenderThumbnail(e, readerEvt) {
     div.appendChild(column_div);
 
     sb.append('<div class="panel panel-default small">');
-    sb.append('<div class="panel-heading img-wrap"><h4 class="panel-title">' + readerEvt.name + '<span delete = "' + readerEvt.name + '" class="close">');
-    sb.append('<i class="glyphicon glyphicon-trash denger"></i></span></h4></div>');
+    sb.append('<div class="panel-heading img-wrap"><h5 class="panel-title">' + readerEvt.name + '<span delete = "' + readerEvt.name + '" class="close denger">');
+    sb.append('<i class="glyphicon glyphicon-trash denger"></i></span></h5></div>');
     sb.append('<div class="panel-body"><img class="img-thumbnail" width="200px" src = "' + e.target.result + '" title = "' + escape(readerEvt.name) + '" id = "' + readerEvt.name + '" />');
-    sb.append('<select class="input-sm image-select" id="img-' + readerEvt.name.replace('.','') + '" name="' + readerEvt.name + '">');
+    sb.append('<select class="input-sm image-select" style="width:90%;" id="img-' + readerEvt.name.replace('.', '') + '" name="' + readerEvt.name + '">');
     sb.append('<option value="">--- Image for ---</option>');
-    sb.append('<option value="' + accountId + '-member.' + readerEvt.name.split('.')[1] + '">Member</option>');
-    sb.append('<option value="' + accountId + '-spouse.' + readerEvt.name.split('.')[1] + '">Spouse</option>');
-    sb.append('<option value="' + accountId + '-first-dependent.' + readerEvt.name.split('.')[1] + '">First Dependent</option>');
-    sb.append('<option value="' + accountId + '-second-dependent.' + readerEvt.name.split('.')[1] + '">Second Dependent</option>');
-    sb.append('<option value="' + accountId + '-form.' + readerEvt.name.split('.')[1] + '">Form Image</option></select>');
+    sb.append(RenderDropDown(readerEvt.name.split('.')[1]));
+    sb.append('</select>');
     column_div.innerHTML = sb.toString();
+}
+
+function RenderDropDown(ext) {
+    var accountId = $('#AccountId').val();
+    var mType = $('#MembershipType').val();
+    var _sb = new StringBuilder();
+    switch (mType) {
+        case '1':
+        case '5':
+            {
+                _sb.append('<option value="' + accountId + '-member.' + ext + '">Member</option>');
+                _sb.append('<option value="' + accountId + '-form.' + ext + '">Form Image</option>');
+                break;
+            }
+        case '2':
+            {
+                _sb.append('<option value="' + accountId + '-member.' + ext + '">Member</option>');
+                _sb.append('<option value="' + accountId + '-spouse.' + ext + '">Spouse</option>');
+                _sb.append('<option value="' + accountId + '-form.' + ext + '">Form Image</option>');
+                break;
+            }
+        case '3':
+            {
+                _sb.append('<option value="' + accountId + '-member.' + ext + '">Member</option>');
+                _sb.append('<option value="' + accountId + '-spouse.' + ext + '">Spouse</option>');
+                _sb.append('<option value="' + accountId + '-first-dependent.' + ext + '">First Dependent</option>');
+                _sb.append('<option value="' + accountId + '-second-dependent.' + ext + '">Second Dependent</option>');
+                _sb.append('<option value="' + accountId + '-form.' + ext + '">Form Image</option>');
+                break;
+            }
+        case '4':
+            {
+                _sb.append('<option value="' + accountId + '-member.' + ext + '">Member</option>');
+                _sb.append('<option value="' + accountId + '-first-dependent.' + ext + '">First Dependent</option>');
+                _sb.append('<option value="' + accountId + '-second-dependent.' + ext + '">Second Dependent</option>');
+                _sb.append('<option value="' + accountId + '-form.' + ext + '">Form Image</option>');
+                break;
+            }
+    }
+    return _sb.toString();
 }
 
 jQuery(function ($) {
@@ -202,4 +253,27 @@ function FillAttachmentArray(e, readerEvt) {
     arrCounter = arrCounter + 1;
 }
 
+function ToggleProgress(flag) {
+    if (flag) {
+        $('.progress').removeClass('hidden');
+        $('.progress-bar').css({
+            "width": "0%"
+        });
+        $('.progress-bar span').html('0% complete');
+    }
+    else {
+        $('.progress').addClass('hidden');
+    }
+}
 
+function Progressing(e) {
+    if (e.lengthComputable) {
+        var pct = (e.loaded / e.total) * 100;
+        $('.progress-bar').css({
+            "width": pct + "%"
+        });
+        $('.progress-bar span').html(pct + '% complete');
+    } else {
+        console.warn('Content Length not reported!');
+    }
+}
