@@ -1,7 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Data;
+using System.Data.Common;
 using System.Linq;
 using Algebra.Entities.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace Algebra.Data.Repositories
 {
@@ -26,6 +29,27 @@ namespace Algebra.Data.Repositories
             };
             modes.Insert(0, defaultMode);
             return new SelectList(modes, "Value", "Text");
+        }
+
+        public List<object> GetPaymentModeDataForColumnChart()
+        {
+            List<object> list = new List<object>();
+            using (IUnitOfWork uow = new UnitOfWork(_dbContext))
+            {
+                _dbContext.Database.OpenConnection();
+                DbCommand cmd = _dbContext.Database.GetDbConnection().CreateCommand();
+                cmd.CommandText = "GetPaymentModeDataForColumnChart";
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        list.Add(new[] { reader["PaymentMode"], (int)reader["Total"] });
+                    }
+                }
+            }
+            return list;
         }
     }
 }

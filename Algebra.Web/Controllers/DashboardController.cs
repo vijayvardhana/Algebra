@@ -25,20 +25,38 @@ namespace Algebra.Web.Controllers
         [Route("referrer")]
         public JsonResult GetReferrer()
         {
-            List<object> list = null;
+            List<object> referrers = null;
 
             using(IUnitOfWork unitOfWork =new UnitOfWork(_dbContext))
             {
-                list = unitOfWork.Referrers.GetPieChartReferrerData();
+                referrers = unitOfWork.Referrers.GetReferrerDataForPieChart();
             }
-            return Json(list);
+            return Json(referrers);
+        }
+
+        [HttpGet]
+        [Route("paymentmode")]
+        public JsonResult GetPaymentModeCount()
+        {
+            List<object> mode = null;
+            using(IUnitOfWork unitOfWork = new UnitOfWork(_dbContext))
+            {
+                mode = unitOfWork.Modes.GetPaymentModeDataForColumnChart();
+            }
+            return Json(mode);
+        }
+
+        [HttpGet]
+        [Route("category")]
+        public JsonResult GetCategoriesCount()
+        {
+            List<object> categories = null;
+            using(IUnitOfWork unitOfWork = new UnitOfWork(_dbContext))
+            {
+                categories = unitOfWork.Categories.GetCategoriesForBarChart();
+            }
+            return Json(categories);
         }
     }
 
-
-    public class GraphData
-    {
-        public string Key { get; set; }
-        public int Value { get; set; }
-    }
 }

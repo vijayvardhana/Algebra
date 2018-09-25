@@ -7,5 +7,6 @@ namespace Algebra.Data.Repositories
     public interface ICategoryRepository : IRepository<Category>
     {
         IEnumerable<SelectListItem> GetDropDown(IUnitOfWork unitOfWork);
+        List<object> GetCategoriesForBarChart();
     }
 }

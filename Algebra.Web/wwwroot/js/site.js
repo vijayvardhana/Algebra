@@ -21,7 +21,8 @@ const Mode = {
 
 const Chart = {
     PIE: 'referrer',
-    BAR: 'referrer',
+    COL:'paymentmode',
+    BAR: 'category',
     LINE:'referrer'
 }
 

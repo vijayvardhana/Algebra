@@ -10,6 +10,6 @@ namespace Algebra.Data.Repositories
         Referrer GetReferrerByCode(string code);
         IEnumerable<SelectListItem> GetDropDown(IUnitOfWork unitOfWork);
 
-        List<object> GetPieChartReferrerData();
+        List<object> GetReferrerDataForPieChart();
     }
 }

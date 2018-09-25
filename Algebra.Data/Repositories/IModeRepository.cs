@@ -7,5 +7,7 @@ namespace Algebra.Data.Repositories
     public interface IModeRepository : IRepository<Mode>
     {
         IEnumerable<SelectListItem> GetDropDown(IUnitOfWork unitOfWork);
+
+        List<object> GetPaymentModeDataForColumnChart();
     }
 }

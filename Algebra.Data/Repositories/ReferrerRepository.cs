@@ -1,12 +1,10 @@
 ﻿using Algebra.Entities.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Algebra.Data.Repositories
 {
@@ -38,7 +36,7 @@ namespace Algebra.Data.Repositories
             return new SelectList(referrers, "Value", "Text");
         }
 
-        public List<object> GetPieChartReferrerData()
+        public List<object> GetReferrerDataForPieChart()
         {
             List<object> list = new List<object>();
             using (IUnitOfWork uow = new UnitOfWork(_dbContext))
@@ -54,12 +52,9 @@ namespace Algebra.Data.Repositories
                     {
                         list.Add(new[] { reader["Name"], (int)reader["Total"] });
                     }
-                        
                 }
             }
-
-
-            return list;//Forms.FromSql("[cms_algebratheclub].[dbo].[GetMembersData]").ToList();
+            return list;
         }
     }
 }

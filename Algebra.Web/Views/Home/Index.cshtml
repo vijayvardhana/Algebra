@@ -51,30 +51,12 @@
 <div class="row">
     <div class="col-md-4">
         <div class="panel box-four">
-            <div class="panel-heading">
-                <h3 class="panel-title">Notes</h3>
-            </div>
-            <div class="panel-body">
-                <ul>
-                    <li>The maximum file size for image is <strong>999 KB</strong></li>
-                    <li>Better storage utilization, please <strong>optimize images</strong> before upload.</li>
-                    <li>Only image files (<strong>JPG, GIF, PNG</strong>) are allowed for upload.</li>
-                </ul>
-            </div>
+            <div id="columnchart" style="width: 100%; height: 100%;"></div>
         </div>
     </div>
     <div class="col-md-4">
         <div class="panel box-five">
-            <div class="panel-heading">
-                <h3 class="panel-title">Notes</h3>
-            </div>
-            <div class="panel-body">
-                <ul>
-                    <li>The maximum file size for image is <strong>999 KB</strong></li>
-                    <li>Better storage utilization, please <strong>optimize images</strong> before upload.</li>
-                    <li>Only image files (<strong>JPG, GIF, PNG</strong>) are allowed for upload.</li>
-                </ul>
-            </div>
+            <div id="areachart" style="width: 100%; height: 100%;"></div>
         </div>
     </div>
     <div class="col-md-4">
@@ -83,6 +65,24 @@
         </div>
     </div>
 
+</div>
+<div class="row"><div class="col-lg-12">&nbsp;</div></div>
+<div class="row">
+    <div class="col-md-4">
+        <div class="panel box-one">
+            <div id="donutchart" style="width: 100%; height: 100%;"></div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="panel box-two">
+            <div id="curvelinechart" style="width: 100%; height: 100%;"></div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="panel box-three">
+            <div id="barchart" style="width: 100%; height: 100%;"></div>
+        </div>
+    </div>
 </div>
 
 @section Scripts {
@@ -94,7 +94,7 @@
         google.charts.load('current', { 'packages': ['corechart'] });
 
         $(document).ready(function () {
-            var pichart = new ReferrerChart();
+            var dashBoard = new DashBoard();
         });
     </script>
 
