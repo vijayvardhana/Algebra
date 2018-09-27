@@ -231,6 +231,98 @@ namespace Algebra.Web.Data.Migrations
                     b.ToTable("Dependent");
                 });
 
+            modelBuilder.Entity("Algebra.Entities.Models.Event", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Address")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("City")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("Created")
+                        .HasMaxLength(50);
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(255);
+
+                    b.Property<DateTime>("EndDate");
+
+                    b.Property<string>("Format")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("IpAddress")
+                        .HasMaxLength(20);
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<string>("Region")
+                        .HasMaxLength(100);
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate();
+
+                    b.Property<DateTime>("StartDate");
+
+                    b.Property<string>("State")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("Title")
+                        .HasMaxLength(100);
+
+                    b.Property<DateTime?>("UpdatedDate");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Event");
+                });
+
+            modelBuilder.Entity("Algebra.Entities.Models.EventCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Created")
+                        .HasMaxLength(50);
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(255);
+
+                    b.Property<int?>("EventId");
+
+                    b.Property<string>("Image")
+                        .HasMaxLength(200);
+
+                    b.Property<string>("IpAddress")
+                        .HasMaxLength(20);
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(100);
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate();
+
+                    b.Property<DateTime?>("UpdatedDate");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EventId");
+
+                    b.ToTable("EventCategory");
+                });
+
             modelBuilder.Entity("Algebra.Entities.Models.Fee", b =>
                 {
                     b.Property<int>("Id")
@@ -596,6 +688,86 @@ namespace Algebra.Web.Data.Migrations
                     b.ToTable("Referrer");
                 });
 
+            modelBuilder.Entity("Algebra.Entities.Models.Speaker", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Created")
+                        .HasMaxLength(50);
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(255);
+
+                    b.Property<int?>("EventId");
+
+                    b.Property<string>("Image")
+                        .HasMaxLength(200);
+
+                    b.Property<string>("IpAddress")
+                        .HasMaxLength(20);
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(100);
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate();
+
+                    b.Property<DateTime?>("UpdatedDate");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EventId");
+
+                    b.ToTable("Speaker");
+                });
+
+            modelBuilder.Entity("Algebra.Entities.Models.Sponsor", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Created")
+                        .HasMaxLength(50);
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(255);
+
+                    b.Property<int?>("EventId");
+
+                    b.Property<string>("IpAddress")
+                        .HasMaxLength(20);
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<string>("Logo")
+                        .HasMaxLength(200);
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(100);
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate();
+
+                    b.Property<DateTime?>("UpdatedDate");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EventId");
+
+                    b.ToTable("Sponsor");
+                });
+
             modelBuilder.Entity("Algebra.Entities.Models.Spouse", b =>
                 {
                     b.Property<int>("Id")
@@ -869,12 +1041,33 @@ namespace Algebra.Web.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("Algebra.Entities.Models.EventCategory", b =>
+                {
+                    b.HasOne("Algebra.Entities.Models.Event")
+                        .WithMany("Categories")
+                        .HasForeignKey("EventId");
+                });
+
             modelBuilder.Entity("Algebra.Entities.Models.Payment", b =>
                 {
                     b.HasOne("Algebra.Entities.Models.Member", "Member")
                         .WithOne("Payments")
                         .HasForeignKey("Algebra.Entities.Models.Payment", "MemberId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Algebra.Entities.Models.Speaker", b =>
+                {
+                    b.HasOne("Algebra.Entities.Models.Event")
+                        .WithMany("Speakers")
+                        .HasForeignKey("EventId");
+                });
+
+            modelBuilder.Entity("Algebra.Entities.Models.Sponsor", b =>
+                {
+                    b.HasOne("Algebra.Entities.Models.Event")
+                        .WithMany("Sponsors")
+                        .HasForeignKey("EventId");
                 });
 
             modelBuilder.Entity("Algebra.Entities.Models.Spouse", b =>

@@ -60,9 +60,18 @@ namespace Algebra.Data
             builder.Entity<Cheque>().ToTable("Cheque");
             builder.Entity<Cheque>().Property(i => i.Id).ValueGeneratedOnAdd();
 
-            //Need to be comment during migration
-            //builder.Entity<NewMembersFrom>().ToTable("Forms");
-            //builder.Entity<NewMembersFrom>().Property(i => i.max_id).ValueGeneratedOnAdd();
+            builder.Entity<Event>().ToTable("Event");
+            builder.Entity<Event>().Property(i => i.Id).ValueGeneratedOnAdd();
+
+            builder.Entity<EventCategory>().ToTable("EventCategory");
+            builder.Entity<EventCategory>().Property(i => i.Id).ValueGeneratedOnAdd();
+
+            builder.Entity<Speaker>().ToTable("Speaker");
+            builder.Entity<Speaker>().Property(i => i.Id).ValueGeneratedOnAdd();
+
+            builder.Entity<Sponsor>().ToTable("Sponsor");
+            builder.Entity<Sponsor>().Property(i => i.Id).ValueGeneratedOnAdd();
+
         }
 
         #region Properties
@@ -77,7 +86,12 @@ namespace Algebra.Data
         public DbSet<Fee> Fees { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Cheque> Cheques { get; set; }
-        
+
+        public DbSet<Event> Events { get; set; }
+        public DbSet<EventCategory> EventCategories { get; set; }
+        public DbSet<Speaker> Speakers { get; set; }
+        public DbSet<Sponsor> Sponsors { get; set; }
+
         #endregion Properties
     }
 }

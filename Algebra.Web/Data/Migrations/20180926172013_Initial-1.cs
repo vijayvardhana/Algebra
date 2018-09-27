@@ -43,6 +43,33 @@ namespace Algebra.Web.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Event",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Created = table.Column<string>(maxLength: 50, nullable: true),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    UpdatedDate = table.Column<DateTime>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    IpAddress = table.Column<string>(maxLength: 20, nullable: true),
+                    RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true),
+                    Title = table.Column<string>(maxLength: 100, nullable: true),
+                    Description = table.Column<string>(maxLength: 255, nullable: true),
+                    StartDate = table.Column<DateTime>(nullable: false),
+                    EndDate = table.Column<DateTime>(nullable: false),
+                    Region = table.Column<string>(maxLength: 100, nullable: true),
+                    Format = table.Column<string>(maxLength: 100, nullable: true),
+                    Address = table.Column<string>(maxLength: 255, nullable: true),
+                    City = table.Column<string>(maxLength: 100, nullable: true),
+                    State = table.Column<string>(maxLength: 100, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Event", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Fee",
                 columns: table => new
                 {
@@ -237,6 +264,90 @@ namespace Algebra.Web.Data.Migrations
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EventCategory",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Created = table.Column<string>(maxLength: 50, nullable: true),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    UpdatedDate = table.Column<DateTime>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    IpAddress = table.Column<string>(maxLength: 20, nullable: true),
+                    RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true),
+                    Name = table.Column<string>(maxLength: 100, nullable: true),
+                    Description = table.Column<string>(maxLength: 255, nullable: true),
+                    Image = table.Column<string>(maxLength: 200, nullable: true),
+                    EventId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EventCategory", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_EventCategory_Event_EventId",
+                        column: x => x.EventId,
+                        principalTable: "Event",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Speaker",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Created = table.Column<string>(maxLength: 50, nullable: true),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    UpdatedDate = table.Column<DateTime>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    IpAddress = table.Column<string>(maxLength: 20, nullable: true),
+                    RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true),
+                    Name = table.Column<string>(maxLength: 100, nullable: true),
+                    Description = table.Column<string>(maxLength: 255, nullable: true),
+                    Image = table.Column<string>(maxLength: 200, nullable: true),
+                    EventId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Speaker", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Speaker_Event_EventId",
+                        column: x => x.EventId,
+                        principalTable: "Event",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Sponsor",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Created = table.Column<string>(maxLength: 50, nullable: true),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    UpdatedDate = table.Column<DateTime>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    IpAddress = table.Column<string>(maxLength: 20, nullable: true),
+                    RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true),
+                    Name = table.Column<string>(maxLength: 100, nullable: true),
+                    Description = table.Column<string>(maxLength: 255, nullable: true),
+                    Logo = table.Column<string>(maxLength: 200, nullable: true),
+                    EventId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Sponsor", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Sponsor_Event_EventId",
+                        column: x => x.EventId,
+                        principalTable: "Event",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -547,10 +658,25 @@ namespace Algebra.Web.Data.Migrations
                 column: "MemberId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_EventCategory_EventId",
+                table: "EventCategory",
+                column: "EventId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Payment_MemberId",
                 table: "Payment",
                 column: "MemberId",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Speaker_EventId",
+                table: "Speaker",
+                column: "EventId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Sponsor_EventId",
+                table: "Sponsor",
+                column: "EventId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Spouse_MemberId",
@@ -603,6 +729,9 @@ namespace Algebra.Web.Data.Migrations
                 name: "Dependent");
 
             migrationBuilder.DropTable(
+                name: "EventCategory");
+
+            migrationBuilder.DropTable(
                 name: "Fee");
 
             migrationBuilder.DropTable(
@@ -615,6 +744,12 @@ namespace Algebra.Web.Data.Migrations
                 name: "Referrer");
 
             migrationBuilder.DropTable(
+                name: "Speaker");
+
+            migrationBuilder.DropTable(
+                name: "Sponsor");
+
+            migrationBuilder.DropTable(
                 name: "Spouse");
 
             migrationBuilder.DropTable(
@@ -625,6 +760,9 @@ namespace Algebra.Web.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Payment");
+
+            migrationBuilder.DropTable(
+                name: "Event");
 
             migrationBuilder.DropTable(
                 name: "User");

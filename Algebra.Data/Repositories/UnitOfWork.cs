@@ -20,6 +20,10 @@ namespace Algebra.Data.Repositories
             Dependents = new DependentRepository(_dbContext);
             Cheques = new ChequeRepository(_dbContext);
             Payments = new PaymentRepository(_dbContext);
+
+            EventCategories = new EventCategoryRepository(_dbContext);
+            Speakers = new SpeakerRepository(_dbContext);
+            Sponsors = new SponsorRepository(_dbContext);
         }
 
         public IMemberRepository Members { get; private set; }
@@ -34,6 +38,9 @@ namespace Algebra.Data.Repositories
         public IPaymentRepository Payments { get; set; }
         public IChequeRepository Cheques { get; set; }
 
+        public IEventCategoryRepository EventCategories { get; set; }
+        public ISpeakerRepository Speakers { get; set; }
+        public ISponsorRepository Sponsors { get; set; }
 
         public int Commit()
         {

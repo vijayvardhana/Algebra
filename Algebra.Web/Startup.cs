@@ -104,8 +104,8 @@ namespace Algebra
                     template: "{controller=Referrer}/{action=Referrer}/{id}"
                     );
                 //routes.MapRoute(
-                //    name: "forms",
-                //    template: "api/{controller=Forms}/{action=Index}/{id?}");
+                //    name: "eventcategory",
+                //    template: "{controller=EventCategory}/{action=Index}/{id?}");
             });
         }
     }

@@ -1,0 +1,55 @@
+﻿@using Algebra.Entities.ViewModels
+@model EventCategoryViewModels
+
+<div class="container">
+    <form method="post" id="location-edit-form">
+        @Html.AntiForgeryToken()
+        <div id="location" class="small">
+            <h4>EventCategory <small>(Add/Edit)</small></h4>
+            <hr class="colorgraph">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label asp-for="@Model.Name"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
+                        <input asp-for="@Model.Name" class="form-control input-sm" />
+                        <span asp-validation-for="@Model.Name" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label asp-for="@Model.Description"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
+                        <input asp-for="@Model.Description" class="form-control input-sm" />
+                        <span asp-validation-for="@Model.Description" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label asp-for="@Model.Image"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
+                        <input asp-for="@Model.Image" class="form-control input-sm" />
+                        <span asp-validation-for="@Model.Image" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary" id="btn-submit">Submit</button>
+                        <button type="button" class="btn" id="btn-cancel" onclick="location.href='@Url.Action("index", "eventcategory")'">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+    <script>
+    $(document).ready(function () {
+    //var toster = "";
+});
+    </script>
+}
