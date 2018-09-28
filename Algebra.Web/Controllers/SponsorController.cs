@@ -24,7 +24,7 @@ namespace Algebra.Web.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            IEnumerable<Sponsor> sponsors;
+            IEnumerable<Sponsor> sponsors = null;
             using (var unitOfWork = new UnitOfWork(_dbContext))
             {
                 sponsors = unitOfWork.Sponsors.GetAll();

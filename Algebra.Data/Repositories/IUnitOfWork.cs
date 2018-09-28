@@ -22,6 +22,8 @@ namespace Algebra.Data.Repositories
         ISpeakerRepository Speakers { get; }
         ISponsorRepository Sponsors { get; }
 
+        IAttendeeRepository Attendees { get; }
+
 
         int Commit();
         void Rollback();

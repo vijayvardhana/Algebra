@@ -1,0 +1,94 @@
+﻿@using Algebra.Entities.ViewModels
+@model AttendeeViewModels
+
+<div class="container">
+    <form method="post" id="attendee-add-form">
+        @Html.AntiForgeryToken()
+        <div id="fee" class="small">
+            <h4>Attendee <small>(@ViewBag.Title)</small></h4>
+            <hr class="colorgraph">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label asp-for="@Model.FirstName"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
+                        <input asp-for="@Model.FirstName" class="form-control input-sm" />
+                        <span asp-validation-for="@Model.FirstName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label asp-for="@Model.MiddleName"></label>
+                        <input asp-for="@Model.MiddleName" class="form-control input-sm" />
+                        <span asp-validation-for="@Model.MiddleName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label asp-for="@Model.LastName"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
+                        <input asp-for="@Model.LastName" class="form-control input-sm" />
+                        <span asp-validation-for="@Model.LastName" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label asp-for="@Model.MobileNumber"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
+                        <input asp-for="@Model.MobileNumber" class="form-control input-sm" />
+                        <span asp-validation-for="@Model.MobileNumber" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label asp-for="@Model.Email"></label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span>
+                        <input asp-for="@Model.Email" class="form-control input-sm" />
+                        <span asp-validation-for="@Model.Email" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label asp-for="@Model.HasGuest"></label>
+                        <input type="checkbox" asp-for="@Model.HasGuest" class="form-control form-check-input" style="width:20px; height:20px; " />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div id="guest-section" style='display:none;'>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Guest</h3>
+                        </div>
+                        <div class="panel-body">
+                            <ul>
+                                @await Html.PartialAsync("_Guest", Model.Guest ?? new List<AttendeeViewModels>())
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary" id="btn-submit">Submit</button>
+                        <button type="button" class="btn" id="btn-cancel" onclick="location.href='@Url.Action("index", "attendee")'">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#HasGuest").click(function () {
+                if ($(this).is(":checked")) {
+                    $("#guest-section").show();
+                } else {
+                    $("#guest-section").hide();
+                }
+            });
+        });
+    </script>
+}

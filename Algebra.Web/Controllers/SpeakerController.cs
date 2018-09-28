@@ -24,7 +24,7 @@ namespace Algebra.Web.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            IEnumerable<Speaker> speakers;
+            IEnumerable<Speaker> speakers = null;
             using (var unitOfWork = new UnitOfWork(_dbContext))
             {
                 speakers = unitOfWork.Speakers.GetAll();

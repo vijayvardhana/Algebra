@@ -60,6 +60,9 @@ namespace Algebra.Data
             builder.Entity<Cheque>().ToTable("Cheque");
             builder.Entity<Cheque>().Property(i => i.Id).ValueGeneratedOnAdd();
 
+            builder.Entity<Image>().ToTable("Image");
+            builder.Entity<Image>().Property(i => i.Id).ValueGeneratedOnAdd();
+
             builder.Entity<Event>().ToTable("Event");
             builder.Entity<Event>().Property(i => i.Id).ValueGeneratedOnAdd();
 
@@ -71,6 +74,10 @@ namespace Algebra.Data
 
             builder.Entity<Sponsor>().ToTable("Sponsor");
             builder.Entity<Sponsor>().Property(i => i.Id).ValueGeneratedOnAdd();
+
+            builder.Entity<Attendee>().ToTable("Attendee");
+            builder.Entity<Attendee>().HasMany(d => d.Guest).WithOne(a => a.Attender)
+            .HasForeignKey(x => x.AttenderntId);
 
         }
 
@@ -86,11 +93,13 @@ namespace Algebra.Data
         public DbSet<Fee> Fees { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Cheque> Cheques { get; set; }
+        public DbSet<Image> Images { get; set; }
 
         public DbSet<Event> Events { get; set; }
         public DbSet<EventCategory> EventCategories { get; set; }
         public DbSet<Speaker> Speakers { get; set; }
         public DbSet<Sponsor> Sponsors { get; set; }
+        public DbSet<Attendee> Attendees { get; set; }
 
         #endregion Properties
     }

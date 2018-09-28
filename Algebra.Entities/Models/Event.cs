@@ -24,13 +24,13 @@ namespace Algebra.Entities.Models
         public string Format { get; set; }
 
         [MaxLength(255)]
-        public EventCategory[] Categories { get; set; }
+        public string Categories { get; set; }
 
         [MaxLength(255)]
-        public Speaker[] Speakers { get; set; }
+        public string Speakers { get; set; }
 
         [MaxLength(255)]
-        public Sponsor[] Sponsors { get; set; }
+        public string Sponsors { get; set; }
 
         [MaxLength(255)]
         public string Address { get; set; }

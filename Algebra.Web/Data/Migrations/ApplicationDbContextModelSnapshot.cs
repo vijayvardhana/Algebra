@@ -88,6 +88,57 @@ namespace Algebra.Web.Data.Migrations
                     b.ToTable("User");
                 });
 
+            modelBuilder.Entity("Algebra.Entities.Models.Attendee", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("AttenderntId");
+
+                    b.Property<string>("Created")
+                        .HasMaxLength(50);
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(200);
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(200);
+
+                    b.Property<bool>("HasGuest");
+
+                    b.Property<string>("IpAddress")
+                        .HasMaxLength(20);
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(200);
+
+                    b.Property<string>("MiddleName")
+                        .HasMaxLength(200);
+
+                    b.Property<string>("MobileNumber")
+                        .IsRequired()
+                        .HasMaxLength(50);
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate();
+
+                    b.Property<DateTime?>("UpdatedDate");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AttenderntId");
+
+                    b.ToTable("Attendee");
+                });
+
             modelBuilder.Entity("Algebra.Entities.Models.Category", b =>
                 {
                     b.Property<int>("Id")
@@ -240,6 +291,9 @@ namespace Algebra.Web.Data.Migrations
                     b.Property<string>("Address")
                         .HasMaxLength(255);
 
+                    b.Property<string>("Categories")
+                        .HasMaxLength(255);
+
                     b.Property<string>("City")
                         .HasMaxLength(100);
 
@@ -267,6 +321,12 @@ namespace Algebra.Web.Data.Migrations
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate();
+
+                    b.Property<string>("Speakers")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Sponsors")
+                        .HasMaxLength(255);
 
                     b.Property<DateTime>("StartDate");
 
@@ -297,8 +357,6 @@ namespace Algebra.Web.Data.Migrations
                     b.Property<string>("Description")
                         .HasMaxLength(255);
 
-                    b.Property<int?>("EventId");
-
                     b.Property<string>("Image")
                         .HasMaxLength(200);
 
@@ -308,6 +366,7 @@ namespace Algebra.Web.Data.Migrations
                     b.Property<bool>("IsDeleted");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasMaxLength(100);
 
                     b.Property<byte[]>("RowVersion")
@@ -317,8 +376,6 @@ namespace Algebra.Web.Data.Migrations
                     b.Property<DateTime?>("UpdatedDate");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("EventId");
 
                     b.ToTable("EventCategory");
                 });
@@ -369,6 +426,50 @@ namespace Algebra.Web.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Fee");
+                });
+
+            modelBuilder.Entity("Algebra.Entities.Models.Image", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AccountId")
+                        .HasMaxLength(20);
+
+                    b.Property<string>("ContentType")
+                        .HasMaxLength(200);
+
+                    b.Property<string>("Created")
+                        .HasMaxLength(50);
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<string>("For")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("IpAddress")
+                        .HasMaxLength(20);
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<int>("Length");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(200);
+
+                    b.Property<string>("Path")
+                        .HasMaxLength(200);
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate();
+
+                    b.Property<DateTime?>("UpdatedDate");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Image");
                 });
 
             modelBuilder.Entity("Algebra.Entities.Models.Location", b =>
@@ -702,7 +803,8 @@ namespace Algebra.Web.Data.Migrations
                     b.Property<string>("Description")
                         .HasMaxLength(255);
 
-                    b.Property<int?>("EventId");
+                    b.Property<string>("Email")
+                        .HasMaxLength(200);
 
                     b.Property<string>("Image")
                         .HasMaxLength(200);
@@ -712,7 +814,11 @@ namespace Algebra.Web.Data.Migrations
 
                     b.Property<bool>("IsDeleted");
 
+                    b.Property<string>("MobileNumber")
+                        .HasMaxLength(50);
+
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasMaxLength(100);
 
                     b.Property<byte[]>("RowVersion")
@@ -722,8 +828,6 @@ namespace Algebra.Web.Data.Migrations
                     b.Property<DateTime?>("UpdatedDate");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("EventId");
 
                     b.ToTable("Speaker");
                 });
@@ -742,7 +846,8 @@ namespace Algebra.Web.Data.Migrations
                     b.Property<string>("Description")
                         .HasMaxLength(255);
 
-                    b.Property<int?>("EventId");
+                    b.Property<string>("Email")
+                        .HasMaxLength(200);
 
                     b.Property<string>("IpAddress")
                         .HasMaxLength(20);
@@ -752,7 +857,11 @@ namespace Algebra.Web.Data.Migrations
                     b.Property<string>("Logo")
                         .HasMaxLength(200);
 
+                    b.Property<string>("MobileNumber")
+                        .HasMaxLength(50);
+
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasMaxLength(100);
 
                     b.Property<byte[]>("RowVersion")
@@ -762,8 +871,6 @@ namespace Algebra.Web.Data.Migrations
                     b.Property<DateTime?>("UpdatedDate");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("EventId");
 
                     b.ToTable("Sponsor");
                 });
@@ -1025,6 +1132,13 @@ namespace Algebra.Web.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("Algebra.Entities.Models.Attendee", b =>
+                {
+                    b.HasOne("Algebra.Entities.Models.Attendee", "Attender")
+                        .WithMany("Guest")
+                        .HasForeignKey("AttenderntId");
+                });
+
             modelBuilder.Entity("Algebra.Entities.Models.Cheque", b =>
                 {
                     b.HasOne("Algebra.Entities.Models.Payment", "Payments")
@@ -1041,33 +1155,12 @@ namespace Algebra.Web.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Algebra.Entities.Models.EventCategory", b =>
-                {
-                    b.HasOne("Algebra.Entities.Models.Event")
-                        .WithMany("Categories")
-                        .HasForeignKey("EventId");
-                });
-
             modelBuilder.Entity("Algebra.Entities.Models.Payment", b =>
                 {
                     b.HasOne("Algebra.Entities.Models.Member", "Member")
                         .WithOne("Payments")
                         .HasForeignKey("Algebra.Entities.Models.Payment", "MemberId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Algebra.Entities.Models.Speaker", b =>
-                {
-                    b.HasOne("Algebra.Entities.Models.Event")
-                        .WithMany("Speakers")
-                        .HasForeignKey("EventId");
-                });
-
-            modelBuilder.Entity("Algebra.Entities.Models.Sponsor", b =>
-                {
-                    b.HasOne("Algebra.Entities.Models.Event")
-                        .WithMany("Sponsors")
-                        .HasForeignKey("EventId");
                 });
 
             modelBuilder.Entity("Algebra.Entities.Models.Spouse", b =>

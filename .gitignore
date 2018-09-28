@@ -260,3 +260,4 @@ paket-files/
 __pycache__/
 *.pyc
 /PostDeployment.sql
+/Algebra.Web/wwwroot/assets/ALC6001

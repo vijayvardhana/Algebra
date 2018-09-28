@@ -7,6 +7,7 @@ namespace Algebra.Entities.Models
 {
     public class Speaker : EntityBase
     {
+        [Required]
         [MaxLength(100)]
         public string Name { get; set; }
 
@@ -15,5 +16,11 @@ namespace Algebra.Entities.Models
 
         [MaxLength(200)]
         public string Image { get; set; }
+        
+        [MaxLength(50)]
+        public string MobileNumber { get; set; }
+
+        [MaxLength(200)]
+        public string Email { get; set; }
     }
 }

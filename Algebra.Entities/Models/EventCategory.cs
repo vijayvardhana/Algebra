@@ -5,6 +5,7 @@ namespace Algebra.Entities.Models
 {
     public class EventCategory:EntityBase
     {
+        [Required]
         [MaxLength(100)]
         public string Name { get; set; }
 

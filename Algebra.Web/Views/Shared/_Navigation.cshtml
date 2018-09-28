@@ -4,10 +4,6 @@
 @if (SignInManager.IsSignedIn(User))
 {
 <ul class="nav navbar-nav">
-    @*<li><a asp-area="" asp-controller="Location" asp-action="Index">Location</a></li>
-        <li><a asp-area="" asp-controller="Member" asp-action="Registration">Registration</a></li>
-        <li><a asp-area="" asp-controller="User" asp-action="Index">Users</a></li>*@
-
     <li class="dropdown">
         <a class="dropdown-toggle text-center" data-toggle="dropdown" href="#">
             <i class="glyphicon glyphicon-education white"></i><br />Membership<span class="caret"></span>
@@ -19,7 +15,7 @@
     </li>
     <li class="dropdown">
         <a class="dropdown-toggle text-center" data-toggle="dropdown" href="#">
-            <i class="glyphicon glyphicon-education white"></i><br />Lookups<span class="caret"></span>
+            <i class="glyphicon glyphicon-eye-open white"></i><br />Lookups<span class="caret"></span>
         </a>
         <ul class="dropdown-menu">
             <li><a asp-area="" asp-controller="Location" asp-action="Index">Location</a></li>
@@ -28,11 +24,17 @@
             <li><a asp-area="" asp-controller="Fee" asp-action="Index">Membership fee</a></li>
             <li><a asp-area="" asp-controller="Category" asp-action="Index">Categories</a></li>
             <li><a asp-area="" asp-controller="Mode" asp-action="Index">Payment modes</a></li>
-
-            <li><a asp-area="" asp-controller="EventCategory" asp-action="Index">Event Category</a></li>
-            <li><a asp-area="" asp-controller="Speaker" asp-action="Index">Speaker</a></li>
-            <li><a asp-area="" asp-controller="Sponsor" asp-action="Index">Sponsor</a></li>
-
+        </ul>
+    </li>
+    <li class="dropdown">
+        <a class="dropdown-toggle text-center" data-toggle="dropdown" href="#">
+            <i class="glyphicon glyphicon-star-empty white"></i><br />Event<span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+            <li><a asp-area="" asp-controller="EventCategory" asp-action="Index">Categories</a></li>
+            <li><a asp-area="" asp-controller="Speaker" asp-action="Index">Speakers</a></li>
+            <li><a asp-area="" asp-controller="Sponsor" asp-action="Index">Sponsors</a></li>
+            <li><a asp-area="" asp-controller="Attendee" asp-action="Index">Attendees</a></li>
         </ul>
     </li>
     <li class="dropdown">
@@ -47,10 +49,10 @@
     </li>
     <li class="dropdown">
         <a class="dropdown-toggle text-center" data-toggle="dropdown" href="#">
-            <i class="glyphicon glyphicon-export white"></i><br />Export<span class="caret"></span>
+            <i class="glyphicon glyphicon-export white"></i><br />Import<span class="caret"></span>
         </a>
         <ul class="dropdown-menu">
-            <li><a asp-area="" asp-controller="Forms" asp-action="Index">Forms into new system</a></li>
+            <li><a asp-area="" asp-controller="Forms" asp-action="Index">Data into new system</a></li>
         </ul>
     </li>
 

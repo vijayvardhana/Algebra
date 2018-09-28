@@ -8,7 +8,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div><h3>Old Member(s) <small>Here you can export old members into new system.</small></h3></div>
-                <div><button type="button" id="btn-export" class="btn btn-primary glyphicon-plus">Export Member(s)</button></div>
+                <div><button type="button" id="btn-import" class="btn btn-primary glyphicon-plus">Import Member(s)</button></div>
                 <hr class="colorgraph">
                 <div class="table-responsive">
                     <table id="cms-form-data" class="table table-bordred table-striped">
@@ -56,7 +56,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
             var url = "/api/forms/export";
-            $("#btn-export").click(function () {
+            $("#btn-import").click(function () {
                 var values = $('.form-check-input:checkbox:checked')
                     .map(function () {
                     return this.value;
