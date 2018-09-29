@@ -25,15 +25,19 @@ namespace Algebra.Entities.ViewModels
         [MaxLength(200)]
         public string LastName { get; set; }
 
-        [Required]
-        [MaxLength(50)]
+        [Required(ErrorMessage = "Mobile Number is required.")]
+        [RegularExpression(@"^([0-9]{10})$", ErrorMessage = "Invalid Mobile Number.")]
         public string MobileNumber { get; set; }
 
         [MaxLength(200)]
+        [Required(ErrorMessage = "Please Enter Email Address")]
+        [RegularExpression(@"^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$", ErrorMessage = "Please Enter Correct Email Address! i.e. 'somename@domain.com'")]
         public string Email { get; set; }
 
         [Display(Name = "Has Guest?")]
         public bool HasGuest { get; set; }
+
+        public int AttenderntId { get; set; }
 
     }
 }

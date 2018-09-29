@@ -19,7 +19,8 @@
       "wwwroot/js/toastr.js",
       "wwwroot/js/asset.upload.js",
       "wwwroot/js/loader.js",
-      "wwwroot/js/dashboard.js"
+      "wwwroot/js/dashboard.js",
+      "wwwroot/js/attendee.js"
     ],
     // Optionally specify minification options
     "minify": {

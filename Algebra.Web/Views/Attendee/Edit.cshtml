@@ -1,11 +1,13 @@
 ﻿@using Algebra.Entities.ViewModels
 @model AttendeeViewModels
+@{ 
 
+}
 <div class="container">
-    <form method="post" id="attendee-add-form">
+    <form method="post" id="attendee-edit-form">
         @Html.AntiForgeryToken()
         <div id="attendee" class="small">
-            <h4>Attendee <small>(@ViewBag.Title)</small></h4>
+            <h4>@ViewBag.Host <small>(Guest of <strong>@ViewBag.Guest</strong>)</small></h4>
             <hr class="colorgraph">
             <div class="row">
                 <div class="col-lg-4">
@@ -48,33 +50,26 @@
                 <div class="col-lg-2">
                     <div class="form-group">
                         <label asp-for="@Model.HasGuest"></label>
-                        <input type="checkbox" asp-for="@Model.HasGuest" class="form-control form-check-input" style="width:20px; height:20px; " />
+                        <input type="checkbox" asp-for="@Model.HasGuest" disabled class="form-control form-check-input" style="width:20px; height:20px; " />
                     </div>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-lg-2">
                     <div class="form-group">
                         <input type="hidden" asp-for="@Model.Id" class="form-control form-check-input" />
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div id="guest-section" style='display:none;'>
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Guest</h3>
-                        </div>
-                        <div class="panel-body">
-                            <ul>
-                                @await Html.PartialAsync("_Guest", Model.Guest)
-                            </ul>
-                        </div>
+                <div class="col-lg-2">
+                    <div class="form-group">
+                        <input type="hidden" asp-for="@Model.AttenderntId" class="form-control form-check-input" />
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-4">
                     <div class="form-group">
-                        <button type="button" class="btn btn-primary" id="btn-submit">Submit</button>
+                        <button type="submit" class="btn btn-primary" id="btn-submit">Submit</button>
                         <button type="button" class="btn" id="btn-cancel" onclick="location.href='@Url.Action("index", "attendee")'">Back</button>
                     </div>
                 </div>
@@ -84,21 +79,4 @@
 </div>
 @section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial")
-    <script src="~/js/attendee.js" asp-append-version="true"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-
-            var o = new Attendee();
-
-            $("#HasGuest").click(function () {
-                o.toggleGuestSection();
-            });
-
-            $("#btn-submit").click(function () {
-                o.submit();
-            });
-
-            $("button.remove").on("click", o.remove);
-        });
-    </script>
 }

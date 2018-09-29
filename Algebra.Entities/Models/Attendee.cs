@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace Algebra.Entities.Models
@@ -31,6 +32,7 @@ namespace Algebra.Entities.Models
 
         public int? AttenderntId { get; set; }
 
+        [ForeignKey("AttenderntId")]
         public virtual Attendee Attender { get; set; }
 
         public virtual ICollection<Attendee> Guest { get; set; }

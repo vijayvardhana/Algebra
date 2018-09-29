@@ -9,12 +9,14 @@ using Algebra.Entities.ViewModels;
 using Algebra.Web.Toast;
 using Mapster;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Algebra.Web.Controllers
 {
-    [Route("api/[controller]")]
+    //[Route("api/[controller]")]
     public class AttendeeController : Controller
     {
         private readonly ApplicationDbContext _dbContext;
@@ -48,7 +50,27 @@ namespace Algebra.Web.Controllers
                 {
                     if (id > 0)
                     {
-                        model = unitOfWork.Attendees.Get(id).Adapt<AttendeeViewModels>();
+                        //model = unitOfWork.Attendees.Get(id).Adapt<AttendeeViewModels>();
+                        model = unitOfWork
+                            .Attendees
+                            .GetAttendeeWithGuest(id)
+                            .Adapt<AttendeeViewModels>();
+
+                        //if (model.HasGuest)
+                        //{
+                        //    IList<AttendeeViewModels> list = null;
+                        //    var guest = unitOfWork.Attendees.GetGuest(model.Id);
+                        //    foreach(var g in guest)
+                        //    {
+                        //        list.Add(g.Adapt<AttendeeViewModels>());
+                        //    }
+                        //    model.Guest = list;
+                        //}
+                    }
+                    else
+                    {
+                        model.Guest.Add(new AttendeeViewModels());
+                        model.Guest.Add(new AttendeeViewModels());
                     }
                 }
             }
@@ -63,42 +85,124 @@ namespace Algebra.Web.Controllers
 
         // POST api/<controller>
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         [Route("api/attendee/add")]
-        public IActionResult Add(AttendeeViewModels model)
+        public IActionResult Add([FromBody] JObject model)
         {
-            IEnumerable<Attendee> list = null;
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                int id = 0;
-                using (IUnitOfWork unitOfWork = new UnitOfWork(_dbContext))
+                return BadRequest("Model state is not valid!");
+            }
+
+            Attendee attendee = BuildModel(model);
+
+            int id = 0;
+            using (IUnitOfWork unitOfWork = new UnitOfWork(_dbContext))
+            {
+                var a = unitOfWork
+                    .Attendees
+                    .GetAttendeeByMobileNumber(attendee.MobileNumber);
+
+                if (a != null)
                 {
-                    var attendees = unitOfWork.Attendees.Get(model.Id);
-                    if (attendees != null)
+                    return BadRequest("Attendee already exist with this mobile number!");
+                }
+
+                try
+                {
+                    if (attendee.Id > 0)
                     {
-                        model.Adapt(attendees);
-                        unitOfWork.Attendees.Update(attendees);
+                        attendee.UpdatedDate = DateTime.Now;
+                        unitOfWork.Attendees.Update(attendee);
                         unitOfWork.Commit();
+                        return Ok("Attendee updated successfully");
                     }
                     else
                     {
-                        var a = model.Adapt<Attendee>();
-                        a.Created = User.Identity.Name;
-                        unitOfWork.Attendees.Add(a);
+                        attendee.Created = User.Identity.Name;
+                        unitOfWork.Attendees.Add(attendee);
                         id = unitOfWork.Commit();
+                        return Ok("Attendee added successfully");
                     }
-
-                    list = unitOfWork.Attendees.GetAll().ToList();
                 }
-                this.AddToastMessage("Success", "Attendee saved successfully", ToastType.Success);
-            }
-            else
-            {
-                this.AddToastMessage("Warning", "Somthing went wrong, please try again ", ToastType.Warning);
-            }
+                catch (Exception e)
+                {
+                    return BadRequest($"Something went wrong! {e.Message}");
+                }
 
-            return View("Index", list);
+            }
         }
 
+        [HttpGet]
+        [Route("api/attendee/edit")]
+        public IActionResult Edit(int id)
+        {
+            AttendeeViewModels model;
+            using (var unitOfWork = new UnitOfWork(_dbContext))
+            {               
+                model = unitOfWork
+                    .Attendees
+                    .Get(id)
+                    .Adapt<AttendeeViewModels>();
+
+                ViewBag.Host = $"{model.FirstName} {model.LastName}";
+                ViewBag.Guest = unitOfWork.Attendees.GuestOf(model.AttenderntId);
+            }
+            return View(model);
+        }
+
+        [HttpPost]
+        [Route("api/attendee/edit")]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(AttendeeViewModels model)
+        {
+            if (ModelState.IsValid)
+            {
+                using (IUnitOfWork unitOfWork = new UnitOfWork(_dbContext))
+                {
+                    try
+                    {
+                        var attendee = unitOfWork.Attendees.Get(model.Id);
+                        if (attendee != null)
+                        {
+                            model.Adapt(attendee);
+                            unitOfWork.Attendees.Update(attendee);
+                            unitOfWork.Commit();
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        throw;// Toast.ToastMessage("");
+                    }
+                }
+            }
+            return RedirectToAction("Index");
+        }
+
+        #region helper method
+        private Attendee BuildModel(JObject model)
+        {
+            string[] str = Utils.UnWrapObjects(model, 'o');
+            Attendee attendee = JsonConvert.DeserializeObject<Attendee>(str[0]);
+            Attendee guest1 = JsonConvert.DeserializeObject<Attendee>(str[1]);
+            Attendee guest2 = JsonConvert.DeserializeObject<Attendee>(str[2]);
+
+            List<Attendee> guestList = new List<Attendee>();
+            if (guest1 != null)
+            {
+                guestList.Add(guest1);
+            }
+
+            if (guest2 != null)
+            {
+                guestList.Add(guest2);
+            }
+
+            attendee.Guest = guestList;
+
+            return attendee;
+        }
+
+        #endregion healper method
     }
 }
