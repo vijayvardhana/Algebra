@@ -50,22 +50,11 @@ namespace Algebra.Web.Controllers
                 {
                     if (id > 0)
                     {
-                        //model = unitOfWork.Attendees.Get(id).Adapt<AttendeeViewModels>();
                         model = unitOfWork
                             .Attendees
                             .GetAttendeeWithGuest(id)
                             .Adapt<AttendeeViewModels>();
 
-                        //if (model.HasGuest)
-                        //{
-                        //    IList<AttendeeViewModels> list = null;
-                        //    var guest = unitOfWork.Attendees.GetGuest(model.Id);
-                        //    foreach(var g in guest)
-                        //    {
-                        //        list.Add(g.Adapt<AttendeeViewModels>());
-                        //    }
-                        //    model.Guest = list;
-                        //}
                     }
                     else
                     {
@@ -165,7 +154,13 @@ namespace Algebra.Web.Controllers
                         var attendee = unitOfWork.Attendees.Get(model.Id);
                         if (attendee != null)
                         {
-                            model.Adapt(attendee);
+                            attendee.UpdatedDate = DateTime.Now;
+                            attendee.FirstName = model.FirstName;
+                            attendee.MiddleName = model.MiddleName;
+                            attendee.LastName = model.LastName;
+                            attendee.MobileNumber = model.MobileNumber;
+                            attendee.Email = model.Email;
+
                             unitOfWork.Attendees.Update(attendee);
                             unitOfWork.Commit();
                         }
@@ -197,6 +192,11 @@ namespace Algebra.Web.Controllers
             {
                 guestList.Add(guest2);
             }
+
+            guestList.RemoveAll(
+                c => c.FirstName == null 
+                && c.MobileNumber == null
+                );
 
             attendee.Guest = guestList;
 

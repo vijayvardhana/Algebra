@@ -76,8 +76,8 @@ namespace Algebra.Data
             builder.Entity<Sponsor>().Property(i => i.Id).ValueGeneratedOnAdd();
 
             builder.Entity<Attendee>().ToTable("Attendee");
-            builder.Entity<Attendee>().HasMany(d => d.Guest).WithOne(a => a.Attender)
-            .HasForeignKey(x => x.AttenderntId);
+            builder.Entity<Attendee>().HasOne(a => a.Attender).WithMany(d => d.Guest)
+            .HasForeignKey(x => x.AttenderntId).IsRequired(false); 
 
         }
 

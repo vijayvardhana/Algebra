@@ -18,10 +18,10 @@ namespace Algebra.Data.Repositories
         IPaymentRepository Payments { get; }
         IChequeRepository Cheques { get; }
 
+        IEventRepository Events { get; set; }
         IEventCategoryRepository EventCategories { get; }
         ISpeakerRepository Speakers { get; }
         ISponsorRepository Sponsors { get; }
-
         IAttendeeRepository Attendees { get; }
 
 

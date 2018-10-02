@@ -7,24 +7,37 @@ class Attendee {
         this.guest2 = {};
         this.ctrl = [];
         this.url = "/api/attendee/add";
-    }    
+    }
 
     values() {
 
         let c = new Array();
-
+        var hasGuest = $('#HasGuest').prop('checked');
+        
         $(".form-control").each(function (index) {
             var o = {};
             var id = this.id;
-            var value = $(this).val();
+
+            let ctrlName = $(this)[0].tagName;
+
+            var value = (id === 'HasGuest')
+                ? hasGuest
+                : $(this).val();
+
             var required = $(this).attr('data-val-required')
                 ? true
                 : false;
 
             var errorMessage = $(this).attr('data-val-required');
             var model = $(this).parents(':eq(3)').attr('id');
-
-            o = { 'id': id, 'value': value, 'isRequired': required, 'errorMessage': errorMessage, 'model': model };
+            if (model === "attendee") {
+                o = { 'id': id, 'value': value, 'isRequired': (id === 'HasGuest') ? false : required, 'errorMessage': errorMessage, 'model': model };
+            }
+            else {
+                if (hasGuest) {
+                    o = { 'id': id, 'value': value, 'isRequired': required, 'errorMessage': errorMessage, 'model': model };
+                }
+            }
 
             console.log(o);
             c[index] = o;
@@ -39,7 +52,6 @@ class Attendee {
             let model = c["model"];
             let key = c["id"];
             let val = c["value"];
-
             switch (model) {
                 case 'attendee':
                     this.attendee[key] = val;
@@ -59,6 +71,7 @@ class Attendee {
 
     validate() {
         var sb_msg = new StringBuilder();
+
         for (var i = 0; i <= this.ctrl.length - 1; i++) {
             let c = this.ctrl[i];
             let model = c["model"];
@@ -67,7 +80,6 @@ class Attendee {
             let message = c["errorMessage"];
             if (required && !val) {
                 sb_msg.append("<li> Tab " + model + " - " + message + "</li>");
-                //console.log('Model : ' + model + ', Control: ' + c.id + ', Value : ' + val);
             }
         }
 
@@ -86,9 +98,9 @@ class Attendee {
 
         if (!this.validate()) {
             return false;
-        }
+        } 
         else {
-
+            //return false;
             this.modelBuilder();
 
             var models = {};

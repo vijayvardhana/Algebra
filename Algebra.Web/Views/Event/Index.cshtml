@@ -1,0 +1,76 @@
+﻿@using Algebra.Entities.Models
+@model IEnumerable<Event>
+
+<div class="container small">
+    <div class="row">
+        <div class="col-md-12">
+            <div><h3>Events <small>Here you can add edit Events.</small></h3></div>
+            <div><button type="button" class="btn btn-primary glyphicon-plus" onclick="location.href='@Url.Action("Add", "Event")'">Add</button></div>
+            <hr class="colorgraph">
+            <div class="table-responsive">
+                @if (Model.Any())
+                {
+                    foreach (var item in Model)
+                    {
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-lg-10">
+                                        <h3 class="panel-title">Title : @item.Title</h3>
+                                    </div>
+                                    <div class="col-lg-1">
+                                        @Html.ActionLink("", "Add", new { id = item.Id }
+                                                    , new { @class = "btn btn-primary btn-xs glyphicon glyphicon-pencil" })
+                                    </div>
+                                    <div class="col-lg-1">
+                                        @Html.ActionLink("", "Get", new { id = item.Id }
+                                                    , new { @class = "btn btn-primary btn-xs glyphicon glyphicon-list" })
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <label asp-for="@item.Description"></label> :
+                                        <p>@item.Description</p>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <label>Date</label> :
+                                        <p>@item.StartDate</p>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <label asp-for="@item.Format"></label> :
+                                        <p>@item.Format</p>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <label asp-for="@item.Region"></label> :
+                                        <p>@item.Region</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <label asp-for="@item.Categories"></label> :
+                                        <p>@item.Categories</p>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <label asp-for="@item.Speakers"></label> :
+                                        <p>@item.Speakers</p>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <label asp-for="@item.Sponsors"></label> :
+                                        <p>@item.Sponsors</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    < h2 > Events(s) are not available yet ...< small > (Add some records and try again later)</ small ></ h2 >
+                }
+            </div>
+        </div>
+    </div>
+</div>

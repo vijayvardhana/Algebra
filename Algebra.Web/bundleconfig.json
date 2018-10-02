@@ -7,7 +7,8 @@
     "inputFiles": [
       "wwwroot/css/site.css",
       "wwwroot/css/toastr.css",
-      "wwwroot/css/dashboard.css"
+      "wwwroot/css/dashboard.css",
+      "wwwroot/css/multiselect.css"
     ]
   },
   {
@@ -20,7 +21,8 @@
       "wwwroot/js/asset.upload.js",
       "wwwroot/js/loader.js",
       "wwwroot/js/dashboard.js",
-      "wwwroot/js/attendee.js"
+      "wwwroot/js/attendee.js",
+      "wwwroot/js/multiselect.js"
     ],
     // Optionally specify minification options
     "minify": {

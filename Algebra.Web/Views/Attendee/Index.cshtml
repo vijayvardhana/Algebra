@@ -18,9 +18,10 @@
                                 <th scope="col">Last Name</th>
                                 <th scope="col">Mobile Number</th>
                                 <th scope="col">Email</th>
+                                <th scope="col">Has Guest</th>
                                 <th scope="col">Guest Of</th>
                                 <th scope="col"></th>
-                                <th scope="col"></th>
+                                @*<th scope="col"></th>*@
                             </tr>
                         </thead>
 
@@ -37,7 +38,7 @@
                                         <td>@attendee.LastName</td>
                                         <td>@attendee.MobileNumber</td>
                                         <td>@attendee.Email</td>
-                                        <td></td>
+                                        <td>@attendee.HasGuest</td>
                                         <td></td>
                                         <td>
                                             @Html.ActionLink("", "Edit", new { id = attendee.Id }
@@ -54,8 +55,8 @@
                                                 <td>@guest.LastName</td>
                                                 <td>@guest.MobileNumber</td>
                                                 <td>@guest.Email</td>
-                                                <td>@guestOf</td>
                                                 <td></td>
+                                                <td>@guestOf</td>
                                                 <td>
                                                     @Html.ActionLink("", "Edit", new { id = guest.Id }
                                                             , new { @class = "btn btn-primary btn-xs glyphicon glyphicon-pencil" })

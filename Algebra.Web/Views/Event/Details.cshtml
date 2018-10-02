@@ -1,0 +1,115 @@
+﻿@using Algebra.Entities.ViewModels
+@model EventViewModels
+
+<div class="container">
+    <div id="fee" class="small">
+        <h4>Event <small>(@Model.Title) on @Model.StartDate</small></h4>
+        <hr class="colorgraph">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label asp-for="@Model.Categories"></label> :
+                    <p>
+                        <ul>
+                            @foreach (var item in Model.Categories)
+                            {
+                                <li>@item</li>
+                            }
+                        </ul>
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label asp-for="@Model.Speakers"></label> :
+                    <p>
+                        <ul>
+                            @foreach (var item in Model.Speakers)
+                            {
+                                <li>@item</li>
+                            }
+                        </ul>
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label asp-for="@Model.Sponsors"></label> :
+                    <p>
+                        <ul>
+                            @foreach (var item in Model.Sponsors)
+                            {
+                                <li>@item</li>
+                            }
+                        </ul>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label asp-for="@Model.Title"></label> :
+                    <p>@Model.Title</p>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label asp-for="@Model.Description"></label> :
+                    <p>@Model.Description</p>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label asp-for="@Model.StartDate"></label> :
+                    <p>@Model.StartDate</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label asp-for="@Model.Address"></label> :
+                    <p>@Model.Address</p>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label asp-for="@Model.City"></label> :
+                    <p>@Model.City</p>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label asp-for="@Model.State"></label> :
+                    <p>@Model.State</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label asp-for="@Model.Format"></label> :
+                    <p>@Model.Format</p>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label asp-for="@Model.Region"></label> :
+                    <p>@Model.Region</p>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="form-group">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary" id="btn-cancel" onclick="location.href='@Url.Action("index", "event")'">Event List</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
