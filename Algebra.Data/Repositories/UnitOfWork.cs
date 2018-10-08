@@ -26,6 +26,7 @@ namespace Algebra.Data.Repositories
             Speakers = new SpeakerRepository(_dbContext);
             Sponsors = new SponsorRepository(_dbContext);
             Attendees = new AttendeeRepository(_dbContext);
+            Attendance = new MarkAttendanceRepository(_dbContext);
         }
 
         public IMemberRepository Members { get; private set; }
@@ -45,6 +46,7 @@ namespace Algebra.Data.Repositories
         public ISpeakerRepository Speakers { get; set; }
         public ISponsorRepository Sponsors { get; set; }
         public IAttendeeRepository Attendees { get; set; }
+        public IMarkAttendanceRepository Attendance { get; set; }
 
         public int Commit()
         {

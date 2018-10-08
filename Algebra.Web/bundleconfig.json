@@ -22,7 +22,8 @@
       "wwwroot/js/loader.js",
       "wwwroot/js/dashboard.js",
       "wwwroot/js/attendee.js",
-      "wwwroot/js/multiselect.js"
+      "wwwroot/js/multiselect.js",
+      "wwwroot/js/search.js"
     ],
     // Optionally specify minification options
     "minify": {

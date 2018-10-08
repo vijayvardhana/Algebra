@@ -77,7 +77,11 @@ namespace Algebra.Data
 
             builder.Entity<Attendee>().ToTable("Attendee");
             builder.Entity<Attendee>().HasOne(a => a.Attender).WithMany(d => d.Guest)
-            .HasForeignKey(x => x.AttenderntId).IsRequired(false); 
+            .HasForeignKey(x => x.AttenderntId).IsRequired(false);
+
+            builder.Entity<MarkAttendance>().ToTable("Attendance");
+            builder.Entity<MarkAttendance>().Property(i => i.Id).ValueGeneratedOnAdd();
+
 
         }
 
@@ -100,6 +104,8 @@ namespace Algebra.Data
         public DbSet<Speaker> Speakers { get; set; }
         public DbSet<Sponsor> Sponsors { get; set; }
         public DbSet<Attendee> Attendees { get; set; }
+
+        public DbSet<MarkAttendance> Attendance { get; set; }
 
         #endregion Properties
     }

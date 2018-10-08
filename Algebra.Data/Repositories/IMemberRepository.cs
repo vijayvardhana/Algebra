@@ -3,6 +3,7 @@ using Algebra.Entities.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Algebra.Data.Repositories
 {
@@ -15,6 +16,8 @@ namespace Algebra.Data.Repositories
         int GetCountByLocationId(int locationId);
 
         IEnumerable<Member> GetMembersWithSpouseAndDependents();
+
+        Task<Member> GetMemberByAccountNumberAsync(string accountNumber);
 
         RegistrationFormViewModel CreateMember(int id);
 

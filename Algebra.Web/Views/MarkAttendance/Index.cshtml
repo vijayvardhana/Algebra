@@ -1,0 +1,102 @@
+﻿@using Algebra.Entities.ViewModels
+@model MarkAttendanceViewModels
+
+<div class="container small">
+    <div class="row">
+        <div class="col-md-12">
+            <div>
+                <h3>
+                    Mark attendance
+                </h3>
+            </div>
+            <hr class="colorgraph">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h5>Title : @Model.Event.Title <small>( On @Model.Event.StartDate.ToShortDateString() at )</small></h5>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <label>Description</label> :
+                            <p>@Model.Event.Description</p>
+                        </div>
+                        <div class="col-lg-2">
+                            <label>Date</label> :
+                            <p>@Model.Event.StartDate.ToShortDateString()</p>
+                        </div>
+                        <div class="col-lg-2">
+                            <label>Format</label> :
+                            <p>@Model.Event.Format</p>
+                        </div>
+                        <div class="col-lg-2">
+                            <label>Region</label> :
+                            <p>@Model.Event.Region</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <label>Categories</label> :
+                            <p>@Model.Event.Categories</p>
+                        </div>
+                        <div class="col-lg-4">
+                            <label>Speakers</label> :
+                            <p>@Model.Event.Speakers</p>
+                        </div>
+                        <div class="col-lg-4">
+                            <label>Sponsors</label> :
+                            <p>@Model.Event.Sponsors</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            @await Html.PartialAsync("_Search")
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+    <script src="~/js/search.js" asp-append-version="true"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('input[name=isMember]:radio').change(function () {
+                if ($('#isMember:checked').val() === "member") {
+                    $("DIV.invitee").hide();
+                    $("DIV.member").show();
+                }
+                else {
+                    $("DIV.member").hide();
+                    $("DIV.invitee").show();
+                }
+            });
+
+            $("#btn-search").click(function () {
+                var _text = $("#search-text").val();
+                var _isMember = $('#isMember:checked').val();
+                var _searchFor = $('#search-for:checked').val();
+
+
+                console.log("_text" + _text + " _isMember " + _isMember + " _searchFor " + _searchFor);
+
+                var values = {
+                    text: _text,
+                    ismember: _isMember,
+                    searchfor: _searchFor,
+                    source: "event"
+                };
+
+                var o = new Search(values);
+                o.submit();
+
+            });
+
+        });
+
+    </script>
+}

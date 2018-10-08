@@ -16,7 +16,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Algebra.Web.Controllers
 {
-    //[Route("api/[controller]")]
+    [Route("api/[controller]")]
     public class AttendeeController : Controller
     {
         private readonly ApplicationDbContext _dbContext;
@@ -39,7 +39,7 @@ namespace Algebra.Web.Controllers
         }
 
         [HttpGet("{id}")]
-        [Route("api/attendee/add")]
+        [Route("add")]
         public IActionResult Add(int id)
         {
             AttendeeViewModels model = new AttendeeViewModels();
@@ -75,7 +75,7 @@ namespace Algebra.Web.Controllers
         // POST api/<controller>
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        [Route("api/attendee/add")]
+        [Route("add")]
         public IActionResult Add([FromBody] JObject model)
         {
             if (!ModelState.IsValid)
@@ -123,7 +123,7 @@ namespace Algebra.Web.Controllers
         }
 
         [HttpGet]
-        [Route("api/attendee/edit")]
+        [Route("edit")]
         public IActionResult Edit(int id)
         {
             AttendeeViewModels model;
@@ -141,7 +141,7 @@ namespace Algebra.Web.Controllers
         }
 
         [HttpPost]
-        [Route("api/attendee/edit")]
+        [Route("edit")]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(AttendeeViewModels model)
         {

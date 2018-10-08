@@ -15,16 +15,26 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <div class="row">
-                                    <div class="col-lg-10">
+                                    <div class="col-lg-9">
                                         <h3 class="panel-title">Title : @item.Title</h3>
                                     </div>
                                     <div class="col-lg-1">
-                                        @Html.ActionLink("", "Add", new { id = item.Id }
-                                                    , new { @class = "btn btn-primary btn-xs glyphicon glyphicon-pencil" })
+                                        <p data-placement="top" data-toggle="tooltip" title="Edit event">
+                                            @Html.ActionLink("", "Add", new { id = item.Id }
+                                                        , new { @class = "btn btn-primary btn-xs glyphicon glyphicon-pencil" })
+                                        </p>
                                     </div>
                                     <div class="col-lg-1">
-                                        @Html.ActionLink("", "Get", new { id = item.Id }
-                                                    , new { @class = "btn btn-primary btn-xs glyphicon glyphicon-list" })
+                                        <p data-placement="top" data-toggle="tooltip" title="Event details">
+                                            @Html.ActionLink("", "Get", new { id = item.Id }
+                                                        , new { @class = "btn btn-primary btn-xs glyphicon glyphicon-tasks" })
+                                        </p>
+                                    </div>
+                                    <div class="col-lg-1">
+                                        <p data-placement="top" data-toggle="tooltip" title="Mark attendance for this event!">
+                                            @Html.ActionLink("", "Index", "MarkAttendance", new { eventId = item.Id }
+                                                        , new { @class = "btn btn-primary btn-xs glyphicon glyphicon-check" })
+                                        </p>
                                     </div>
                                 </div>
 

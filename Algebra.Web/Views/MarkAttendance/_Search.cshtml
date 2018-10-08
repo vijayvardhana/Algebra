@@ -1,0 +1,65 @@
+﻿<div style="width:100%; height:400px;">
+    <form method="post" id="member-search-form">
+        @Html.AntiForgeryToken()
+        <div id="member-search">
+            <h4>Search <small>(You can search member or guest here for attendance marking)</small></h4>
+            <hr class="colorgraph">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label>Text</label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span><br />
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </span>
+                            <input type="text" id="search-text" name="search-text" class="form-control input-sm" />
+                        </div>
+                    </div>
+                </div>
+                @*</div>
+                <div class="row">*@
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label>Member/Invitee</label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span><br />
+                        <div class="radio">
+                            <label><input type="radio" name="isMember" id="isMember" value="member">Member</label>
+                        </div>
+                        <div class="radio">
+                            <label><input type="radio" name="isMember" id="isMember" value="invitee">Invitee</label>
+                        </div>
+                    </div>
+                </div>
+                @*</div>
+                <div class="row">*@
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label>Search For</label> <span class="glyphicon-sm glyphicon-asterisk" style="color:red"></span><br />
+                        <div class="radio member">
+                            <label><input type="radio" name="search-for" id="search-for" value="MemberByAccountNumber">Member's Account number</label>
+                        </div>
+                        <div class="radio member">
+                            <label><input type="radio" name="search-for" id="search-for" value="MemberByName">Member's Name</label>
+                        </div>
+                        <div class="radio invitee">
+                            <label><input type="radio" name="search-for" id="search-for" value="InviteeByName">Invitee's Name</label>
+                        </div>
+                        <div class="radio invitee">
+                            <label><input type="radio" name="search-for" id="search-for" value="InviteeByMobileNumber">Invitee's Mobile Number</label>
+                        </div>
+                        <div class="radio invitee">
+                            <label><input type="radio" name="search-for" id="search-for" value="InviteeByEmail">Invitee's Email</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary" id="btn-search">Search</button>
+                        <button type="button" class="btn" id="btn-cancel" onclick="location.href='@Url.Action("index", "event")'">Back</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

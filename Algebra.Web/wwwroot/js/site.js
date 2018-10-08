@@ -69,3 +69,12 @@ function GetJSONData(str) {
 
     return JSON.parse(jsonData);
 };
+
+function GetJSON(controller, action, searchText) {
+    var url = "/api/" + controller + "/" + action + "/?namelike=" + searchText;
+    var jsonData = $.ajax({
+        url: url,
+        contentType: "application/json",
+        async: false
+    }).responseText;
+};

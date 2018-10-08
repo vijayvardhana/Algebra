@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Algebra.Web.Controllers
 {
-    //[Route("api/[controller]")]
+    [Route("api/[controller]")]
     public class MemberController : Controller
     {
 
@@ -30,7 +30,7 @@ namespace Algebra.Web.Controllers
         }
 
         // GET: api/<controller>
-        [HttpGet]
+        [HttpGet("Index")]
         public IActionResult Index()
         {
             IEnumerable<MemberViewModels> members;
@@ -47,7 +47,7 @@ namespace Algebra.Web.Controllers
             return View(members);
         }
 
-        [HttpGet]
+        [HttpGet("AddMember")]
         public IActionResult AddMember(int id)
         {
             RegistrationFormViewModel model;
@@ -60,7 +60,7 @@ namespace Algebra.Web.Controllers
             return View(model);
         }
 
-        [HttpPost]
+        [HttpPost("AddMember")]
         public IActionResult AddMember(RegistrationFormViewModel m)
         {
             RegistrationFormViewModel model;
@@ -85,7 +85,7 @@ namespace Algebra.Web.Controllers
 
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        [Route("api/member/post")]
+        [Route("post")]
         public IActionResult Post([FromBody] JObject model)
         {
             if (!ModelState.IsValid)
@@ -130,7 +130,7 @@ namespace Algebra.Web.Controllers
 
         // GET api/<controller>/5
         [HttpGet]
-        [Route("api/member/get/{id}")]
+        [Route("get")]
         public IActionResult Get(int id)
         {
             RegistrationFormViewModel model;

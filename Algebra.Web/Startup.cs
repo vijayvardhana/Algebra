@@ -103,9 +103,10 @@ namespace Algebra
                     name: "Referrer",
                     template: "{controller=Referrer}/{action=Referrer}/{id}"
                     );
-                routes.MapRoute(
-                    name: "attendee",
-                    template: "api/{controller=Attendee}/{action=Index}/{id?}");
+                //routes.MapRoute(
+                //    name: "attendee",
+                //    template: "api/{controller=Attendee}/{action=Index}/{id?}");
+                
             });
         }
     }

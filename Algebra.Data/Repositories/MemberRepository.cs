@@ -8,6 +8,7 @@ using Algebra.Entities.ViewModels;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Threading.Tasks;
 
 namespace Algebra.Data.Repositories
 {
@@ -63,7 +64,20 @@ namespace Algebra.Data.Repositories
         {
             return _dbContext
                 .Members
+                .Include(i => i.Spouse)
+                .Include(i => i.Dependents)
+                .Include(i => i.Payments)
                 .SingleOrDefault(c => c.AccountId == accountNumber);
+        }
+
+        public async Task<Member> GetMemberByAccountNumberAsync(string accountNumber)
+        {
+            return await _dbContext
+                .Members
+                .Include(i => i.Spouse)
+                .Include(i => i.Dependents)
+                .Include(i => i.Payments)
+                .SingleOrDefaultAsync(m => m.AccountId == accountNumber);
         }
 
         public RegistrationFormViewModel CreateMember(int id)
